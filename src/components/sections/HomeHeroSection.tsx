@@ -1,5 +1,6 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, ShieldCheck, Activity, Users } from 'lucide-react';
@@ -30,10 +31,12 @@ export const HomeHeroSection = () => (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-5xl font-black uppercase tracking-[0.3em] text-foreground sm:text-6xl"
+        className="text-balance text-4xl font-black uppercase tracking-[0.2em] text-foreground sm:text-5xl sm:tracking-[0.28em] lg:text-6xl lg:tracking-[0.32em]"
       >
         <span className="block">Boutique Livestream</span>
-        <span className="block text-4xl tracking-[0.4em] text-slate-500 sm:text-5xl">Studios</span>
+        <span className="block text-3xl tracking-[0.28em] text-slate-500 sm:text-4xl sm:tracking-[0.35em] lg:text-5xl lg:tracking-[0.4em]">
+          Studios
+        </span>
       </motion.h1>
       <motion.p
         initial={{ opacity: 0, y: 20 }}
@@ -101,7 +104,7 @@ export const HomeHeroSection = () => (
               {
                 '--accent-from': brand.accentFrom,
                 '--accent-to': brand.accentTo
-              } as React.CSSProperties
+              } as CSSProperties
             }
           >
             <Image
