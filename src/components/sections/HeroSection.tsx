@@ -45,11 +45,14 @@ export const HeroSection = () => (
             </li>
           ))}
         </ul>
-        <div className="mt-1 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-          <Button href="/apply">Apply Now</Button>
+        <div className="mt-1 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <Button href="/apply" className="w-full sm:w-auto">
+            Apply Now
+          </Button>
           <Button
             href="#why-host"
             variant="secondary"
+            className="w-full sm:w-auto"
             onClick={(event) => {
               event.preventDefault();
               const anchor = document.querySelector('#why-host');
