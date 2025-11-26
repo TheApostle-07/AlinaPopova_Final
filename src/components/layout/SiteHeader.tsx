@@ -17,6 +17,7 @@ type NavLink = {
 const navLinks: NavLink[] = [
   { label: 'Home', href: { pathname: '/' } },
   { label: 'Careers', href: { pathname: '/careers' } },
+  { label: 'Pricing', href: { pathname: '/pricing' } },
   { label: 'Why Host', href: { pathname: '/careers', hash: 'why-host' } },
   { label: 'Tiers', href: { pathname: '/careers', hash: 'tiers' } },
   { label: 'FAQs', href: { pathname: '/careers', hash: 'faqs' } }
