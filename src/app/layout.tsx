@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { siteConfig } from '@/lib/config';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
-
+import { Analytics } from "@vercel/analytics/next"
 const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-poppins' });
 
 export const metadata: Metadata = {
@@ -44,6 +44,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <main className="flex-1">{children}</main>
           <SiteFooter />
         </div>
+        <Analytics />
       </body>
     </html>
   );
