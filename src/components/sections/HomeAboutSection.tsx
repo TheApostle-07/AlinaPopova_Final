@@ -25,8 +25,9 @@ export const HomeAboutSection = () => (
       <p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary">Studio Ethos</p>
       <h2 className="mt-4 text-3xl font-semibold text-foreground">We are a calm livestream lab for detail-first brands.</h2>
       <p className="mt-4 text-base text-slate-600">
-        Each engagement is architected in Delhi NCR with a small team of producers, culture writers, and signal analysts. We
-        design formats that feel like boutique talk sessions, backed by measurable runbooks.
+        Each engagement is architected from Gujarat with a small team of producers, culture writers, and signal analysts for
+        India-wide creator and brand campaigns. We design formats that feel like boutique talk sessions, backed by measurable
+        runbooks.
       </p>
     </div>
     <div className="mt-12 grid gap-6 md:grid-cols-3">

@@ -44,9 +44,9 @@ const stepConfig: Array<{
           /^[A-Za-z/,\s]{3,}$/.test(value.trim()) ? null : 'Use letters, slashes, or commas only.'
       },
       {
-        label: 'Current Location (Delhi NCR)',
+        label: 'Current Location (India)',
         name: 'location',
-        placeholder: 'Neighbourhood + city',
+        placeholder: 'City, state, and area/locality',
         required: true,
         validate: (value) => (value.trim().length >= 3 ? null : 'Add your neighbourhood or city.')
       }

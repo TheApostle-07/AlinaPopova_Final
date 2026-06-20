@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
   title: 'Pricing & Engagements – Alina Popova Studio',
-  description: 'Transparent livestream pricing with dedicated hosts, producers, and calm runbooks tuned for Delhi NCR.'
+  description: 'Transparent livestream pricing with dedicated hosts, producers, and calm runbooks for India-wide campaigns.'
 };
 
 const packages = [

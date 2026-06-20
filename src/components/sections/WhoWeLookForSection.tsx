@@ -2,7 +2,7 @@ import { Check } from 'lucide-react';
 import { SectionWrapper } from '@/components/layout/SectionWrapper';
 
 const qualities = [
-  'Women 18+, based in Delhi NCR',
+  'Women 18+, based anywhere in India',
   'Comfortable speaking on camera in Hindi and/or English',
   'Polite, calm and good with conversations',
   'Able to commit to agreed slots on time',

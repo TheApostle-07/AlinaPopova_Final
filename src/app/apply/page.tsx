@@ -5,7 +5,7 @@ import { CareersApplicationSection } from '@/components/sections/CareersApplicat
 
 export const metadata: Metadata = {
   title: 'Application Form – Alina Popova Studio',
-  description: 'Apply to become a female livestream host with Alina Popova Studio in Delhi NCR.'
+  description: 'Apply to become a female livestream host with Alina Popova Studio from anywhere in India.'
 };
 
 const ApplyPage = () => (

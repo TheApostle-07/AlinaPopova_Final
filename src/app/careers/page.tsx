@@ -12,7 +12,7 @@ import { CareersApplicationSection } from '@/components/sections/CareersApplicat
 export const metadata: Metadata = {
   title: 'Careers | Alina Popova Studio',
   description:
-    'Explore structured hiring for female livestream hosts in Delhi NCR with Alina Popova Studio. Learn about tiers, process, and how to apply.'
+    'Explore structured hiring for female livestream hosts across India with Gujarat-based Alina Popova Studio. Learn about tiers, process, and how to apply.'
 };
 
 const CareersPage = () => (

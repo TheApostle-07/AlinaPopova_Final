@@ -10,13 +10,13 @@ const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: 'Hiring Female Live Stream Hosts | Alina Popova Studio – Delhi NCR',
+  title: 'Hiring Female Live Stream Hosts Across India | Alina Popova Studio',
   description:
-    'We hire calm, confident female livestream hosts across Delhi NCR with guided formats, respectful studio culture, and transparent earnings.',
+    'We hire calm, confident female livestream hosts across India through a Gujarat-based studio with guided formats, respectful culture, and transparent earnings.',
   openGraph: {
-    title: 'Hiring Female Live Stream Hosts | Alina Popova Studio – Delhi NCR',
+    title: 'Hiring Female Live Stream Hosts Across India | Alina Popova Studio',
     description:
-      'Explore a calm, professional studio for female livestream hosts with transparent earnings and guided frameworks.',
+      'Explore a calm, Gujarat-based professional studio for female livestream hosts across India with transparent earnings and guided frameworks.',
     url: siteConfig.siteUrl,
     siteName: siteConfig.siteName,
     images: [

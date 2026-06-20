@@ -1,6 +1,6 @@
 # Alina Popova Studio
 
-Elegant marketing site for recruiting calm, confident female livestream hosts in Delhi NCR. Built with Next.js 14 App Router, TypeScript, Tailwind CSS, Lucide icons, and Framer Motion animations.
+Elegant marketing site for recruiting calm, confident female livestream hosts across India for a Gujarat-based studio. Built with Next.js 14 App Router, TypeScript, Tailwind CSS, Lucide icons, and Framer Motion animations.
 
 ## Tech Stack
 - Next.js 14 (App Router)

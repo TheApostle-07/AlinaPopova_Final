@@ -3,11 +3,9 @@
 import Link from 'next/link';
 import type { Route } from 'next';
 import type { UrlObject } from 'url';
-import { motion } from 'framer-motion';
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
+import { motion, type HTMLMotionProps } from 'framer-motion';
+import type { AnchorHTMLAttributes, ReactNode } from 'react';
 import clsx from 'clsx';
-
-const MotionLink = motion(Link);
 
 const variants = {
   primary: 'bg-primary text-white shadow shadow-primary/20 hover:bg-primary/90 hover:text-white',
@@ -23,8 +21,9 @@ type BaseProps = {
   children: ReactNode;
 };
 
-type ButtonLikeProps = BaseProps & ButtonHTMLAttributes<HTMLButtonElement> & { href?: undefined };
-type LinkLikeProps = BaseProps & AnchorHTMLAttributes<HTMLAnchorElement> & { href: Route | UrlObject };
+type ButtonLikeProps = BaseProps &
+  Omit<HTMLMotionProps<'button'>, keyof BaseProps | 'href' | 'children' | 'ref'> & { href?: undefined };
+type LinkLikeProps = BaseProps & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & { href: Route | UrlObject };
 
 export type ButtonProps = ButtonLikeProps | LinkLikeProps;
 
@@ -45,17 +44,15 @@ export const Button = (props: ButtonProps) => {
   );
 
   if (href) {
-    const linkProps = rest as AnchorHTMLAttributes<HTMLAnchorElement>;
+    const linkProps = rest as Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>;
     return (
-      <MotionLink
+      <Link
         href={href}
         className={classes}
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
         {...linkProps}
       >
         {content}
-      </MotionLink>
+      </Link>
     );
   }
 
@@ -64,7 +61,7 @@ export const Button = (props: ButtonProps) => {
       className={classes}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
-      {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}
+      {...(rest as Omit<HTMLMotionProps<'button'>, 'ref'>)}
     >
       {content}
     </motion.button>

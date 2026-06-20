@@ -1,6 +1,6 @@
 export const siteConfig = {
   siteName: 'Alina Popova Studio',
-  siteTagline: 'Hiring Female Live Stream Hosts',
+  siteTagline: 'Gujarat-Based, India-Wide Livestream Talent Agency',
   siteUrl: 'https://alinapopova.com',
   contactEmail: 'support@alinapopova.com'
 };

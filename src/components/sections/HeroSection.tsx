@@ -26,13 +26,13 @@ export const HeroSection = () => (
     <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
       <div className="space-y-8">
         <div className="space-y-4">
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary">Delhi NCR</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary">Gujarat Based / India Wide</p>
           <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-            Hiring Female Live Stream Hosts – Delhi NCR
+            Hiring Female Live Stream Hosts Across India
           </h1>
           <p className="text-lg text-slate-600">
-            A calm, professional studio where you can host live sessions, interact with audiences, and earn fairly for your
-            time.
+            A calm, professional Gujarat-based studio where creators across India can host live sessions, interact with
+            audiences, and earn fairly for their time.
           </p>
         </div>
         <ul className="space-y-4 text-left">
@@ -50,7 +50,7 @@ export const HeroSection = () => (
             Apply Now
           </Button>
           <Button
-            href="#why-host"
+            type="button"
             variant="secondary"
             className="w-full sm:w-auto"
             onClick={(event) => {
