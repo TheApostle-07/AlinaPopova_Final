@@ -16,11 +16,11 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { label: 'Home', href: { pathname: '/' } },
-  { label: 'Creators', href: { pathname: '/creators' } },
-  { label: 'How It Works', href: { pathname: '/how-it-works' } },
-  { label: 'For Brands', href: { pathname: '/brands' } },
-  { label: 'Safety', href: { pathname: '/safety' } },
+  { label: 'For Companies', href: { pathname: '/companies' } },
+  { label: 'For Creators', href: { pathname: '/creators' } },
+  { label: 'Services', href: { pathname: '/services' } },
   { label: 'Pricing', href: { pathname: '/pricing' } },
+  { label: 'Safety', href: { pathname: '/safety' } },
   { label: 'FAQs', href: { pathname: '/faqs' } }
 ];
 
@@ -49,7 +49,7 @@ export const SiteHeader = () => {
       transition={{ duration: 0.6 }}
       className={clsx(
         'sticky top-0 z-[60] border-b border-primary/10 backdrop-blur-xl transition-shadow',
-        menuOpen ? 'bg-ivory/95' : 'bg-ivory/85',
+        menuOpen ? 'bg-white/95' : 'bg-white/90',
         scrolled ? 'shadow-header' : 'shadow-none'
       )}
     >
@@ -67,39 +67,39 @@ export const SiteHeader = () => {
           />
           <div className="leading-tight text-foreground">
             <span className="block text-base font-semibold uppercase tracking-[0.13em]">Alina Popova Studio</span>
-            <span className="text-xs text-cocoa leading-tight">Creator Launch Program</span>
+            <span className="text-xs text-cocoa leading-tight">Creator-Led Marketing</span>
           </div>
         </Link>
-        <nav className="hidden items-center gap-7 text-sm font-semibold text-cocoa xl:flex">
+        <nav className="hidden items-center gap-1 rounded-full border border-primary/10 bg-porcelain/55 p-1.5 text-sm font-semibold text-cocoa xl:flex">
           {navLinks.map((link) => (
             <Link
               key={`${link.href.pathname}-${link.href.hash ?? 'root'}`}
               href={link.href}
               scroll
-              className="transition-colors hover:text-primary"
+              className="rounded-full px-3 py-2 transition-colors hover:bg-white hover:text-primary"
             >
               {link.label}
             </Link>
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          <Button href="/apply" className="hidden md:inline-flex" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
-            Apply Free
+          <Button href="/companies" className="hidden md:inline-flex" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
+            Market My Company
           </Button>
           <Button
-            href="/apply"
+            href="/companies"
             className="px-4 py-2 text-xs md:hidden"
             variant="secondary"
             iconRight={<ArrowRight className="h-3.5 w-3.5" aria-hidden />}
           >
-            Apply Free
+            For Companies
           </Button>
           <button
             type="button"
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-primary/15 bg-white text-cocoa shadow-sm transition hover:border-primary hover:text-primary md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-primary/15 bg-white text-cocoa shadow-card transition hover:border-primary hover:text-primary md:hidden"
           >
             {menuOpen ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
           </button>
@@ -119,14 +119,14 @@ export const SiteHeader = () => {
             transition={{ duration: 0.2 }}
             className="md:hidden"
           >
-            <div className="fixed inset-x-4 top-20 z-50 rounded-lg border border-primary/15 bg-ivory p-6 shadow-soft">
+            <div className="fixed inset-x-4 top-20 z-50 rounded-[32px] border border-primary/15 bg-white p-6 shadow-soft">
               <div className="mb-4 flex items-center justify-between">
                 <p className="text-sm font-semibold uppercase tracking-[0.14em] text-cocoa">Menu</p>
                 <button
                   type="button"
                   aria-label="Close navigation menu"
                   onClick={() => setMenuOpen(false)}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-primary/15 text-cocoa transition hover:border-primary hover:text-primary"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-primary/15 text-cocoa transition hover:border-primary hover:text-primary"
                 >
                   <X className="h-5 w-5" aria-hidden />
                 </button>
@@ -138,15 +138,15 @@ export const SiteHeader = () => {
                     href={link.href}
                     scroll
                     onClick={() => setMenuOpen(false)}
-                    className="rounded-md px-3 py-3 transition hover:bg-blush/20 hover:text-primary"
+                    className="rounded-xl px-3 py-3 transition hover:bg-porcelain hover:text-primary"
                   >
                     {link.label}
                   </Link>
                 ))}
               </nav>
               <div className="mt-6 grid gap-3">
-                <Button href="/brands" variant="ghost" className="w-full">
-                  Book Creators for Brand
+                <Button href="/companies" variant="ghost" className="w-full">
+                  Market My Company
                 </Button>
                 <Button href="/apply" className="w-full" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
                   Apply Free

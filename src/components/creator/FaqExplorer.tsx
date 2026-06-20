@@ -31,13 +31,13 @@ export const FaqExplorer = () => {
 
   return (
     <div className="mx-auto max-w-4xl">
-      <div className="flex flex-col gap-4 border border-primary/15 bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 rounded-xl border border-primary/15 bg-white p-4 shadow-card sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-2" role="tablist" aria-label="FAQ categories">
-          {categories.map((item) => <button key={item} id={`faq-tab-${item.toLowerCase()}`} type="button" role="tab" aria-controls="faq-results" aria-selected={category === item} onClick={() => setCategory(item)} className={`min-h-10 rounded-md px-3 text-sm font-semibold transition ${category === item ? 'bg-primary text-ivory' : 'bg-porcelain text-cocoa hover:bg-blush/30'}`}>{item}</button>)}
+          {categories.map((item) => <button key={item} id={`faq-tab-${item.toLowerCase()}`} type="button" role="tab" aria-controls="faq-results" aria-selected={category === item} onClick={() => setCategory(item)} className={`min-h-10 rounded-full px-4 text-sm font-semibold transition ${category === item ? 'bg-primary text-white shadow-card' : 'bg-porcelain text-cocoa hover:bg-champagne'}`}>{item}</button>)}
         </div>
-        <label className="relative block sm:w-60"><Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-cocoa" aria-hidden /><span className="sr-only">Search frequently asked questions</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search answers" className="min-h-10 w-full rounded-md border border-primary/15 bg-ivory py-2 pl-9 pr-3 text-sm text-espresso outline-none focus:border-primary focus:ring-2 focus:ring-primary/15" /></label>
+        <label className="relative block sm:w-60"><Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-cocoa" aria-hidden /><span className="sr-only">Search frequently asked questions</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search answers" className="min-h-10 w-full rounded-xl border border-primary/15 bg-ivory py-2 pl-9 pr-3 text-sm text-espresso outline-none focus:border-primary focus:ring-4 focus:ring-primary/10" /></label>
       </div>
-      <div id="faq-results" role="tabpanel" aria-labelledby={`faq-tab-${category.toLowerCase()}`} className="mt-5">{results.length ? <Accordion items={results} /> : <p className="border border-primary/15 bg-white p-6 text-sm text-cocoa">No answer matches that search. Contact the studio for clarification.</p>}</div>
+      <div id="faq-results" role="tabpanel" aria-labelledby={`faq-tab-${category.toLowerCase()}`} className="mt-5">{results.length ? <Accordion items={results} /> : <p className="rounded-xl border border-primary/15 bg-white p-6 text-sm text-cocoa">No answer matches that search. Contact the studio for clarification.</p>}</div>
     </div>
   );
 };

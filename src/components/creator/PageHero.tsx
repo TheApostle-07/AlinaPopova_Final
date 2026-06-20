@@ -5,15 +5,16 @@ interface PageHeroProps {
   title: string;
   description: string;
   actions?: ReactNode;
+  compact?: boolean;
 }
 
-export const PageHero = ({ eyebrow, title, description, actions }: PageHeroProps) => (
-  <section className="border-b border-primary/10 bg-porcelain">
-    <div className="mx-auto max-w-[1240px] px-5 py-16 sm:px-8 lg:px-10 lg:py-24">
-      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">{eyebrow}</p>
-      <h1 className="mt-4 max-w-4xl font-display text-4xl leading-tight text-espresso sm:text-5xl">{title}</h1>
+export const PageHero = ({ eyebrow, title, description, actions, compact = false }: PageHeroProps) => (
+  <section className="border-b border-neon/15 bg-white">
+    <div className={`mx-auto flex max-w-[1200px] flex-col items-center justify-center px-5 text-center sm:px-8 lg:px-10 ${compact ? 'py-14 lg:py-16' : 'min-h-[46vh] py-16 lg:min-h-[50vh] lg:py-24'}`}>
+      <p className="inline-flex rounded-full border border-neon/25 bg-porcelain px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary">{eyebrow}</p>
+      <h1 className="mt-5 max-w-[860px] font-display text-4xl font-semibold leading-tight tracking-normal text-espresso sm:text-5xl">{title}</h1>
       <p className="mt-5 max-w-3xl text-base leading-7 text-cocoa sm:text-lg sm:leading-8">{description}</p>
-      {actions && <div className="mt-8 flex flex-wrap gap-3">{actions}</div>}
+      {actions && <div className="mt-8 flex flex-wrap justify-center gap-3">{actions}</div>}
     </div>
   </section>
 );

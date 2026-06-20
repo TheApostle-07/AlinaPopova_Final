@@ -28,14 +28,31 @@ export const SafetyPage = () => (
         ))}
       </div>
     </SectionWrapper>
-    <SectionWrapper className="bg-ink text-ivory">
-      <p className="text-sm font-semibold uppercase tracking-[0.13em] text-gold">Creator rights</p>
-      <h2 className="mt-4 font-display text-4xl">What we will not ask you to do</h2>
-      <ul className="mt-8 grid gap-x-10 gap-y-4 text-sm leading-6 text-champagne md:grid-cols-2">
+    <SectionWrapper className="bg-porcelain/65">
+      <div className="rounded-[40px] border border-primary/15 bg-white p-7 shadow-soft sm:p-10">
+      <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Creator rights</p>
+      <h2 className="mt-4 font-display text-4xl text-espresso">What we will not ask you to do</h2>
+      <ul className="mt-8 grid gap-3 text-sm leading-6 text-cocoa md:grid-cols-2">
         {['Pay to apply, join, train, or remain on the roster', 'Accept a private client request you did not agree to', 'Do unpaid commercial work', 'Use a personal account without separate approval', 'Wear, say, pose for, or appear in something you do not accept', 'Participate in adult, exploitative, unsafe, illegal, or obscene content'].map((item) => (
-          <li key={item} className="flex gap-3"><ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-gold" aria-hidden />{item}</li>
+          <li key={item} className="flex gap-3 rounded-xl border border-primary/10 bg-porcelain/60 p-4"><ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />{item}</li>
         ))}
       </ul>
+      </div>
+    </SectionWrapper>
+    <SectionWrapper>
+      <div className="grid gap-5 lg:grid-cols-2">
+        <Card>
+          <ShieldCheck className="h-7 w-7 text-primary" aria-hidden />
+          <h2 className="mt-6 font-display text-3xl text-espresso">Brand conduct rules</h2>
+          <ul className="mt-5 space-y-3 text-sm leading-6 text-cocoa">{['Respectful campaign communication only', 'No direct pressure or off-platform private requests', 'No adult, obscene, exploitative, or unsafe requests', 'No usage beyond the written rights and consent'].map((item) => <li key={item} className="flex gap-3"><ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul>
+        </Card>
+        <Card>
+          <AlertTriangle className="h-7 w-7 text-primary" aria-hidden />
+          <h2 className="mt-6 font-display text-3xl text-espresso">A documented complaint route</h2>
+          <p className="mt-3 text-sm leading-6 text-cocoa">Safety concerns can be submitted through the contact page. The team records the concern, reviews the relevant campaign, and may pause work while it is assessed.</p>
+          <p className="mt-5 rounded-2xl border border-neon/20 bg-porcelain px-4 py-3 text-sm font-semibold text-primary">Safety-first decisions take priority over campaign momentum.</p>
+        </Card>
+      </div>
     </SectionWrapper>
   </>
 );

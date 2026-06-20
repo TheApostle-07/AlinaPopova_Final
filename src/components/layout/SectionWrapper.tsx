@@ -23,12 +23,12 @@ export const SectionWrapper = ({ id, children, className }: SectionWrapperProps)
       id={id}
       initial={reducedMotion ? false : 'hidden'}
       whileInView={reducedMotion ? undefined : 'visible'}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.45, ease: 'easeOut' }}
+      viewport={{ once: true, amount: 0.08 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
       variants={variants}
-      className={clsx('mx-auto w-full max-w-[1240px] px-5 py-16 sm:px-8 lg:px-10 lg:py-24', className)}
+      className={clsx('w-full py-16 sm:py-20 lg:py-28', className)}
     >
-      {children}
+      <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-10">{children}</div>
     </motion.section>
   );
 };

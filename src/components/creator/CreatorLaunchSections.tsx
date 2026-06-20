@@ -25,29 +25,30 @@ const paths = [
 ];
 
 const promise = [
-  'No joining fee or training debt',
+  'No joining fee, hidden deductions, or training debt',
   'No adult, obscene, illegal, exploitative, or unsafe content',
   'No unpaid commercial work',
   'No forced outfits, scripts, poses, or campaigns',
   'No unsafe private client requests',
   'No false income guarantees',
   'Written scope and payout before paid work',
-  'Creators can accept or decline opportunities'
+  'Creators can accept or decline opportunities',
+  'Content usage only with written consent'
 ];
 
 export const CreatorLaunchSections = () => (
   <>
-    <SectionWrapper className="pt-0 sm:pt-16 lg:pt-24">
+    <SectionWrapper className="!pt-0 bg-porcelain/45 sm:!pt-16 lg:!pt-0">
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="border-primary/25 bg-white">
-          <div className="flex h-11 w-11 items-center justify-center rounded-md bg-blush/30 text-primary"><HeartHandshake className="h-5 w-5" aria-hidden /></div>
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-champagne text-primary"><HeartHandshake className="h-5 w-5" aria-hidden /></div>
           <p className="mt-6 text-sm font-semibold uppercase tracking-[0.13em] text-primary">For creators</p>
           <h2 className="mt-3 font-display text-3xl text-espresso">A career path that begins with trust.</h2>
           <p className="mt-3 text-sm leading-6 text-cocoa">Apply free, train if selected, build camera confidence, and become eligible for brand-safe paid opportunities without giving up your independence.</p>
           <Button href="/creators" className="mt-7" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Explore Creator Program</Button>
         </Card>
         <Card className="border-gold/35 bg-champagne/45">
-          <div className="flex h-11 w-11 items-center justify-center rounded-md bg-white text-primary"><Building2 className="h-5 w-5" aria-hidden /></div>
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-primary shadow-card"><Building2 className="h-5 w-5" aria-hidden /></div>
           <p className="mt-6 text-sm font-semibold uppercase tracking-[0.13em] text-primary">For brands</p>
           <h2 className="mt-3 font-display text-3xl text-espresso">Campaign talent with a clearer process.</h2>
           <p className="mt-3 text-sm leading-6 text-cocoa">Book trained creators for livestreams, product demos, creator campaigns, and live shopping with scope, usage, and safety clarity.</p>
@@ -60,11 +61,11 @@ export const CreatorLaunchSections = () => (
       <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Included for selected creators</p>
-          <h2 className="mt-4 font-display text-4xl leading-tight text-espresso">A structured creator launch, not a vague promise.</h2>
+          <h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Everything you need to become camera-ready and brand-ready.</h2>
           <p className="mt-4 text-base leading-7 text-cocoa">The program is free to apply for and selection-based. We do not use inflated value claims or hide charges behind training language.</p>
-          <p className="mt-6 inline-flex border border-primary/20 bg-porcelain px-4 py-3 text-sm font-semibold text-espresso">Total upfront cost: ₹0</p>
+          <p className="mt-6 inline-flex rounded-full border border-primary/15 bg-porcelain px-4 py-3 text-sm font-semibold text-espresso">Total upfront cost: ₹0</p>
         </div>
-        <div className="grid gap-px overflow-hidden rounded-md border border-primary/15 bg-primary/10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-px overflow-hidden rounded-xl border border-primary/15 bg-primary/10 shadow-card sm:grid-cols-2 lg:grid-cols-3">
           {included.map((item, index) => (
             <div key={item} className="bg-white p-5">
               <span className="font-mono text-xs text-primary">0{index + 1}</span>
@@ -73,6 +74,7 @@ export const CreatorLaunchSections = () => (
           ))}
         </div>
       </div>
+      <p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-6 text-cocoa">Training and opportunities are selection-based. Income is not guaranteed. Paid commercial work is shared with written scope, payout, usage rights, and fee terms before acceptance.</p>
     </SectionWrapper>
 
     <SectionWrapper>
@@ -98,20 +100,20 @@ export const CreatorLaunchSections = () => (
           <h2 className="mt-4 font-display text-4xl text-espresso">You pay nothing upfront.</h2>
           <p className="mt-4 max-w-2xl text-base leading-7 text-cocoa">Alina Popova earns through brand service fees or agreed marketing and management fees from revenue generated through agency-supported opportunities. Paid work is never automatic and never forced.</p>
         </div>
-        <div className="border-l-4 border-gold bg-white px-6 py-6 text-sm leading-7 text-cocoa shadow-sm"><CircleDollarSign className="mb-4 h-7 w-7 text-primary" aria-hidden />When a suitable opportunity is available, you receive the scope, payout, usage rights, and fee structure before you decide.</div>
+        <div className="rounded-xl border border-primary/15 bg-white px-6 py-6 text-sm leading-7 text-cocoa shadow-card"><CircleDollarSign className="mb-4 h-7 w-7 text-primary" aria-hidden />When a suitable opportunity is available, you receive the scope, payout, usage rights, and fee structure before you decide.</div>
       </div>
     </SectionWrapper>
 
-    <SectionWrapper className="bg-ink text-ivory">
-      <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
+    <SectionWrapper className="bg-porcelain/65">
+      <div className="grid gap-10 rounded-[40px] border border-primary/15 bg-white p-7 shadow-soft sm:p-10 lg:grid-cols-[0.75fr_1.25fr]">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.13em] text-gold">Safety promise</p>
-          <h2 className="mt-4 font-display text-4xl leading-tight">Safety, consent, and clarity are non-negotiable.</h2>
-          <p className="mt-4 text-base leading-7 text-champagne/80">You stay independent, informed, and in control. We only support lawful, consent-based, brand-safe creator work.</p>
-          <Button href="/safety" variant="secondary" className="mt-7 border-gold bg-transparent text-gold hover:bg-gold/10 hover:text-gold">View Safety Promise</Button>
+          <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Safety promise</p>
+          <h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Safety, consent, and clarity are non-negotiable.</h2>
+          <p className="mt-4 text-base leading-7 text-cocoa">You stay independent, informed, and in control. We only support lawful, consent-based, brand-safe creator work.</p>
+          <Button href="/safety" variant="secondary" className="mt-7">View Safety Promise</Button>
         </div>
         <ul className="grid gap-3 sm:grid-cols-2">
-          {promise.map((item) => <li key={item} className="flex gap-3 border border-white/15 bg-white/5 p-4 text-sm leading-6 text-champagne"><ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-gold" aria-hidden />{item}</li>)}
+          {promise.map((item) => <li key={item} className="flex gap-3 rounded-xl border border-primary/10 bg-porcelain/60 p-4 text-sm leading-6 text-cocoa"><ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />{item}</li>)}
         </ul>
       </div>
     </SectionWrapper>

@@ -1,10 +1,10 @@
 import { CreatorLaunchHero } from '@/components/creator/CreatorLaunchHero';
-import { CreatorLaunchSections } from '@/components/creator/CreatorLaunchSections';
+import { AgencyHomeSections } from '@/components/creator/AgencyHomeSections';
 
 const HomePage = () => (
   <>
     <CreatorLaunchHero />
-    <CreatorLaunchSections />
+    <AgencyHomeSections />
   </>
 );
 

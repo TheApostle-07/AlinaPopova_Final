@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { BrandPage } from '@/components/creator/BrandPage';
+import { CompanyMarketingPage } from '@/components/creator/MarketingPages';
 
 export const metadata: Metadata = {
   title: 'Book Creators for Brand | Alina Popova Studio',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function BrandsPage() {
-  return <BrandPage />;
+  return <CompanyMarketingPage />;
 }

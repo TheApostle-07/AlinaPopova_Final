@@ -8,9 +8,9 @@ import type { AnchorHTMLAttributes, ReactNode } from 'react';
 import clsx from 'clsx';
 
 const variants = {
-  primary: 'bg-primary text-ivory shadow-sm hover:bg-[#78404c] hover:text-ivory',
-  secondary: 'border border-primary bg-ivory text-primary hover:bg-blush/20 hover:text-primary',
-  ghost: 'bg-transparent text-primary hover:bg-blush/20'
+  primary: 'bg-primary text-white shadow-neon hover:bg-[#B8005D] hover:text-white hover:shadow-[0_18px_42px_rgba(255,45,170,0.32)]',
+  secondary: 'border border-neon/60 bg-white text-primary shadow-[0_8px_20px_rgba(18,17,22,0.04)] hover:bg-porcelain hover:text-primary',
+  ghost: 'bg-transparent text-primary hover:bg-porcelain'
 };
 
 type BaseProps = {
@@ -38,7 +38,7 @@ export const Button = (props: ButtonProps) => {
   );
 
   const classes = clsx(
-    'inline-flex min-h-12 items-center justify-center rounded-md px-5 py-3 text-sm font-semibold transition-[background-color,color,transform] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold disabled:pointer-events-none disabled:opacity-50',
+    'inline-flex min-h-12 items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-[background-color,color,box-shadow,transform] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-50',
     variants[variant],
     className
   );

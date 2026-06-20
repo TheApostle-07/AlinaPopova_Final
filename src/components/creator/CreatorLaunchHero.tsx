@@ -2,33 +2,37 @@ import { ArrowRight, BadgeCheck, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { CreatorLaunchDashboard } from '@/components/creator/CreatorLaunchDashboard';
 
-const assurances = ['₹0 joining fee', 'Free training if selected', 'No unsafe work', 'Written terms before paid work'];
+const assurances = ['UGC, livestreams, and social campaigns', 'Independent creator partners', 'Clear scope, rights, and payouts', 'Brand-safe, India-wide delivery'];
 
 export const CreatorLaunchHero = () => (
-  <section className="border-b border-primary/10 bg-ivory">
-    <div className="mx-auto grid max-w-[1240px] gap-10 px-5 py-4 sm:px-8 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-10 lg:py-12">
-      <div className="max-w-2xl">
-        <p className="inline-flex items-center gap-2 rounded-md border border-primary/20 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-primary">
-          <BadgeCheck className="h-4 w-4" aria-hidden /> Applications open for Creator Launch Intake
+  <>
+  <section className="bg-white">
+    <div className="mx-auto flex max-w-[1200px] flex-col items-center px-5 pb-0 pt-12 text-center sm:px-8 sm:pb-10 sm:pt-16 lg:px-10 lg:pt-20">
+      <div className="mx-auto max-w-[860px]">
+        <p className="inline-flex items-center gap-2 rounded-full border border-neon/25 bg-porcelain px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-primary sm:text-xs">
+          <BadgeCheck className="h-4 w-4" aria-hidden /> Creator-led marketing studio · Gujarat, India
         </p>
-        <h1 className="mt-5 font-display text-[2.55rem] leading-[1.06] text-espresso sm:text-5xl lg:text-6xl">
-          Launch Your Creator Career Safely, Professionally, and Without a Joining Fee
+        <h1 className="mt-5 font-display text-[2.5rem] font-semibold leading-[1.08] tracking-normal text-espresso sm:text-5xl lg:text-6xl">
+          We Market for Companies. <span className="text-primary">We Hire Creators.</span>
         </h1>
-        <p className="mt-5 max-w-xl text-base leading-7 text-cocoa sm:text-lg sm:leading-8">
-          Apply to Alina Popova Studio&apos;s Creator Launch Program and train for Instagram presence, YouTube Live confidence,
-          livestream hosting, product demos, and brand-safe paid opportunities if selected.
+        <p className="mx-auto mt-5 max-w-3xl text-[0.95rem] leading-6 text-cocoa sm:text-lg sm:leading-8">
+          Alina Popova Studio builds creator-led campaigns for companies and partners with independent creators for UGC,
+          livestreams, product demos, YouTube Live, and social media marketing across India.
         </p>
-        <div className="mt-7 flex flex-wrap gap-3">
-          <Button href="/apply" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Apply Free</Button>
-          <Button href="/how-it-works" variant="secondary">See How It Works</Button>
+        <div className="mt-7 flex flex-wrap justify-center gap-3">
+          <Button href="/companies" className="min-w-[170px]" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Market My Company</Button>
+          <Button href="/apply" className="min-w-[154px]" variant="secondary">Apply as Creator</Button>
         </div>
-        <ul className="mt-7 grid grid-cols-2 gap-x-4 gap-y-3 text-xs leading-5 text-cocoa sm:text-sm">
+        <ul className="mx-auto mt-5 grid max-w-3xl grid-cols-2 gap-2 text-left text-xs leading-5 text-cocoa sm:mt-7 sm:grid-cols-4 sm:text-sm">
           {assurances.map((item) => (
-            <li key={item} className="flex items-start gap-2"><ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-sage" aria-hidden />{item}</li>
+            <li key={item} className="flex items-start gap-2 rounded-xl border border-[#ECECF0] bg-white px-3 py-2 shadow-card"><ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-sage" aria-hidden />{item}</li>
           ))}
         </ul>
       </div>
-      <div className="hidden lg:block"><CreatorLaunchDashboard /></div>
     </div>
   </section>
+  <section className="border-b border-neon/15 bg-white pb-12 sm:pb-16">
+    <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-10"><CreatorLaunchDashboard /></div>
+  </section>
+  </>
 );
