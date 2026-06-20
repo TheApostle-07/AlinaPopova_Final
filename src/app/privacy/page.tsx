@@ -1,30 +1,13 @@
 import type { Metadata } from 'next';
-import { SectionWrapper } from '@/components/layout/SectionWrapper';
+import { LegalPage, type LegalSection } from '@/components/creator/LegalPage';
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy – Alina Popova Studio'
-};
+export const metadata: Metadata = { title: 'Privacy | Alina Popova Studio' };
 
-const PrivacyPage = () => (
-  <SectionWrapper className="pt-28">
-    <div className="mx-auto max-w-3xl space-y-6 text-left text-sm text-slate-600">
-      <h1 className="text-3xl font-semibold text-foreground">Privacy Policy</h1>
-      <p>
-        Alina Popova Studio collects the information you choose to share when you submit an application or speak with our team. We use this data to
-        schedule calls, align tiers, and stay in touch about hosting opportunities. We do not sell or rent your personal information and only share it
-        internally with the producers and operations team supporting your sessions.
-      </p>
-      <p>
-        Session notes, schedules, and payouts are stored securely and are retained only as long as they are required for project tracking and payment
-        records. You can request an export or deletion of your information by submitting a fresh application entry with the subject “Privacy Request”.
-        Our team will respond within 3–5 working days.
-      </p>
-      <p>
-        This policy may be updated as our internal processes evolve. When we make a significant change, we will highlight it in the application form
-        and other communication channels. By continuing to work with Alina Popova Studio you agree to this policy and the way we handle personal data.
-      </p>
-    </div>
-  </SectionWrapper>
-);
+const sections: LegalSection[] = [
+  { title: 'Information we collect', paragraphs: ['We collect information you submit through an application or direct contact, including contact details, city, social links, availability, interests, boundaries, consent records, and notes needed to review an application.'] },
+  { title: 'How we use it', paragraphs: ['We use application data to review suitability, contact shortlisted applicants, maintain the creator roster, document consent, and administer accepted commercial work. We do not sell personal information.'] },
+  { title: 'Sharing and retention', paragraphs: ['Access is limited to authorized operations staff and, where necessary, approved parties supporting a specific accepted campaign. We retain records only for legitimate application, operational, legal, and accounting purposes.'] },
+  { title: 'Your choices', paragraphs: ['You may ask about, correct, or request deletion of your information by emailing support@alinapopova.com. Some records may need to be retained where required by law or an active agreement.'] }
+];
 
-export default PrivacyPage;
+export default function PrivacyPage() { return <LegalPage eyebrow="Privacy" title="Your application data is handled for a clear operational purpose." description="This summary explains how creator and contact information is collected and used by the studio." sections={sections} />; }

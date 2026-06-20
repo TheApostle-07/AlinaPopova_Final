@@ -1,22 +1,24 @@
 import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
+import { Fraunces, Manrope } from 'next/font/google';
 import '@/styles/globals.css';
 import clsx from 'clsx';
 import { siteConfig } from '@/lib/config';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
-import { Analytics } from "@vercel/analytics/next"
-const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-poppins' });
+import { Analytics } from '@vercel/analytics/next';
+
+const fraunces = Fraunces({ subsets: ['latin'], variable: '--font-fraunces' });
+const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: 'Hiring Female Live Stream Hosts Across India | Alina Popova Studio',
+  title: 'Creator Launch Program | Alina Popova Studio',
   description:
-    'We hire calm, confident female livestream hosts across India through a Gujarat-based studio with guided formats, respectful culture, and transparent earnings.',
+    'Apply free to Alina Popova Studio’s Creator Launch Program for brand-safe creator, livestream, product demo, Instagram, and YouTube Live opportunities.',
   openGraph: {
-    title: 'Hiring Female Live Stream Hosts Across India | Alina Popova Studio',
+    title: 'Creator Launch Program | Alina Popova Studio',
     description:
-      'Explore a calm, Gujarat-based professional studio for female livestream hosts across India with transparent earnings and guided frameworks.',
+      'Apply free. Train free if selected. Become eligible for paid brand-safe creator opportunities.',
     url: siteConfig.siteUrl,
     siteName: siteConfig.siteName,
     images: [
@@ -37,8 +39,8 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={clsx('bg-background text-foreground antialiased', poppins.variable)}>
+    <html lang="en" className={clsx('scroll-smooth', fraunces.variable, manrope.variable)}>
+      <body className="bg-background text-foreground antialiased">
         <div className="flex min-h-screen flex-col">
           <SiteHeader />
           <main className="flex-1">{children}</main>

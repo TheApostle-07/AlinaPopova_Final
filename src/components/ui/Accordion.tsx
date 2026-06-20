@@ -22,11 +22,13 @@ export const Accordion = ({ items }: AccordionProps) => {
       {items.map((item) => {
         const isOpen = activeId === item.id;
         return (
-          <div key={item.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+          <div key={item.id} className="overflow-hidden rounded-md border border-primary/15 bg-white">
             <button
               type="button"
               onClick={() => setActiveId(isOpen ? null : item.id)}
-              className="flex w-full items-center justify-between px-6 py-4 text-left text-base font-semibold text-foreground"
+              aria-expanded={isOpen}
+              aria-controls={`${item.id}-content`}
+              className="flex min-h-14 w-full items-center justify-between px-5 py-4 text-left text-base font-semibold text-foreground sm:px-6"
             >
               <span>{item.question}</span>
               <ChevronDown
@@ -43,7 +45,7 @@ export const Accordion = ({ items }: AccordionProps) => {
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.35, ease: 'easeInOut' }}
                 >
-                  <div className="px-6 pb-6 text-sm text-slate-600">{item.answer}</div>
+                  <div id={`${item.id}-content`} role="region" className="px-5 pb-6 text-sm leading-6 text-cocoa sm:px-6">{item.answer}</div>
                 </motion.div>
               )}
             </AnimatePresence>

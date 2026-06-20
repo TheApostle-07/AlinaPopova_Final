@@ -1,30 +1,13 @@
 import type { Metadata } from 'next';
-import { SectionWrapper } from '@/components/layout/SectionWrapper';
+import { LegalPage, type LegalSection } from '@/components/creator/LegalPage';
 
-export const metadata: Metadata = {
-  title: 'Terms & Guidelines – Alina Popova Studio'
-};
+export const metadata: Metadata = { title: 'Terms | Alina Popova Studio' };
 
-const TermsPage = () => (
-  <SectionWrapper className="pt-28">
-    <div className="mx-auto max-w-3xl space-y-6 text-left text-sm text-slate-600">
-      <h1 className="text-3xl font-semibold text-foreground">Terms & Guidelines</h1>
-      <p>
-        Engagements with Alina Popova Studio begin only after you complete the application, attend an introductory call, and sign the onboarding
-        document outlining studio conduct, confidentiality, and payout cadence. All scheduling commitments must be honored unless an emergency is
-        reported at least 12 hours in advance.
-      </p>
-      <p>
-        Hosts agree not to disclose internal processes, scripts, or pricing shared during onboarding. Content captured inside the studio remains the
-        property of Alina Popova Studio and its partner brands. We reserve the right to pause or discontinue an engagement if the guidelines are not
-        met or if client feedback requires a change.
-      </p>
-      <p>
-        These terms may be updated without prior notice; when we make material changes, we will highlight them during ongoing sessions and inside the
-        application form. Continuing to work with Alina Popova Studio indicates your acceptance of these terms and guidelines.
-      </p>
-    </div>
-  </SectionWrapper>
-);
+const sections: LegalSection[] = [
+  { title: 'Program scope', paragraphs: ['The Creator Launch Program is an application, review, training, tiering, and opportunity-shortlisting program. Applying, training, or joining a roster does not guarantee selection, paid work, earnings, or a fixed number of campaigns.'] },
+  { title: 'Creator independence', paragraphs: ['Creators remain independent adults. Any commercial work is voluntary and subject to a separate written scope, payout, usage-rights, safety, and fee agreement before it begins.'] },
+  { title: 'Conduct and safety', paragraphs: ['We do not support adult, obscene, illegal, exploitative, unsafe, or coercive content. We may pause or decline an application, campaign, or partnership that conflicts with this standard or applicable law.'] },
+  { title: 'Updates', paragraphs: ['This public summary can change as the program evolves. Material campaign-specific terms are documented separately for the applicable creator or brand.'] }
+];
 
-export default TermsPage;
+export default function TermsPage() { return <LegalPage eyebrow="Terms" title="Program terms, without hidden obligations." description="These terms describe the public Creator Launch Program and brand-safe service model. They are not a substitute for a campaign-specific written agreement." sections={sections} />; }

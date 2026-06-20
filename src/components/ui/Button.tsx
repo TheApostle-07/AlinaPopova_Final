@@ -8,9 +8,9 @@ import type { AnchorHTMLAttributes, ReactNode } from 'react';
 import clsx from 'clsx';
 
 const variants = {
-  primary: 'bg-primary text-white shadow shadow-primary/20 hover:bg-primary/90 hover:text-white',
-  secondary: 'bg-slate-100 text-foreground hover:bg-slate-200',
-  ghost: 'bg-transparent text-foreground hover:bg-slate-100'
+  primary: 'bg-primary text-ivory shadow-sm hover:bg-[#78404c] hover:text-ivory',
+  secondary: 'border border-primary bg-ivory text-primary hover:bg-blush/20 hover:text-primary',
+  ghost: 'bg-transparent text-primary hover:bg-blush/20'
 };
 
 type BaseProps = {
@@ -38,7 +38,7 @@ export const Button = (props: ButtonProps) => {
   );
 
   const classes = clsx(
-    'inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-50',
+    'inline-flex min-h-12 items-center justify-center rounded-md px-5 py-3 text-sm font-semibold transition-[background-color,color,transform] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold disabled:pointer-events-none disabled:opacity-50',
     variants[variant],
     className
   );

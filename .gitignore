@@ -6,6 +6,8 @@ node_modules
 out
 dist
 .playwright-mcp
+creator-launch-*.png
+premium-*.png
 tsconfig.tsbuildinfo
 
 .DS_Store

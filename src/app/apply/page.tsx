@@ -1,19 +1,11 @@
 import type { Metadata } from 'next';
-import { SectionWrapper } from '@/components/layout/SectionWrapper';
-import { Card } from '@/components/ui/Card';
-import { CareersApplicationSection } from '@/components/sections/CareersApplicationSection';
+import { CreatorApplicationForm } from '@/components/creator/CreatorApplicationForm';
 
 export const metadata: Metadata = {
-  title: 'Application Form – Alina Popova Studio',
-  description: 'Apply to become a female livestream host with Alina Popova Studio from anywhere in India.'
+  title: 'Apply Free | Alina Popova Studio',
+  description: 'Apply to the Alina Popova Creator Launch Intake in seven clear, safety-aware steps.'
 };
 
-const ApplyPage = () => (
-  <SectionWrapper className="pt-28">
-    <Card className="mx-auto max-w-4xl border-none bg-transparent shadow-none">
-      <CareersApplicationSection />
-    </Card>
-  </SectionWrapper>
-);
-
-export default ApplyPage;
+export default function ApplyPage() {
+  return <section className="mx-auto max-w-[1240px] px-5 py-12 sm:px-8 lg:px-10 lg:py-20"><CreatorApplicationForm /></section>;
+}

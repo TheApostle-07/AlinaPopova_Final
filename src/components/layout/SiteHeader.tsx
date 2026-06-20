@@ -16,11 +16,12 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { label: 'Home', href: { pathname: '/' } },
-  { label: 'Careers', href: { pathname: '/careers' } },
+  { label: 'Creators', href: { pathname: '/creators' } },
+  { label: 'How It Works', href: { pathname: '/how-it-works' } },
+  { label: 'For Brands', href: { pathname: '/brands' } },
+  { label: 'Safety', href: { pathname: '/safety' } },
   { label: 'Pricing', href: { pathname: '/pricing' } },
-  { label: 'Why Host', href: { pathname: '/careers', hash: 'why-host' } },
-  { label: 'Tiers', href: { pathname: '/careers', hash: 'tiers' } },
-  { label: 'FAQs', href: { pathname: '/careers', hash: 'faqs' } }
+  { label: 'FAQs', href: { pathname: '/faqs' } }
 ];
 
 export const SiteHeader = () => {
@@ -47,12 +48,12 @@ export const SiteHeader = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
       className={clsx(
-        'sticky top-0 z-[60] border-b border-slate-100/70 backdrop-blur-xl transition-shadow',
-        menuOpen ? 'bg-white/95' : 'bg-white/80',
+        'sticky top-0 z-[60] border-b border-primary/10 backdrop-blur-xl transition-shadow',
+        menuOpen ? 'bg-ivory/95' : 'bg-ivory/85',
         scrolled ? 'shadow-header' : 'shadow-none'
       )}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-[1240px] items-center justify-between px-5 py-4 sm:px-8 lg:px-10">
         <Link href="/" className="flex items-center gap-3 text-sm font-semibold tracking-tight text-primary">
           <Image
             src="/AP_Logo_2.png"
@@ -65,11 +66,11 @@ export const SiteHeader = () => {
             sizes="140px"
           />
           <div className="leading-tight text-foreground">
-            <span className="block text-base font-semibold uppercase tracking-[0.2em]">Alina Popova Studio</span>
-            <span className="text-xs text-slate-500 leading-tight">Live Streaming Agency</span>
+            <span className="block text-base font-semibold uppercase tracking-[0.13em]">Alina Popova Studio</span>
+            <span className="text-xs text-cocoa leading-tight">Creator Launch Program</span>
           </div>
         </Link>
-        <nav className="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
+        <nav className="hidden items-center gap-7 text-sm font-semibold text-cocoa xl:flex">
           {navLinks.map((link) => (
             <Link
               key={`${link.href.pathname}-${link.href.hash ?? 'root'}`}
@@ -83,7 +84,7 @@ export const SiteHeader = () => {
         </nav>
         <div className="flex items-center gap-3">
           <Button href="/apply" className="hidden md:inline-flex" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
-            Apply
+            Apply Free
           </Button>
           <Button
             href="/apply"
@@ -91,14 +92,14 @@ export const SiteHeader = () => {
             variant="secondary"
             iconRight={<ArrowRight className="h-3.5 w-3.5" aria-hidden />}
           >
-            Apply
+            Apply Free
           </Button>
           <button
             type="button"
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-primary md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-primary/15 bg-white text-cocoa shadow-sm transition hover:border-primary hover:text-primary md:hidden"
           >
             {menuOpen ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
           </button>
@@ -107,7 +108,7 @@ export const SiteHeader = () => {
       {menuOpen && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-white/40 backdrop-blur-2xl md:hidden"
+            className="fixed inset-0 z-40 bg-espresso/20 backdrop-blur-sm md:hidden"
             onClick={() => setMenuOpen(false)}
             aria-hidden
           />
@@ -118,40 +119,40 @@ export const SiteHeader = () => {
             transition={{ duration: 0.2 }}
             className="md:hidden"
           >
-            <div className="fixed inset-x-4 top-20 z-50 rounded-3xl border border-slate-100 bg-white/95 p-6 shadow-2xl">
+            <div className="fixed inset-x-4 top-20 z-50 rounded-lg border border-primary/15 bg-ivory p-6 shadow-soft">
               <div className="mb-4 flex items-center justify-between">
-                <p className="text-sm font-semibold uppercase tracking-[0.4em] text-slate-400">Menu</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-cocoa">Menu</p>
                 <button
                   type="button"
                   aria-label="Close navigation menu"
                   onClick={() => setMenuOpen(false)}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:border-slate-300 hover:text-primary"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-primary/15 text-cocoa transition hover:border-primary hover:text-primary"
                 >
                   <X className="h-5 w-5" aria-hidden />
                 </button>
               </div>
-              <nav className="flex flex-col gap-3 text-base font-semibold text-slate-700">
+              <nav className="flex flex-col gap-2 text-base font-semibold text-espresso">
                 {navLinks.map((link) => (
                   <Link
                     key={`mobile-${link.href.pathname}-${link.href.hash ?? 'root'}`}
                     href={link.href}
                     scroll
                     onClick={() => setMenuOpen(false)}
-                    className="rounded-2xl px-3 py-2 transition hover:bg-slate-50 hover:text-primary"
+                    className="rounded-md px-3 py-3 transition hover:bg-blush/20 hover:text-primary"
                   >
                     {link.label}
                   </Link>
                 ))}
               </nav>
               <div className="mt-6 grid gap-3">
-                <Button href="/careers" variant="ghost" className="w-full">
-                  Explore Careers
+                <Button href="/brands" variant="ghost" className="w-full">
+                  Book Creators for Brand
                 </Button>
                 <Button href="/apply" className="w-full" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
-                  Apply Now
+                  Apply Free
                 </Button>
               </div>
-              <p className="mt-6 text-center text-xs uppercase tracking-[0.3em] text-slate-400">Boutique Livestream Studios</p>
+              <p className="mt-6 text-center text-xs uppercase tracking-[0.13em] text-cocoa">Gujarat Based · India Wide</p>
             </div>
           </motion.div>
         </>

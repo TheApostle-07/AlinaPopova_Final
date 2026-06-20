@@ -1,18 +1,10 @@
-import { HomeHeroSection } from '@/components/sections/HomeHeroSection';
-import { HomeAboutSection } from '@/components/sections/HomeAboutSection';
-import { HomePartnersSection } from '@/components/sections/HomePartnersSection';
-import { HomeArchitectureSection } from '@/components/sections/HomeArchitectureSection';
-import { HomeTestimonialsSection } from '@/components/sections/HomeTestimonialsSection';
-import { HomeCTASection } from '@/components/sections/HomeCTASection';
+import { CreatorLaunchHero } from '@/components/creator/CreatorLaunchHero';
+import { CreatorLaunchSections } from '@/components/creator/CreatorLaunchSections';
 
 const HomePage = () => (
   <>
-    <HomeHeroSection />
-    <HomeAboutSection />
-    <HomePartnersSection />
-    <HomeArchitectureSection />
-    <HomeTestimonialsSection />
-    <HomeCTASection />
+    <CreatorLaunchHero />
+    <CreatorLaunchSections />
   </>
 );
 
