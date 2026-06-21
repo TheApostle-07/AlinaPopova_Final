@@ -1,7 +1,7 @@
 import { lookup } from 'node:dns/promises';
 import postgres, { type Sql } from 'postgres';
 
-export type ApplicationStatus = 'new' | 'shortlisted' | 'call_scheduled' | 'selected' | 'training' | 'roster_ready' | 'rejected';
+export type ApplicationStatus = 'new' | 'review' | 'shortlisted' | 'call_needed' | 'call_scheduled' | 'selected' | 'training' | 'roster_ready' | 'matched' | 'active' | 'paused' | 'not_selected' | 'rejected' | 'rejected_safety';
 
 export interface ApplicationRecord {
   id: string;
@@ -9,11 +9,18 @@ export interface ApplicationRecord {
   email: string;
   whatsapp: string;
   city: string;
+  area: string;
   languages: string;
   instagramUrl: string | null;
   youtubeUrl: string | null;
   cameraComfort: string;
   categories: string[];
+  roleTags: string[];
+  formatTags: string[];
+  categoryTags: string[];
+  availabilityTags: string[];
+  experienceLevel: string;
+  expectedPayout: string;
   availability: string;
   boundaries: string;
   status: ApplicationStatus;
@@ -48,6 +55,49 @@ export interface ContactInquiryRecord {
 
 export type CampaignStatus = 'new_brief' | 'discovery' | 'scoped' | 'active' | 'complete' | 'declined';
 
+export type CompanyBriefStatus = 'new_brief' | 'qualified' | 'needs_call' | 'proposal_needed' | 'proposal_sent' | 'negotiation' | 'confirmed' | 'in_production' | 'delivered' | 'completed' | 'lost' | 'rejected_unsafe';
+
+export interface CompanyBriefRecord {
+  id: string;
+  companyName: string;
+  contactName: string;
+  email: string;
+  phone: string;
+  websiteUrl: string;
+  businessCategory: string;
+  goals: string[];
+  platforms: string[];
+  monetizationTargets: string[];
+  services: string[];
+  talentNeeds: string[];
+  budgetRange: string;
+  timeline: string;
+  usageRights: string;
+  description: string;
+  recommendedPackage: string;
+  status: CompanyBriefStatus;
+  adminNotes: string | null;
+  submittedAt: string;
+  duplicateCount: number;
+}
+
+export type MatchAcceptanceStatus = 'not_contacted' | 'pending' | 'accepted' | 'declined';
+export type MatchPayoutStatus = 'pending' | 'agreed' | 'paid';
+export type MatchUsageStatus = 'pending' | 'agreed';
+export type MatchDeliveryStatus = 'not_started' | 'in_progress' | 'delivered';
+
+export interface CompanyBriefMatchRecord {
+  id: string;
+  briefId: string;
+  creatorId: string;
+  acceptanceStatus: MatchAcceptanceStatus;
+  payoutStatus: MatchPayoutStatus;
+  usageStatus: MatchUsageStatus;
+  deliveryStatus: MatchDeliveryStatus;
+  notes: string | null;
+  createdAt: string;
+}
+
 export interface CompanyCampaignRecord {
   companyId: string;
   companyName: string;
@@ -69,6 +119,8 @@ let schemaPromise: Promise<void> | null = null;
 let contactSchemaPromise: Promise<void> | null = null;
 let operationsSchemaPromise: Promise<void> | null = null;
 let legalConsentSchemaPromise: Promise<void> | null = null;
+let companyBriefSchemaPromise: Promise<void> | null = null;
+let companyBriefMatchSchemaPromise: Promise<void> | null = null;
 
 const createSqlClient = async () => {
   const connectionString = process.env.DATABASE_URL;
@@ -122,10 +174,17 @@ export const ensureApplicationsSchema = async () => {
     await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS email TEXT`;
     await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS whatsapp TEXT`;
     await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS city TEXT`;
+    await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS area TEXT`;
     await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS instagram_url TEXT`;
     await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS youtube_url TEXT`;
     await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS camera_comfort TEXT`;
     await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS categories JSONB NOT NULL DEFAULT '[]'::jsonb`;
+    await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS role_tags JSONB NOT NULL DEFAULT '[]'::jsonb`;
+    await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS format_tags JSONB NOT NULL DEFAULT '[]'::jsonb`;
+    await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS category_tags JSONB NOT NULL DEFAULT '[]'::jsonb`;
+    await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS availability_tags JSONB NOT NULL DEFAULT '[]'::jsonb`;
+    await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS experience_level TEXT`;
+    await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS expected_payout TEXT`;
     await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS boundaries TEXT`;
     await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS consents JSONB NOT NULL DEFAULT '{}'::jsonb`;
     await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'new'`;
@@ -136,6 +195,8 @@ export const ensureApplicationsSchema = async () => {
     await sql`ALTER TABLE creator_applications ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`;
     await sql`CREATE INDEX IF NOT EXISTS creator_applications_status_idx ON creator_applications (status, submitted_at DESC)`;
     await sql`CREATE INDEX IF NOT EXISTS creator_applications_duplicate_key_idx ON creator_applications (duplicate_key)`;
+    await sql`CREATE INDEX IF NOT EXISTS creator_applications_role_tags_idx ON creator_applications USING GIN (role_tags)`;
+    await sql`CREATE INDEX IF NOT EXISTS creator_applications_format_tags_idx ON creator_applications USING GIN (format_tags)`;
   })();
 
   return schemaPromise;
@@ -299,6 +360,69 @@ export const ensureOperationsSchema = async () => {
   return operationsSchemaPromise;
 };
 
+export const ensureCompanyBriefsSchema = async () => {
+  companyBriefSchemaPromise ??= (async () => {
+    const sql = await getSqlClient();
+    await sql`
+      CREATE TABLE IF NOT EXISTS company_briefs (
+        id BIGSERIAL PRIMARY KEY,
+        company_name TEXT NOT NULL,
+        contact_name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT NOT NULL,
+        website_url TEXT,
+        business_category TEXT NOT NULL,
+        goals JSONB NOT NULL DEFAULT '[]'::jsonb,
+        platforms JSONB NOT NULL DEFAULT '[]'::jsonb,
+        monetization_targets JSONB NOT NULL DEFAULT '[]'::jsonb,
+        services JSONB NOT NULL DEFAULT '[]'::jsonb,
+        talent_needs JSONB NOT NULL DEFAULT '[]'::jsonb,
+        budget_range TEXT NOT NULL,
+        timeline TEXT NOT NULL,
+        usage_rights TEXT NOT NULL,
+        description TEXT NOT NULL,
+        recommended_package TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'new_brief',
+        admin_notes TEXT,
+        payload JSONB NOT NULL,
+        duplicate_key TEXT,
+        submitted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS company_briefs_status_submitted_idx ON company_briefs (status, submitted_at DESC)`;
+    await sql`CREATE INDEX IF NOT EXISTS company_briefs_duplicate_key_idx ON company_briefs (duplicate_key)`;
+    await sql`CREATE INDEX IF NOT EXISTS company_briefs_goals_idx ON company_briefs USING GIN (goals)`;
+    await sql`CREATE INDEX IF NOT EXISTS company_briefs_talent_needs_idx ON company_briefs USING GIN (talent_needs)`;
+  })();
+  return companyBriefSchemaPromise;
+};
+
+export const ensureCompanyBriefMatchesSchema = async () => {
+  companyBriefMatchSchemaPromise ??= (async () => {
+    await Promise.all([ensureCompanyBriefsSchema(), ensureApplicationsSchema()]);
+    const sql = await getSqlClient();
+    await sql`
+      CREATE TABLE IF NOT EXISTS company_brief_matches (
+        id BIGSERIAL PRIMARY KEY,
+        brief_id BIGINT NOT NULL REFERENCES company_briefs(id) ON DELETE CASCADE,
+        creator_id BIGINT NOT NULL REFERENCES creator_applications(id) ON DELETE CASCADE,
+        acceptance_status TEXT NOT NULL DEFAULT 'not_contacted',
+        payout_status TEXT NOT NULL DEFAULT 'pending',
+        usage_status TEXT NOT NULL DEFAULT 'pending',
+        delivery_status TEXT NOT NULL DEFAULT 'not_started',
+        notes TEXT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (brief_id, creator_id)
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS company_brief_matches_brief_idx ON company_brief_matches (brief_id, created_at DESC)`;
+  })();
+  return companyBriefMatchSchemaPromise;
+};
+
 export const recordCompanyMarketingBrief = async ({
   fullName,
   email,
@@ -389,11 +513,18 @@ export const getApplications = async (): Promise<ApplicationRecord[]> => {
       COALESCE(a.email, '') AS email,
       COALESCE(a.whatsapp, '') AS whatsapp,
       COALESCE(a.city, a.location) AS city,
+      COALESCE(a.area, '') AS area,
       a.languages,
       a.instagram_url AS "instagramUrl",
       a.youtube_url AS "youtubeUrl",
       COALESCE(a.camera_comfort, '') AS "cameraComfort",
       COALESCE(a.categories, '[]'::jsonb) AS categories,
+      COALESCE(a.role_tags, '[]'::jsonb) AS "roleTags",
+      COALESCE(a.format_tags, '[]'::jsonb) AS "formatTags",
+      COALESCE(a.category_tags, '[]'::jsonb) AS "categoryTags",
+      COALESCE(a.availability_tags, '[]'::jsonb) AS "availabilityTags",
+      COALESCE(a.experience_level, '') AS "experienceLevel",
+      COALESCE(a.expected_payout, '') AS "expectedPayout",
       a.availability,
       COALESCE(a.boundaries, '') AS boundaries,
       a.status,
@@ -410,6 +541,148 @@ export const getApplications = async (): Promise<ApplicationRecord[]> => {
     ORDER BY a.is_top_10 DESC, a.submitted_at DESC
   `;
   return rows as unknown as ApplicationRecord[];
+};
+
+export const createCompanyBrief = async ({
+  companyName,
+  contactName,
+  email,
+  phone,
+  websiteUrl,
+  businessCategory,
+  goals,
+  platforms,
+  monetizationTargets,
+  services,
+  talentNeeds,
+  budgetRange,
+  timeline,
+  usageRights,
+  description,
+  recommendedPackage,
+  payload,
+  duplicateKey
+}: Omit<CompanyBriefRecord, 'id' | 'status' | 'adminNotes' | 'submittedAt' | 'duplicateCount'> & { payload: Record<string, unknown>; duplicateKey: string }) => {
+  await ensureCompanyBriefsSchema();
+  const sql = await getSqlClient();
+  const rows = await sql`
+    INSERT INTO company_briefs (
+      company_name, contact_name, email, phone, website_url, business_category, goals, platforms, monetization_targets,
+      services, talent_needs, budget_range, timeline, usage_rights, description, recommended_package, payload, duplicate_key
+    ) VALUES (
+      ${companyName}, ${contactName}, ${email}, ${phone}, ${websiteUrl || null}, ${businessCategory}, ${JSON.stringify(goals)}::jsonb,
+      ${JSON.stringify(platforms)}::jsonb, ${JSON.stringify(monetizationTargets)}::jsonb, ${JSON.stringify(services)}::jsonb,
+      ${JSON.stringify(talentNeeds)}::jsonb, ${budgetRange}, ${timeline}, ${usageRights}, ${description}, ${recommendedPackage},
+      ${JSON.stringify(payload)}::jsonb, ${duplicateKey}
+    )
+    RETURNING id::text AS id
+  `;
+  return rows[0]?.id as string | undefined;
+};
+
+export const getCompanyBriefs = async (): Promise<CompanyBriefRecord[]> => {
+  await ensureCompanyBriefsSchema();
+  const sql = await getSqlClient();
+  const rows = await sql`
+    SELECT
+      brief.id::text AS id,
+      brief.company_name AS "companyName",
+      brief.contact_name AS "contactName",
+      brief.email,
+      brief.phone,
+      COALESCE(brief.website_url, '') AS "websiteUrl",
+      brief.business_category AS "businessCategory",
+      brief.goals,
+      brief.platforms,
+      brief.monetization_targets AS "monetizationTargets",
+      brief.services,
+      brief.talent_needs AS "talentNeeds",
+      brief.budget_range AS "budgetRange",
+      brief.timeline,
+      brief.usage_rights AS "usageRights",
+      brief.description,
+      brief.recommended_package AS "recommendedPackage",
+      brief.status,
+      brief.admin_notes AS "adminNotes",
+      brief.submitted_at AS "submittedAt",
+      COALESCE((
+        SELECT COUNT(*)::int
+        FROM company_briefs duplicates
+        WHERE duplicates.duplicate_key IS NOT NULL AND duplicates.duplicate_key = brief.duplicate_key
+      ), 0) AS "duplicateCount"
+    FROM company_briefs brief
+    ORDER BY brief.submitted_at DESC
+  `;
+  return rows as unknown as CompanyBriefRecord[];
+};
+
+export const updateCompanyBrief = async ({ id, status, adminNotes }: { id: string; status: CompanyBriefStatus; adminNotes: string | null }) => {
+  await ensureCompanyBriefsSchema();
+  const sql = await getSqlClient();
+  const rows = await sql`
+    UPDATE company_briefs
+    SET status = ${status}, admin_notes = ${adminNotes}, updated_at = NOW()
+    WHERE id = ${id}::bigint
+    RETURNING id::text AS id
+  `;
+  return rows.length > 0;
+};
+
+export const getCompanyBriefMatches = async (): Promise<CompanyBriefMatchRecord[]> => {
+  await ensureCompanyBriefMatchesSchema();
+  const sql = await getSqlClient();
+  const rows = await sql`
+    SELECT
+      id::text AS id,
+      brief_id::text AS "briefId",
+      creator_id::text AS "creatorId",
+      acceptance_status AS "acceptanceStatus",
+      payout_status AS "payoutStatus",
+      usage_status AS "usageStatus",
+      delivery_status AS "deliveryStatus",
+      notes,
+      created_at AS "createdAt"
+    FROM company_brief_matches
+    ORDER BY created_at DESC
+  `;
+  return rows as unknown as CompanyBriefMatchRecord[];
+};
+
+export const createCompanyBriefMatch = async ({ briefId, creatorId }: { briefId: string; creatorId: string }) => {
+  await ensureCompanyBriefMatchesSchema();
+  const sql = await getSqlClient();
+  const rows = await sql`
+    INSERT INTO company_brief_matches (brief_id, creator_id)
+    VALUES (${briefId}::bigint, ${creatorId}::bigint)
+    ON CONFLICT (brief_id, creator_id) DO UPDATE SET updated_at = NOW()
+    RETURNING id::text AS id
+  `;
+  return rows[0]?.id as string | undefined;
+};
+
+export const updateCompanyBriefMatch = async ({
+  id,
+  acceptanceStatus,
+  payoutStatus,
+  usageStatus,
+  deliveryStatus,
+  notes
+}: Omit<CompanyBriefMatchRecord, 'briefId' | 'creatorId' | 'createdAt'>) => {
+  await ensureCompanyBriefMatchesSchema();
+  const sql = await getSqlClient();
+  const rows = await sql`
+    UPDATE company_brief_matches
+    SET
+      acceptance_status = ${acceptanceStatus},
+      payout_status = ${payoutStatus},
+      usage_status = ${usageStatus},
+      delivery_status = ${deliveryStatus},
+      notes = ${notes},
+      updated_at = NOW()
+    WHERE id = ${id}::bigint
+    RETURNING id::text AS id
+  `;
+  return rows.length > 0;
 };
 
 export const updateApplication = async ({

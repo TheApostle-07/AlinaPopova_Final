@@ -19,7 +19,7 @@ export const CreatorLaunchHero = () => (
           We help companies plan and execute UGC, social content, livestreams, product demos, and creator-led campaigns, supported by a trusted network of trained creators.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <Button href="/companies" className="min-w-[170px]" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Market My Company</Button>
+          <Button href="/companies/start" className="min-w-[170px]" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Market My Company</Button>
           <Button href="/apply" className="min-w-[154px]" variant="secondary">Apply as Creator</Button>
         </div>
         <p className="mt-6 text-sm font-medium text-cocoa">{services.join('  •  ')}</p>

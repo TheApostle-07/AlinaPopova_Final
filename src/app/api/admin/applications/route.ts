@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { isValidAdminSession, ADMIN_COOKIE } from '@/lib/admin-auth';
 import { getApplications, type ApplicationStatus, updateApplication } from '@/lib/database';
 
-const statuses = new Set<ApplicationStatus>(['new', 'shortlisted', 'call_scheduled', 'selected', 'training', 'roster_ready', 'rejected']);
+const statuses = new Set<ApplicationStatus>(['new', 'review', 'shortlisted', 'call_needed', 'call_scheduled', 'selected', 'training', 'roster_ready', 'matched', 'active', 'paused', 'not_selected', 'rejected', 'rejected_safety']);
 
 const authorized = (request: Request) => {
   const cookieHeader = request.headers.get('cookie') ?? '';
@@ -16,8 +16,8 @@ export async function GET(request: Request) {
   if (!authorized(request)) return NextResponse.json({ ok: false, error: 'Unauthorized.' }, { status: 401 });
   const applications = await getApplications();
   if (new URL(request.url).searchParams.get('format') === 'csv') {
-    const header = ['id', 'name', 'email', 'whatsapp', 'city', 'languages', 'categories', 'status', 'top_10', 'tier', 'submitted_at'];
-    const rows = applications.map((item) => [item.id, item.fullName, item.email, item.whatsapp, item.city, item.languages, item.categories.join('; '), item.status, item.isTop10, item.creatorTier, item.submittedAt].map(csvEscape).join(','));
+    const header = ['id', 'name', 'email', 'whatsapp', 'city', 'roles', 'formats', 'categories', 'status', 'top_10', 'tier', 'submitted_at'];
+    const rows = applications.map((item) => [item.id, item.fullName, item.email, item.whatsapp, item.city, item.roleTags.join('; '), item.formatTags.join('; '), item.categoryTags.join('; '), item.status, item.isTop10, item.creatorTier, item.submittedAt].map(csvEscape).join(','));
     return new NextResponse([header.join(','), ...rows].join('\n'), { headers: { 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': 'attachment; filename="creator-applications.csv"' } });
   }
   return NextResponse.json({ ok: true, applications });

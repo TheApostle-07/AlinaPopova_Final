@@ -66,7 +66,7 @@ export const SiteHeader = () => {
           <Button href="/apply" className={`hidden xl:inline-flex ${headerButtonClass}`} variant="secondary">
             Apply as Creator
           </Button>
-          <Button href="/companies" className={`hidden xl:inline-flex ${headerButtonClass}`}>
+          <Button href="/companies/start" className={`hidden xl:inline-flex ${headerButtonClass}`}>
             Market My Company
           </Button>
           <button
@@ -117,7 +117,7 @@ export const SiteHeader = () => {
                 ))}
               </nav>
               <div className="mt-5 grid gap-3 border-t border-[#ECE8EC] pt-5">
-                <Button href="/companies" className="w-full" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
+                <Button href="/companies/start" className="w-full" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
                   Market My Company
                 </Button>
                 <Button href="/apply" className="w-full" variant="secondary">
