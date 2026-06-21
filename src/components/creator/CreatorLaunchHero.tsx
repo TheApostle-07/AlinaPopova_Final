@@ -14,9 +14,12 @@ export const CreatorLaunchHero = () => (
         <p className="inline-flex items-center gap-2 rounded-full border border-neon/25 bg-porcelain px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-primary sm:text-xs">
           <BadgeCheck className="h-4 w-4" aria-hidden /> Creator Marketing Studio
         </p>
-        <h1 className="mt-5 font-display text-[2.5rem] font-semibold leading-[1.08] tracking-normal text-espresso sm:text-5xl lg:text-6xl">
+        <h1 className="mt-5 font-display text-[2.5rem] font-semibold leading-[1.02] tracking-normal text-espresso sm:text-5xl lg:text-6xl">
           <span className="sr-only">Creator-Led Growth for Modern Brands</span>
-          <span aria-hidden="true"><span className="block sm:inline">Creator-Led Growth for</span>{' '}<TypingText words={heroWords} className="mt-1 flex sm:mt-0 sm:inline-flex" /></span>
+          <span aria-hidden="true">
+            <span className="block sm:inline">Creator-Led Growth</span>{' '}
+            <span className="block text-[0.77em] sm:inline sm:text-[1em]">for <TypingText words={heroWords} /></span>
+          </span>
         </h1>
         <p className="mx-auto mt-5 max-w-3xl text-[0.95rem] leading-6 text-cocoa sm:text-lg sm:leading-8">
           We help companies plan and execute UGC, social content, livestreams, product demos, and creator-led campaigns, supported by a trusted network of trained creators.

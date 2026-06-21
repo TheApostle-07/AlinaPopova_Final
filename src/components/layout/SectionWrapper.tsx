@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { motion, useReducedMotion } from 'framer-motion';
-import type { ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 
 interface SectionWrapperProps {
   id?: string;
@@ -17,12 +17,18 @@ const variants = {
 
 export const SectionWrapper = ({ id, children, className }: SectionWrapperProps) => {
   const reducedMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  const shouldReduceMotion = mounted && reducedMotion;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <motion.section
       id={id}
-      initial={reducedMotion ? false : 'hidden'}
-      whileInView={reducedMotion ? undefined : 'visible'}
+      initial={shouldReduceMotion ? false : 'hidden'}
+      whileInView={shouldReduceMotion ? undefined : 'visible'}
       viewport={{ once: true, amount: 0.08 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
       variants={variants}

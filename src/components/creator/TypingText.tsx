@@ -24,7 +24,7 @@ const useReducedMotion = () => {
   return reducedMotion;
 };
 
-export const TypingText = ({ words, typingSpeed = 85, deletingSpeed = 45, pauseMs = 1600, className = '' }: TypingTextProps) => {
+export const TypingText = ({ words, typingSpeed = 85, deletingSpeed = 45, pauseMs = 1500, className = '' }: TypingTextProps) => {
   const reducedMotion = useReducedMotion();
   const safeWords = useMemo(() => words.filter(Boolean), [words]);
   const [wordIndex, setWordIndex] = useState(0);
@@ -66,5 +66,12 @@ export const TypingText = ({ words, typingSpeed = 85, deletingSpeed = 45, pauseM
     return () => window.clearTimeout(timeout);
   }, [deleting, pauseMs, paused, reducedMotion, safeWords, text, typingSpeed, deletingSpeed, wordIndex]);
 
-  return <span className={`inline-flex max-w-full items-baseline whitespace-nowrap text-primary ${className}`}><span className="inline-block min-w-0 sm:min-w-[17ch]">{text}</span>{!reducedMotion && <span aria-hidden="true" className="ml-1 inline-block h-[0.88em] w-[2px] translate-y-[0.08em] rounded-full bg-primary/70 animate-[typingCursor_1.2s_ease-in-out_infinite]" />}</span>;
+  return (
+    <span className={`inline-block min-w-0 text-left align-baseline text-primary sm:min-w-[16ch] ${className}`}>
+      <span className="inline-flex items-baseline whitespace-nowrap">
+        <span>{text}</span>
+        {!reducedMotion && <span aria-hidden="true" className="ml-1 inline-block h-[0.82em] w-[2px] translate-y-[0.08em] rounded-full bg-primary/70 animate-[typingCursor_1.15s_ease-in-out_infinite]" />}
+      </span>
+    </span>
+  );
 };
