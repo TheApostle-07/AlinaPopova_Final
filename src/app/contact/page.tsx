@@ -21,13 +21,13 @@ export default function ContactPage() {
             <Mail className="h-7 w-7 text-primary" aria-hidden />
             <h2 className="mt-6 text-xl font-semibold text-foreground">Email the studio</h2>
             <p className="mt-3 text-sm leading-6 text-cocoa">For campaign briefs, legal questions, or creator application support.</p>
-            <a href={`mailto:${siteConfig.contactEmail}`} className="mt-6 inline-flex min-h-11 items-center rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-white shadow-neon transition hover:bg-[#B8005D] hover:shadow-soft">Email Us</a>
+            <a href={`mailto:${siteConfig.contactEmail}`} className="mt-6 inline-flex min-h-11 items-center rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-white shadow-neon transition hover:bg-[#B12670] hover:shadow-soft">Email Us</a>
           </Card>
           <Card>
             <MessageCircle className="h-7 w-7 text-coral" aria-hidden />
             <h2 className="mt-6 text-xl font-semibold text-foreground">WhatsApp contact</h2>
             <p className="mt-3 text-sm leading-6 text-cocoa">For a short, non-sensitive first message. Do not share IDs or private documents in chat.</p>
-            <a href={siteConfig.whatsappUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center rounded-full bg-coral px-6 py-2.5 text-sm font-semibold text-white shadow-neon transition hover:bg-[#B8005D] hover:shadow-soft">Open WhatsApp</a>
+            <a href={siteConfig.whatsappUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center rounded-full bg-coral px-6 py-2.5 text-sm font-semibold text-white shadow-neon transition hover:bg-[#B12670] hover:shadow-soft">Open WhatsApp</a>
           </Card>
           <Card>
             <ShieldCheck className="h-7 w-7 text-primary" aria-hidden />

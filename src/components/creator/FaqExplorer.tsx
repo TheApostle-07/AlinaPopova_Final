@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
 import { Accordion, type AccordionItem } from '@/components/ui/Accordion';
 
-type FaqCategory = 'Creators' | 'Brands' | 'Payments' | 'Safety';
+type FaqCategory = 'Creators' | 'Companies' | 'Payments' | 'Safety';
 
 const items: Array<AccordionItem & { category: FaqCategory }> = [
   { id: 'income', category: 'Payments', question: 'Will I earn for sure?', answer: 'No income is guaranteed. We train and shortlist selected creators for suitable opportunities. Paid work depends on brand requirements, creator readiness, and accepted campaigns.' },
@@ -15,11 +15,14 @@ const items: Array<AccordionItem & { category: FaqCategory }> = [
   { id: 'decline', category: 'Safety', question: 'Can I refuse a campaign?', answer: 'Yes. You can accept or decline commercial opportunities before they begin.' },
   { id: 'adult', category: 'Safety', question: 'Is this adult content?', answer: 'No. Alina Popova does not support adult, obscene, illegal, exploitative, or unsafe content.' },
   { id: 'usage', category: 'Safety', question: 'Will you use my photos or videos?', answer: 'Only with written usage consent and agreed campaign terms.' },
-  { id: 'brand-scope', category: 'Brands', question: 'How do brand campaigns begin?', answer: 'We start with a written brief, creator or host fit, deliverables, product boundaries, usage rights, timing, and commercial terms.' },
-  { id: 'brand-safety', category: 'Brands', question: 'How are creators protected during a campaign?', answer: 'Campaigns are screened against our safety standard. Creators receive the agreed scope and can decline work they are not comfortable accepting.' }
+  { id: 'sales', category: 'Companies', question: 'Do you guarantee sales?', answer: 'No. We provide creator-led marketing strategy, content, livestream support, and campaign execution. Sales depend on the offer, product, audience, pricing, and market response.' },
+  { id: 'ad-usage', category: 'Companies', question: 'Can we use creator content in ads?', answer: 'Only if usage rights are agreed in writing for the relevant campaign.' },
+  { id: 'creator-choice', category: 'Companies', question: 'Can we choose creators?', answer: 'We can shortlist creators based on campaign needs, subject to creator acceptance and safety rules.' },
+  { id: 'direct-contact', category: 'Companies', question: 'Can we contact creators directly?', answer: 'Campaign communication should remain through Alina Popova unless direct communication is approved.' },
+  { id: 'brand-safety', category: 'Companies', question: 'How are creators protected during a campaign?', answer: 'Campaigns are screened against our safety standard. Creators receive the agreed scope and can decline work they are not comfortable accepting.' }
 ];
 
-const categories: Array<FaqCategory | 'All'> = ['All', 'Creators', 'Brands', 'Payments', 'Safety'];
+const categories: Array<FaqCategory | 'All'> = ['All', 'Companies', 'Creators', 'Payments', 'Safety'];
 
 export const FaqExplorer = () => {
   const [category, setCategory] = useState<FaqCategory | 'All'>('All');

@@ -83,6 +83,9 @@ export const SiteHeader = () => {
           ))}
         </nav>
         <div className="flex items-center gap-3">
+          <Button href="/apply" className="hidden lg:inline-flex" variant="secondary">
+            Apply as Creator
+          </Button>
           <Button href="/companies" className="hidden md:inline-flex" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
             Market My Company
           </Button>

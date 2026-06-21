@@ -12,7 +12,7 @@ html {
 
 body {
   font-family: var(--font-manrope), 'Manrope', ui-sans-serif, system-ui;
-  background-color: #fafafb;
+  background-color: #fcfcfd;
   color: #121116;
   min-height: 100vh;
   line-height: 1.6;
@@ -25,20 +25,20 @@ a {
 
 a:hover,
 a:focus-visible {
-  color: #d6006f;
+  color: #d63384;
   text-decoration: underline;
 }
 
 ::selection {
-  background-color: rgba(255, 45, 170, 0.2);
+  background-color: rgba(214, 51, 132, 0.16);
 }
 
 input[type='checkbox'] {
-  accent-color: #d6006f;
+  accent-color: #d63384;
 }
 
 :focus-visible {
-  outline: 3px solid #ff2daa;
+  outline: 3px solid #d63384;
   outline-offset: 3px;
 }
 
@@ -60,7 +60,7 @@ textarea {
 }
 
 .admin-surface {
-  background: #fafafb;
+  background: #fcfcfd;
   color: #121116;
 }
 
@@ -89,21 +89,21 @@ textarea {
 
 .admin-surface .bg-white\/5,
 .admin-surface .bg-white\/10 {
-  background-color: #fff5fb !important;
+  background-color: #fff1f7 !important;
 }
 
 .admin-surface .bg-emerald-300\/10,
 .admin-surface .bg-emerald-50 {
-  background-color: #ffe0f3 !important;
+  background-color: #f8c8dc !important;
 }
 
 .admin-surface .text-emerald-200,
 .admin-surface .text-emerald-300 {
-  color: #d6006f !important;
+  color: #d63384 !important;
 }
 
 .admin-surface .focus\:border-emerald-300:focus {
-  border-color: #ff2daa !important;
+  border-color: #d63384 !important;
 }
 
 .admin-surface .shadow-sm,

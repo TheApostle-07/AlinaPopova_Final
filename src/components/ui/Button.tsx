@@ -8,8 +8,8 @@ import type { AnchorHTMLAttributes, ReactNode } from 'react';
 import clsx from 'clsx';
 
 const variants = {
-  primary: 'bg-primary text-white shadow-neon hover:bg-[#B8005D] hover:text-white hover:shadow-[0_18px_42px_rgba(255,45,170,0.32)]',
-  secondary: 'border border-neon/60 bg-white text-primary shadow-[0_8px_20px_rgba(18,17,22,0.04)] hover:bg-porcelain hover:text-primary',
+  primary: 'bg-primary text-white shadow-neon hover:bg-[#B12670] hover:text-white hover:shadow-[0_18px_42px_rgba(214,51,132,0.24)]',
+  secondary: 'border border-primary/35 bg-white text-primary shadow-[0_8px_20px_rgba(18,17,22,0.04)] hover:bg-porcelain hover:text-primary',
   ghost: 'bg-transparent text-primary hover:bg-porcelain'
 };
 

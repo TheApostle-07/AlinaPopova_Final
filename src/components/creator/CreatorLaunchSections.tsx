@@ -36,26 +36,21 @@ const promise = [
   'Content usage only with written consent'
 ];
 
-export const CreatorLaunchSections = () => (
+const eligibility = [
+  'Women 18+ interested in creator work',
+  'Comfortable on camera or willing to learn',
+  'Interested in UGC, Instagram, YouTube, live, or product demos',
+  'Reliable, professional, and open to feedback',
+  'Hindi or English communication preferred'
+];
+
+interface CreatorLaunchSectionsProps {
+  creatorFocused?: boolean;
+}
+
+export const CreatorLaunchSections = ({ creatorFocused = false }: CreatorLaunchSectionsProps) => (
   <>
-    <SectionWrapper className="!pt-0 bg-porcelain/45 sm:!pt-16 lg:!pt-0">
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="border-primary/25 bg-white">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-champagne text-primary"><HeartHandshake className="h-5 w-5" aria-hidden /></div>
-          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.13em] text-primary">For creators</p>
-          <h2 className="mt-3 font-display text-3xl text-espresso">A career path that begins with trust.</h2>
-          <p className="mt-3 text-sm leading-6 text-cocoa">Apply free, train if selected, build camera confidence, and become eligible for brand-safe paid opportunities without giving up your independence.</p>
-          <Button href="/creators" className="mt-7" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Explore Creator Program</Button>
-        </Card>
-        <Card className="border-gold/35 bg-champagne/45">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-primary shadow-card"><Building2 className="h-5 w-5" aria-hidden /></div>
-          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.13em] text-primary">For brands</p>
-          <h2 className="mt-3 font-display text-3xl text-espresso">Campaign talent with a clearer process.</h2>
-          <p className="mt-3 text-sm leading-6 text-cocoa">Book trained creators for livestreams, product demos, creator campaigns, and live shopping with scope, usage, and safety clarity.</p>
-          <Button href="/brands" variant="secondary" className="mt-7">Book Brand Call</Button>
-        </Card>
-      </div>
-    </SectionWrapper>
+    {creatorFocused ? <SectionWrapper className="!pt-0 bg-porcelain/45 sm:!pt-16 lg:!pt-0"><div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center"><div><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Who can apply</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">A professional creator path for women ready to learn and show up.</h2><p className="mt-4 text-base leading-7 text-cocoa">You do not need a large following or modelling experience. We look for clear communication, reliability, comfort with learning, and an interest in brand-safe camera-based work.</p></div><ul className="grid gap-3 sm:grid-cols-2">{eligibility.map((item) => <li key={item} className="flex gap-3 rounded-xl border border-primary/15 bg-white p-4 text-sm leading-6 text-cocoa shadow-card"><BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul></div></SectionWrapper> : <SectionWrapper className="!pt-0 bg-porcelain/45 sm:!pt-16 lg:!pt-0"><div className="grid gap-4 lg:grid-cols-2"><Card className="border-primary/25 bg-white"><div className="flex h-11 w-11 items-center justify-center rounded-xl bg-champagne text-primary"><HeartHandshake className="h-5 w-5" aria-hidden /></div><p className="mt-6 text-sm font-semibold uppercase tracking-[0.13em] text-primary">For creators</p><h2 className="mt-3 font-display text-3xl text-espresso">A career path that begins with trust.</h2><p className="mt-3 text-sm leading-6 text-cocoa">Apply free, train if selected, build camera confidence, and become eligible for brand-safe paid opportunities without giving up your independence.</p><Button href="/creators" className="mt-7" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Explore Creator Program</Button></Card><Card className="border-gold/35 bg-champagne/45"><div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-primary shadow-card"><Building2 className="h-5 w-5" aria-hidden /></div><p className="mt-6 text-sm font-semibold uppercase tracking-[0.13em] text-primary">For companies</p><h2 className="mt-3 font-display text-3xl text-espresso">Campaign talent with a clearer process.</h2><p className="mt-3 text-sm leading-6 text-cocoa">Book trained creators for livestreams, product demos, creator campaigns, and live shopping with scope, usage, and safety clarity.</p><Button href="/companies" variant="secondary" className="mt-7">Market My Company</Button></Card></div></SectionWrapper>}
 
     <SectionWrapper className="bg-white">
       <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
