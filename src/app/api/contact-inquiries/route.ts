@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createContactInquiry, recordCompanyMarketingBrief, type ContactInquiryType } from '@/lib/database';
+import { createContactInquiry, recordCompanyMarketingBrief, recordLegalConsent, type ContactInquiryType } from '@/lib/database';
+import { COMPANY_INQUIRY_CONSENT, CONTACT_CONSENT, LEGAL_VERSION, companyAgreementLinks } from '@/lib/legal';
 import { isRateLimited } from '@/lib/rate-limit';
 
 const inquiryTypes = new Set<ContactInquiryType>(['creator_support', 'brand_inquiry', 'safety_concern', 'general']);
@@ -51,6 +52,19 @@ export async function POST(request: Request) {
     if (inquiryType === 'brand_inquiry' && companyBriefIsComplete) {
       await recordCompanyMarketingBrief({ fullName, email, phone: normalizedPhone, details: details as Required<typeof details> });
     }
+    await recordLegalConsent({
+      userType: inquiryType === 'brand_inquiry' ? 'company' : 'general',
+      userId: id,
+      formType: inquiryType === 'brand_inquiry' ? 'company_inquiry' : 'contact_request',
+      consentText: inquiryType === 'brand_inquiry' ? COMPANY_INQUIRY_CONSENT : CONTACT_CONSENT,
+      legalVersion: LEGAL_VERSION,
+      legalLinks: inquiryType === 'brand_inquiry' ? companyAgreementLinks : [{ label: 'Privacy Policy', href: '/privacy' }],
+      accepted: true,
+      ip,
+      userAgent: request.headers.get('user-agent'),
+      email,
+      phone: normalizedPhone
+    });
     return NextResponse.json({ ok: true, id }, { status: 201 });
   } catch {
     return NextResponse.json({ ok: false, error: 'Unable to send your message right now. Please try again later.' }, { status: 500 });

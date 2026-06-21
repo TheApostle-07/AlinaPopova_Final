@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 import { LegalPage, type LegalSection } from '@/components/creator/LegalPage';
 
-export const metadata: Metadata = { title: 'Refunds | Alina Popova Studio' };
+export const metadata: Metadata = { title: 'Refund & Cancellation Policy | Alina Popova Studio' };
 
 const sections: LegalSection[] = [
-  { title: 'Creators', paragraphs: ['There is no joining fee or training fee for the Creator Launch Program, so there is no creator-program payment to refund. No creator should pay a training debt or hidden charge.'] },
-  { title: 'Brands', paragraphs: ['Brand campaign, pilot, and production payments are governed by the quote, invoice, and written campaign agreement for that engagement. Rescheduling, cancellation, credit, and refund terms depend on confirmed talent, production, and usage commitments.'] },
-  { title: 'Questions', paragraphs: ['Ask for scope, timelines, included services, and commercial terms in writing before confirming a brand booking. Contact support@alinapopova.com for clarification.'] }
+  { title: 'Creator applications', paragraphs: ['Creator applications are free. There is no joining fee or training debt, so there is no creator application payment to refund.'] },
+  { title: 'Company campaigns', paragraphs: ['Refunds and credits depend on the written proposal, payment stage, work started, creator booking, production planning, content creation, and delivered services. A company inquiry does not create a refund obligation.'] },
+  { title: 'Cancellation and rescheduling', paragraphs: ['Before planning, booking, or production begins, a refund or credit may be considered according to the written proposal. After strategy, shortlisting, scripting, scheduling, creator booking, production, or live delivery begins, relevant fees may be non-refundable.', 'Rescheduling may be possible when requested within the notice window in the written campaign scope. Creator booking or cancellation fees may apply.'] },
+  { title: 'Revisions and third-party issues', paragraphs: ['Revisions follow the approved package or proposal. Additional revisions, reshoots, or scope changes may be chargeable. Refunds are not generally available for platform outages, company-side delays, product unavailability, approval delays, or third-party tool failures outside the studio’s reasonable control.'] },
+  { title: 'Creator payouts and requests', paragraphs: ['Creator payouts follow written campaign confirmation. For a cancellation or refund request, email support@alinapopova.com with the company name, campaign name, invoice details, and requested resolution.'] }
 ];
 
-export default function RefundsPage() { return <LegalPage eyebrow="Refunds" title="No creator fees. Brand payment terms are agreed before booking." description="This page separates creator-program access from the commercial terms that apply to a specific brand engagement." sections={sections} />; }
+export default function RefundsPage() { return <LegalPage eyebrow="Legal" title="Refund & Cancellation Policy" description="Clear expectations for company campaigns, production work, and rescheduling." summary="Creator applications are free. Company campaign refunds depend on the written scope and the stage of planning, creator booking, production, and delivery. Confirmed work and creator time may be non-refundable." sections={sections} />; }

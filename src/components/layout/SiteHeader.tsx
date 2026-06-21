@@ -4,7 +4,6 @@ import Link from 'next/link';
 import type { Route } from 'next';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { ArrowRight, Menu, X } from 'lucide-react';
 import clsx from 'clsx';
 import { Button } from '@/components/ui/Button';
@@ -48,42 +47,33 @@ export const SiteHeader = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}
       className={clsx(
-        'sticky top-0 z-[60] border-b border-primary/10 backdrop-blur-xl transition-shadow',
+        'sticky top-0 z-[60] border-b border-[#ECE8EC] backdrop-blur-xl transition-shadow',
         menuOpen ? 'bg-white/95' : 'bg-white/90',
         scrolled ? 'shadow-header' : 'shadow-none'
       )}
     >
-      <div className="mx-auto flex max-w-[1240px] items-center justify-between px-5 py-4 sm:px-8 lg:px-10">
-        <Link href="/" className="flex items-center gap-3 text-sm font-semibold tracking-tight text-primary">
-          <Image
-            src="/AP_Logo_2.png"
-            alt="Alina Popova Studio logo"
-            width={140}
-            height={44}
-            className="h-10 w-auto sm:h-12"
-            priority
-            unoptimized
-            sizes="140px"
-          />
+      <div className="mx-auto flex max-w-[1240px] items-center justify-between px-5 py-5 sm:px-8 lg:px-10">
+        <Link href="/" className="flex items-center gap-3 text-sm font-semibold text-primary">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-porcelain font-display text-sm text-primary">AP</span>
           <div className="leading-tight text-foreground">
-            <span className="block text-base font-semibold uppercase tracking-[0.13em]">Alina Popova Studio</span>
-            <span className="text-xs text-cocoa leading-tight">Creator-Led Marketing</span>
+            <span className="block text-[0.95rem] font-semibold">Alina Popova Studio</span>
+            <span className="text-xs text-cocoa leading-tight">Creator Marketing Studio</span>
           </div>
         </Link>
-        <nav className="hidden items-center gap-1 rounded-full border border-primary/10 bg-porcelain/55 p-1.5 text-sm font-semibold text-cocoa xl:flex">
+        <nav className="hidden items-center gap-1 text-sm font-medium text-cocoa xl:flex">
           {navLinks.map((link) => (
             <Link
               key={`${link.href.pathname}-${link.href.hash ?? 'root'}`}
               href={link.href}
               scroll
-              className="rounded-full px-3 py-2 transition-colors hover:bg-white hover:text-primary"
+              className="rounded-full px-3 py-2 transition-colors hover:bg-porcelain hover:text-primary"
             >
               {link.label}
             </Link>
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          <Button href="/apply" className="hidden lg:inline-flex" variant="secondary">
+          <Button href="/apply" className="hidden xl:inline-flex" variant="secondary">
             Apply as Creator
           </Button>
           <Button href="/companies" className="hidden md:inline-flex" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
@@ -155,7 +145,7 @@ export const SiteHeader = () => {
                   Apply Free
                 </Button>
               </div>
-              <p className="mt-6 text-center text-xs uppercase tracking-[0.13em] text-cocoa">Gujarat Based · India Wide</p>
+              <p className="mt-6 text-center text-xs text-cocoa">Clear terms. Professional opportunities.</p>
             </div>
           </motion.div>
         </>

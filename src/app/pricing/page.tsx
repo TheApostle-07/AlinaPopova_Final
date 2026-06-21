@@ -32,7 +32,7 @@ const creatorIncluded = [
 export default function PricingPage() {
   return (
     <>
-      <PageHero eyebrow="Pricing" title="Creator Marketing Packages for Companies That Need Content, Lives, and Campaigns" description="Choose a starting package or build a recurring creator marketing engine with UGC, Reels, Shorts, livestreams, and campaign management." />
+      <PageHero eyebrow="Pricing" title="Packages for creator-led content, livestreams, and campaign execution." description="Choose a clear starting package or build a recurring creator marketing engine with UGC, short-form content, livestreams, and campaign management." />
       <SectionWrapper>
         <div className="flex items-end justify-between gap-6">
           <div><p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">For companies</p><h2 className="mt-3 font-display text-4xl text-espresso">Marketing packages for a clear first engagement.</h2></div>

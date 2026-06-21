@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { NextResponse } from 'next/server';
-import { ensureApplicationsSchema, getSqlClient } from '@/lib/database';
+import { ensureApplicationsSchema, getSqlClient, recordLegalConsent } from '@/lib/database';
+import { CREATOR_APPLICATION_CONSENT, LEGAL_VERSION, creatorAgreementLinks } from '@/lib/legal';
 import { isRateLimited } from '@/lib/rate-limit';
 
 type ApplicationPayload = {
@@ -15,20 +16,17 @@ type ApplicationPayload = {
   categories?: unknown;
   availability?: unknown;
   boundaries?: unknown;
+  experience?: unknown;
+  workMode?: unknown;
+  expectedPayout?: unknown;
   consents?: unknown;
   submittedAt?: unknown;
 };
 
-const allowedCategories = new Set(['instagram', 'youtube-live', 'livestreams', 'modelling', 'product-demos', 'brand-campaigns']);
+const allowedCategories = new Set(['ugc', 'instagram-reels', 'youtube-shorts', 'youtube-live', 'instagram-live', 'livestreams', 'modelling', 'product-demos', 'live-shopping', 'brand-campaigns']);
 const requiredConsents = [
   'age18',
-  'noSelectionGuarantee',
-  'noIncomeGuarantee',
-  'trainingMayBeUnpaid',
-  'paidWorkInWriting',
-  'safeContentOnly',
-  'canRejectOpportunities',
-  'contactConsent'
+  'legalAgreement'
 ] as const;
 
 const stringValue = (value: unknown, maxLength = 500) => (typeof value === 'string' ? value.trim().slice(0, maxLength) : '');
@@ -66,8 +64,11 @@ export async function POST(request: Request) {
     const languages = stringValue(payload.languages, 250);
     const availability = stringValue(payload.availability, 120);
     const boundaries = stringValue(payload.boundaries, 2000);
+    const experience = stringValue(payload.experience, 500);
+    const workMode = stringValue(payload.workMode, 120);
+    const expectedPayout = stringValue(payload.expectedPayout, 120);
     const categories = Array.isArray(payload.categories)
-      ? [...new Set(payload.categories.filter((category): category is string => typeof category === 'string' && allowedCategories.has(category)))].slice(0, 6)
+      ? [...new Set(payload.categories.filter((category): category is string => typeof category === 'string' && allowedCategories.has(category)))].slice(0, 10)
       : [];
     const consents = payload.consents && typeof payload.consents === 'object' && !Array.isArray(payload.consents)
       ? payload.consents as Record<string, unknown>
@@ -78,7 +79,7 @@ export async function POST(request: Request) {
     const allConsentsGiven = requiredConsents.every((key) => consents[key] === true);
     if (
       fullName.length < 3 || !emailIsValid || !whatsappIsValid || city.length < 2 || !cameraComfort || languages.length < 2 ||
-      !availability || !boundaries || categories.length === 0 || !validUrl(instagramUrl) || !validUrl(youtubeUrl) || !allConsentsGiven
+      !availability || categories.length === 0 || !validUrl(instagramUrl) || !validUrl(youtubeUrl) || !allConsentsGiven
     ) {
       return NextResponse.json({ ok: false, error: 'Please complete every required field and consent before submitting.' }, { status: 400 });
     }
@@ -95,15 +96,29 @@ export async function POST(request: Request) {
         boundaries, consents, duplicate_key
       )
       VALUES (
-        ${fullName}, 'not provided', ${`${city}, India`}, ${languages}, ${instagramUrl || youtubeUrl || 'New creator'},
-        ${categories.join(', ')}, ${availability}, 'creator-launch-intake', ${`${email} | ${whatsapp}`}, ${submittedAt},
+        ${fullName}, 'not provided', ${`${city}, India`}, ${languages}, ${experience || instagramUrl || youtubeUrl || 'New creator'},
+        ${[...categories, workMode, expectedPayout].filter(Boolean).join(', ')}, ${availability}, 'creator-network', ${`${email} | ${whatsapp}`}, ${submittedAt},
         ${JSON.stringify(payload)}::jsonb, ${email}, ${whatsapp}, ${city}, ${instagramUrl || null}, ${youtubeUrl || null},
         ${cameraComfort}, ${JSON.stringify(categories)}::jsonb, ${boundaries}, ${JSON.stringify(consents)}::jsonb, ${duplicateKey}
       )
       RETURNING id::text AS id
     `;
 
-    return NextResponse.json({ ok: true, id: rows[0]?.id }, { status: 201 });
+    const id = rows[0]?.id as string | undefined;
+    await recordLegalConsent({
+      userType: 'creator',
+      userId: id,
+      formType: 'creator_application',
+      consentText: CREATOR_APPLICATION_CONSENT,
+      legalVersion: LEGAL_VERSION,
+      legalLinks: creatorAgreementLinks,
+      accepted: true,
+      ip,
+      userAgent: request.headers.get('user-agent'),
+      email,
+      phone: whatsapp
+    });
+    return NextResponse.json({ ok: true, id }, { status: 201 });
   } catch {
     return NextResponse.json({ ok: false, error: 'Unable to submit your application right now. Please try again later.' }, { status: 500 });
   }

@@ -1,88 +1,64 @@
-import { ArrowRight, BadgeCheck, BarChart3, Camera, CircleDollarSign, Clapperboard, Instagram, Megaphone, MonitorPlay, ShieldCheck, Smartphone, UsersRound, Video } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clapperboard, FileCheck2, ShieldCheck, UsersRound, Video } from 'lucide-react';
 import { SectionWrapper } from '@/components/layout/SectionWrapper';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 
-const services = [
-  { title: 'UGC Video Production', description: 'Product-led videos for organic social and agreed paid usage.', icon: Smartphone },
-  { title: 'Instagram Reels Campaigns', description: 'Creator-first social concepts built around clear campaign goals.', icon: Instagram },
-  { title: 'YouTube Shorts Campaigns', description: 'Fast, useful creator content for product discovery and reach.', icon: Clapperboard },
-  { title: 'YouTube Live Sessions', description: 'Prepared hosts, runbooks, and moderated live formats.', icon: MonitorPlay },
-  { title: 'Instagram Live Campaigns', description: 'Structured live moments for launches, Q&A, and community.', icon: Video },
-  { title: 'Product Demo Videos', description: 'Clear, product-led presentation that answers buyer questions.', icon: Camera },
-  { title: 'Live Shopping Campaigns', description: 'Hosts, scripts, product flow, and post-live learning.', icon: Video },
-  { title: 'Creator-Led Launches', description: 'Launch content, live moments, and creator coordination.', icon: Megaphone },
-  { title: 'Paid Ad Creative Production', description: 'Creator-made performance assets with agreed usage rights.', icon: BadgeCheck },
-  { title: 'Social Media Content Engine', description: 'Campaign calendars and ongoing social execution.', icon: BarChart3 },
-  { title: 'Campaign Management', description: 'Planning, approvals, production tracking, and reporting.', icon: BadgeCheck },
-  { title: 'Creator Coordination', description: 'Clear creator matching, communication, and delivery support.', icon: UsersRound }
+const servicePillars = [
+  { title: 'UGC & Social Content', icon: Clapperboard, items: ['UGC videos', 'Instagram Reels', 'YouTube Shorts', 'Product demos', 'Ad creatives'] },
+  { title: 'Livestream & Live Shopping', icon: Video, items: ['YouTube Live', 'Instagram Live', 'Launch streams', 'Live shopping', 'Product demos'] },
+  { title: 'Creator Campaigns', icon: UsersRound, items: ['Creator-led launches', 'Social proof campaigns', 'Brand storytelling', 'Community campaigns', 'Ambassador-style content'] },
+  { title: 'Campaign Management', icon: FileCheck2, items: ['Creator shortlisting', 'Scripts and hooks', 'Approvals', 'Usage rights', 'Reporting'] }
 ];
 
-const standards = [
-  'No joining fee or training debt for creators',
-  'No adult, exploitative, or unsafe work',
-  'No unpaid commercial work',
-  'Clear scope, usage rights, payout, and agency terms',
-  'Creators accept or decline every opportunity',
-  'No false guarantees of sales, income, or virality'
+const process = [
+  ['01', 'Brief', 'Goals, product, audience, budget, and timing.'],
+  ['02', 'Plan', 'Campaign angle, creator fit, deliverables, and usage rights.'],
+  ['03', 'Match', 'Suitable creators review the opportunity before assignment.'],
+  ['04', 'Produce', 'Content, livestreams, demos, or campaign assets are delivered.'],
+  ['05', 'Report', 'Clear notes, learnings, and next-step recommendations.']
+];
+
+const creatorPromise = ['Apply free', 'No joining fee', 'No training debt', 'Training if selected', 'No adult or unsafe work', 'No unpaid commercial work', 'Written payout before paid work', 'Creator can accept or decline'];
+const safety = ['Written scope', 'Usage rights', 'Creator consent', 'Clear payout terms', 'Professional conduct', 'No false guarantees'];
+const packages = [
+  ['UGC Starter Pack', '₹25,000–₹45,000', 'A focused first creator content test.'],
+  ['Creator Launch Campaign', '₹60,000–₹1.2L', 'A coordinated product launch or social proof campaign.'],
+  ['Livestream Sales Sprint', '₹75,000–₹1.8L', 'A live product launch, demo, or commerce session.'],
+  ['Monthly Creator Marketing Engine', '₹1.5L–₹4L/month', 'A recurring creator content and campaign system.']
 ];
 
 export const AgencyHomeSections = () => (
   <>
-    <SectionWrapper className="!pt-0 bg-porcelain/45 sm:!pt-16 lg:!pt-0">
-      <div className="mx-auto mb-10 max-w-3xl text-center">
-        <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Two connected systems</p>
-        <h2 className="mt-4 font-display text-4xl leading-tight text-espresso">One studio. Two connected systems.</h2>
-      </div>
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="border-primary/25 bg-white">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-champagne text-primary"><Megaphone className="h-5 w-5" aria-hidden /></div>
-          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.13em] text-primary">For companies</p>
-          <h2 className="mt-3 font-display text-3xl text-espresso">Creator-led marketing without the creator-management chaos.</h2>
-          <p className="mt-3 text-sm leading-6 text-cocoa">We plan and execute UGC videos, Instagram campaigns, YouTube content, livestreams, product demos, live shopping, and creator-led launches with clear deliverables and managed execution.</p>
-          <Button href="/companies" className="mt-7" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Market My Company</Button>
-        </Card>
-        <Card className="border-primary/15 bg-champagne/45">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-primary shadow-card"><UsersRound className="h-5 w-5" aria-hidden /></div>
-          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.13em] text-primary">For creators</p>
-          <h2 className="mt-3 font-display text-3xl text-espresso">A safer path into professional creator work.</h2>
-          <p className="mt-3 text-sm leading-6 text-cocoa">Apply free to join the Alina Popova Creator Network. If selected, you may receive guidance, training, and access to brand-safe paid opportunities with written scope and payout terms.</p>
-          <Button href="/apply" variant="secondary" className="mt-7">Apply as Creator</Button>
-        </Card>
-      </div>
+    <SectionWrapper className="bg-softwhite">
+      <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold text-primary">Two fronts. One managed studio.</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Companies come for campaigns. Creators come for professional opportunity.</h2><p className="mt-4 text-base leading-7 text-cocoa">The studio connects managed creator marketing for companies with a clearer, brand-safe network for independent creators.</p></div>
+      <div className="mt-10 grid gap-5 lg:grid-cols-2"><Card className="flex min-h-[340px] flex-col p-8"><p className="text-sm font-semibold text-primary">For Companies</p><h3 className="mt-5 font-display text-3xl text-espresso">Managed creator marketing without the chaos.</h3><p className="mt-4 text-base leading-7 text-cocoa">We handle strategy, creators, scripts, content, livestream structure, usage rights, delivery, and reporting, so your team gets a campaign, not more coordination work.</p><Button href="/companies" className="mt-auto self-start" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Market My Company</Button></Card><Card className="flex min-h-[340px] flex-col border-primary/20 p-8"><p className="text-sm font-semibold text-primary">For Creators</p><h3 className="mt-5 font-display text-3xl text-espresso">A safer path into creator work.</h3><p className="mt-4 text-base leading-7 text-cocoa">Apply free to join a professional creator network for UGC, social content, livestreams, product demos, and paid brand-safe opportunities if selected.</p><Button href="/apply" className="mt-auto self-start" variant="secondary">Apply as Creator</Button></Card></div>
     </SectionWrapper>
 
-    <SectionWrapper className="bg-white">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-        <div className="max-w-3xl"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Marketing services</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Marketing built for the creator economy.</h2></div>
-        <Button href="/services" variant="secondary">Explore Services</Button>
-      </div>
-      <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {services.map((service) => <Card key={service.title} className="p-5"><service.icon className="h-6 w-6 text-primary" aria-hidden /><h3 className="mt-5 text-base font-semibold leading-6 text-espresso">{service.title}</h3><p className="mt-2 text-sm leading-6 text-cocoa">{service.description}</p></Card>)}
-      </div>
+    <SectionWrapper>
+      <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold text-primary">Services</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Marketing built around creators, content, and live attention.</h2><p className="mt-4 text-base leading-7 text-cocoa">One studio for strategy, talent, content production, livestreams, and campaign delivery.</p></div>
+      <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">{servicePillars.map((pillar) => <Card key={pillar.title} className="min-h-[320px] p-7"><pillar.icon className="h-6 w-6 text-primary" aria-hidden /><h3 className="mt-6 font-display text-2xl text-espresso">{pillar.title}</h3><ul className="mt-5 space-y-3 text-sm leading-6 text-cocoa">{pillar.items.map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul></Card>)}</div>
+      <div className="mt-8 text-center"><Button href="/services" variant="secondary">Explore Services</Button></div>
     </SectionWrapper>
 
-    <SectionWrapper className="bg-champagne/45">
-      <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-        <div><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">How engagements work</p><h2 className="mt-4 font-display text-4xl text-espresso">A practical campaign process for brands and creators.</h2><p className="mt-4 max-w-2xl text-base leading-7 text-cocoa">Companies begin with a brief and package fit. Creators are shortlisted only when a relevant campaign exists. Both sides see the terms before commercial work begins.</p><Button href="/how-it-works" variant="secondary" className="mt-7">See the Process</Button></div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {[['01', 'Company brief', 'Goals, product, budget, timing, and formats.'], ['02', 'Campaign plan', 'Scope, deliverables, talent, and rights.'], ['03', 'Creator matching', 'Suitable independent creators review the brief.'], ['04', 'Delivery + reporting', 'Execute, document, and measure what was agreed.']].map(([number, title, description]) => <div key={number} className="rounded-2xl border border-primary/15 bg-white p-5 shadow-card"><span className="font-mono text-xs text-primary">{number}</span><h3 className="mt-6 text-lg font-semibold text-espresso">{title}</h3><p className="mt-2 text-sm leading-6 text-cocoa">{description}</p></div>)}
-        </div>
-      </div>
+    <SectionWrapper className="bg-champagne">
+      <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold text-primary">Process</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">A cleaner way to run creator campaigns.</h2><p className="mt-4 text-base leading-7 text-cocoa">No scattered DMs, unclear deliverables, or usage confusion. We keep the campaign structured from brief to delivery.</p></div>
+      <div className="mt-10 grid gap-4 md:grid-cols-5">{process.map(([number, title, description]) => <article key={number} className="relative border-t border-primary/20 pt-5 md:pt-6"><span className="font-display text-3xl text-primary">{number}</span><h3 className="mt-5 text-lg font-semibold text-espresso">{title}</h3><p className="mt-3 text-sm leading-6 text-cocoa">{description}</p></article>)}</div>
     </SectionWrapper>
 
-    <SectionWrapper className="bg-ink text-ivory">
-      <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
-        <div><p className="text-sm font-semibold uppercase tracking-[0.13em] text-neon">Safety promise</p><h2 className="mt-4 font-display text-4xl leading-tight text-white">Brand-safe. Creator-safe. Clear before anything goes live.</h2><p className="mt-4 text-base leading-7 text-champagne/75">We do not support adult, obscene, illegal, exploitative, coercive, or unsafe content. Creator content is used only with written scope, usage terms, and consent.</p><Button href="/safety" variant="secondary" className="mt-7 border-white/35 bg-white text-espresso hover:bg-champagne">Read Safety Promise</Button></div>
-        <ul className="grid gap-3 sm:grid-cols-2">{standards.map((standard) => <li key={standard} className="flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm leading-6 text-champagne/85"><ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-neon" aria-hidden />{standard}</li>)}</ul>
-      </div>
+    <SectionWrapper>
+      <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start"><div><p className="text-sm font-semibold text-primary">Creator network</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">A creator network built on clarity.</h2><p className="mt-4 text-base leading-7 text-cocoa">Creators should never have to guess whether an opportunity is safe, paid, or professional.</p><Button href="/creators" className="mt-7" variant="secondary">Explore Creator Network</Button></div><div className="grid gap-3 sm:grid-cols-2">{creatorPromise.map((item) => <div key={item} className="flex gap-3 rounded-[24px] border border-[#ECE8EC] bg-porcelain p-4 text-sm leading-6 text-cocoa"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden />{item}</div>)}</div></div>
     </SectionWrapper>
 
-    <SectionWrapper className="text-center">
-      <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Start with the right route</p>
-      <h2 className="mx-auto mt-4 max-w-3xl font-display text-4xl leading-tight text-espresso">Choose your front. We&apos;ll build the system around it.</h2>
-      <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-cocoa">Choose the route that matches why you are here. Both start with a clear, no-pressure conversation.</p>
-      <div className="mt-7 flex flex-wrap justify-center gap-3"><Button href="/companies" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Market My Company</Button><Button href="/apply" variant="secondary">Apply as Creator</Button></div>
+    <SectionWrapper className="bg-softwhite">
+      <div className="rounded-[44px] border border-primary/15 bg-porcelain p-7 sm:p-10"><div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold text-primary">Safety and clarity</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Safe for creators. Clear for companies.</h2><p className="mt-4 text-base leading-7 text-cocoa">Every campaign is built around written scope, usage rights, creator consent, and professional conduct. We do not support adult, obscene, illegal, exploitative, coercive, or unsafe content.</p></div><div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{safety.map((item) => <div key={item} className="flex gap-3 rounded-[24px] border border-[#ECE8EC] bg-white p-4 text-sm font-semibold text-espresso"><ShieldCheck className="h-5 w-5 shrink-0 text-primary" aria-hidden />{item}</div>)}</div><div className="mt-8 text-center"><Button href="/safety" variant="secondary">Read Safety Promise</Button></div></div>
     </SectionWrapper>
+
+    <SectionWrapper>
+      <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold text-primary">Pricing</p><h2 className="mt-4 font-display text-4xl text-espresso">Start with a campaign package.</h2></div>
+      <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">{packages.map(([name, price, description]) => <Card key={name} className="flex min-h-[240px] flex-col p-6"><h3 className="font-display text-2xl text-espresso">{name}</h3><p className="mt-4 text-lg font-semibold text-primary">{price}</p><p className="mt-4 text-sm leading-6 text-cocoa">{description}</p></Card>)}</div>
+      <div className="mt-8 text-center"><Button href="/pricing" variant="secondary">View Pricing</Button></div>
+    </SectionWrapper>
+
+    <SectionWrapper className="bg-softwhite"><div className="mx-auto max-w-4xl rounded-[48px] border border-primary/15 bg-porcelain px-6 py-12 text-center shadow-card sm:px-10"><p className="text-sm font-semibold text-primary">Start here</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Start with the right path.</h2><p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-cocoa">Companies can plan a creator-led campaign. Creators can apply to join the network. Both begin with clear terms and no pressure.</p><div className="mt-8 flex flex-wrap justify-center gap-3"><Button href="/companies" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Market My Company</Button><Button href="/apply" variant="secondary">Apply as Creator</Button></div></div></SectionWrapper>
   </>
 );

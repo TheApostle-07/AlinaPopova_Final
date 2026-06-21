@@ -68,6 +68,7 @@ let sqlClientPromise: Promise<Sql> | null = null;
 let schemaPromise: Promise<void> | null = null;
 let contactSchemaPromise: Promise<void> | null = null;
 let operationsSchemaPromise: Promise<void> | null = null;
+let legalConsentSchemaPromise: Promise<void> | null = null;
 
 const createSqlClient = async () => {
   const connectionString = process.env.DATABASE_URL;
@@ -161,6 +162,69 @@ export const ensureContactInquiriesSchema = async () => {
   })();
 
   return contactSchemaPromise;
+};
+
+export const ensureLegalConsentsSchema = async () => {
+  legalConsentSchemaPromise ??= (async () => {
+    const sql = await getSqlClient();
+    await sql`
+      CREATE TABLE IF NOT EXISTS legal_consents (
+        id BIGSERIAL PRIMARY KEY,
+        user_type TEXT NOT NULL,
+        user_id TEXT,
+        form_type TEXT NOT NULL,
+        consent_text TEXT NOT NULL,
+        legal_version TEXT NOT NULL,
+        legal_links JSONB NOT NULL DEFAULT '[]'::jsonb,
+        accepted BOOLEAN NOT NULL,
+        ip TEXT,
+        user_agent TEXT,
+        email TEXT,
+        phone TEXT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS legal_consents_form_created_idx ON legal_consents (form_type, created_at DESC)`;
+    await sql`CREATE INDEX IF NOT EXISTS legal_consents_email_idx ON legal_consents (email)`;
+  })();
+  return legalConsentSchemaPromise;
+};
+
+export const recordLegalConsent = async ({
+  userType,
+  userId,
+  formType,
+  consentText,
+  legalVersion,
+  legalLinks,
+  accepted,
+  ip,
+  userAgent,
+  email,
+  phone
+}: {
+  userType: 'creator' | 'company' | 'general';
+  userId?: string;
+  formType: string;
+  consentText: string;
+  legalVersion: string;
+  legalLinks: ReadonlyArray<{ label: string; href: string }>;
+  accepted: boolean;
+  ip?: string | null;
+  userAgent?: string | null;
+  email?: string | null;
+  phone?: string | null;
+}) => {
+  await ensureLegalConsentsSchema();
+  const sql = await getSqlClient();
+  await sql`
+    INSERT INTO legal_consents (
+      user_type, user_id, form_type, consent_text, legal_version, legal_links, accepted, ip, user_agent, email, phone
+    ) VALUES (
+      ${userType}, ${userId ?? null}, ${formType}, ${consentText}, ${legalVersion}, ${JSON.stringify(legalLinks)}::jsonb,
+      ${accepted}, ${ip ?? null}, ${userAgent ?? null}, ${email ?? null}, ${phone ?? null}
+    )
+  `;
 };
 
 export const createContactInquiry = async ({

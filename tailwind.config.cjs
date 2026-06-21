@@ -9,35 +9,35 @@ module.exports = {
       colors: {
         ivory: '#FFFFFF',
         softwhite: '#FCFCFD',
-        porcelain: '#FFF1F7',
-        champagne: '#FFF7FB',
-        espresso: '#121116',
-        charcoal: '#29222C',
-        cocoa: '#756B78',
-        primary: '#D63384',
-        neon: '#E85D9E',
-        hotpink: '#B5179E',
-        magenta: '#B5179E',
-        rose: '#E85D9E',
-        blush: '#F8C8DC',
+        porcelain: '#FFF8FB',
+        champagne: '#F8F5F7',
+        espresso: '#111014',
+        charcoal: '#2B262D',
+        cocoa: '#766D78',
+        primary: '#C73572',
+        neon: '#E9A1BF',
+        hotpink: '#A8245C',
+        magenta: '#A8245C',
+        rose: '#E9A1BF',
+        blush: '#F9E6F0',
         gold: '#C8A96A',
         sage: '#5B8A6B',
         merlot: '#B42352',
         background: '#FCFCFD',
         foreground: '#121116',
-        muted: '#F7F7FA',
-        coral: '#D63384',
-        ink: '#121116'
+        muted: '#F8F5F7',
+        coral: '#C73572',
+        ink: '#111014'
       },
       fontFamily: {
         sans: ['var(--font-manrope)', 'Manrope', 'ui-sans-serif', 'system-ui'],
         display: ['var(--font-sora)', 'Sora', 'ui-sans-serif', 'system-ui']
       },
       boxShadow: {
-        header: '0 10px 30px rgba(18, 17, 22, 0.06)',
-        card: '0 14px 40px rgba(18, 17, 22, 0.06)',
-        soft: '0 24px 60px rgba(214, 51, 132, 0.12)',
-        neon: '0 14px 34px rgba(214, 51, 132, 0.22)'
+        header: '0 10px 32px rgba(17, 16, 20, 0.04)',
+        card: '0 18px 60px rgba(17, 16, 20, 0.06)',
+        soft: '0 28px 90px rgba(17, 16, 20, 0.08)',
+        neon: '0 18px 50px rgba(199, 53, 114, 0.08)'
       },
       borderRadius: {
         sm: '0.75rem',

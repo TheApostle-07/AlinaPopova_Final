@@ -1,21 +1,15 @@
-import { ArrowRight, BarChart3, Camera, CheckCircle2, CircleDollarSign, Clapperboard, FileCheck2, Instagram, Megaphone, MonitorPlay, ShieldCheck, Smartphone, UsersRound, Video } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clapperboard, FileCheck2, ShieldCheck, UsersRound, Video } from 'lucide-react';
 import { PageHero } from '@/components/creator/PageHero';
 import { BrandOperationsPreview } from '@/components/creator/BrandOperationsPreview';
 import { SectionWrapper } from '@/components/layout/SectionWrapper';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 
-const services = [
-  { title: 'UGC Video Campaigns', description: 'Product-led videos for organic social and agreed paid usage.', icon: Smartphone },
-  { title: 'Instagram Reels Campaigns', description: 'Creator-led content plans built around a practical campaign objective.', icon: Instagram },
-  { title: 'YouTube Shorts Campaigns', description: 'Short-form creator content for reach, product proof, and social momentum.', icon: Clapperboard },
-  { title: 'YouTube Live Campaigns', description: 'Hosts, show flow, moderation support, and post-live clips.', icon: MonitorPlay },
-  { title: 'Instagram Live Campaigns', description: 'Structured live moments for launches, Q&A, and community.', icon: Video },
-  { title: 'Product Demo Campaigns', description: 'Prepared product presentation for launches, education, and commerce.', icon: Camera },
-  { title: 'Live Shopping Campaigns', description: 'Live hosts, product flow, and audience-ready session structure.', icon: Video },
-  { title: 'Creator-Led Launch Campaigns', description: 'Campaign concepts and creator coordination for high-attention moments.', icon: Megaphone },
-  { title: 'Social Proof Campaigns', description: 'Creator stories and product moments that make brand claims more human.', icon: UsersRound },
-  { title: 'Paid Ad Creative Campaigns', description: 'Creator-made assets for paid media with agreed platform usage.', icon: CircleDollarSign }
+const servicePillars = [
+  { title: 'UGC & Social Content', description: 'UGC videos, Instagram Reels, YouTube Shorts, product demos, and ad creatives.', icon: Clapperboard },
+  { title: 'Livestream & Live Shopping', description: 'YouTube Live, Instagram Live, launch streams, live shopping, and product demos.', icon: Video },
+  { title: 'Creator Campaigns', description: 'Creator-led launches, social proof, brand storytelling, and ambassador-style content.', icon: UsersRound },
+  { title: 'Campaign Management', description: 'Creator shortlisting, scripts, approvals, usage rights, delivery, and reporting.', icon: FileCheck2 }
 ];
 
 const companyStandards = [
@@ -26,8 +20,8 @@ const companyStandards = [
 ];
 
 const ServiceGrid = () => (
-  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-    {services.map((service) => <Card key={service.title} className="p-5"><service.icon className="h-6 w-6 text-primary" aria-hidden /><h3 className="mt-5 text-base font-semibold leading-6 text-espresso">{service.title}</h3><p className="mt-2 text-sm leading-6 text-cocoa">{service.description}</p></Card>)}
+  <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+    {servicePillars.map((service) => <Card key={service.title} className="flex min-h-[246px] flex-col p-7"><service.icon className="h-7 w-7 text-primary" aria-hidden /><h3 className="mt-8 text-xl font-semibold leading-7 text-espresso">{service.title}</h3><p className="mt-4 text-sm leading-7 text-cocoa">{service.description}</p></Card>)}
   </div>
 );
 
@@ -35,20 +29,20 @@ const CompanyCta = ({ label = 'Market My Company' }: { label?: string }) => <But
 
 export const CompanyMarketingPage = () => (
   <>
-    <PageHero eyebrow="For companies" title="Creator-Led Marketing for Companies That Need Attention, Trust, and Sales" description="Alina Popova helps companies turn creators into a managed marketing channel through UGC, Instagram, YouTube, livestreams, product demos, and campaign execution." actions={<><CompanyCta /><Button href="/pricing" variant="secondary">View Packages</Button></>} />
+    <PageHero eyebrow="For companies" title="Creator-led marketing without the creator-management chaos." description="Alina Popova Studio plans and executes UGC, social content, livestreams, product demos, and creator campaigns with clear ownership from brief to reporting." actions={<><CompanyCta /><Button href="/pricing" variant="secondary">View Packages</Button></>} />
     <SectionWrapper>
       <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center"><div><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">How we help</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Bring the business objective. We build the creator-led campaign around it.</h2><p className="mt-4 text-base leading-7 text-cocoa">Whether you need product education, content volume, a live commerce moment, or a focused launch, the work begins with a structured brief. We then define the service mix, production plan, creator fit, deliverables, and usage requirements.</p><div className="mt-7 flex flex-wrap gap-3"><Button href="/campaigns" variant="secondary">See Campaigns</Button><Button href="/live-studio" variant="ghost">Explore Live Studio</Button></div></div><BrandOperationsPreview /></div>
     </SectionWrapper>
     <SectionWrapper className="bg-champagne/45"><div className="grid gap-5 lg:grid-cols-2"><Card className="p-7"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">The problem</p><h2 className="mt-4 font-display text-3xl text-espresso">Creator marketing is hard to run without a system.</h2><p className="mt-4 text-base leading-7 text-cocoa">Generic content, inconsistent social, unclear usage rights, and unmanaged creator relationships can make a promising campaign feel chaotic.</p></Card><Card className="p-7"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">The Alina Popova solution</p><h2 className="mt-4 font-display text-3xl text-espresso">A managed campaign channel built around real human content.</h2><p className="mt-4 text-base leading-7 text-cocoa">We handle campaign strategy, creator shortlisting, hooks and scripts, production, livestream planning, approvals, usage clarity, and reporting.</p></Card></div></SectionWrapper>
     <SectionWrapper className="bg-porcelain/45"><div className="text-center"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">What we can deliver</p><h2 className="mx-auto mt-4 max-w-3xl font-display text-4xl leading-tight text-espresso">A focused menu of creator-led marketing services.</h2></div><div className="mt-10"><ServiceGrid /></div></SectionWrapper>
     <SectionWrapper><div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">{companyStandards.map((standard, index) => <Card key={standard} className="p-6"><span className="font-mono text-xs text-primary">0{index + 1}</span><CheckCircle2 className="mt-7 h-6 w-6 text-primary" aria-hidden /><p className="mt-5 text-sm leading-6 text-cocoa">{standard}</p></Card>)}</div></SectionWrapper>
-    <SectionWrapper className="bg-ink text-ivory"><div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-neon">Start with a campaign brief</p><h2 className="mt-4 font-display text-4xl leading-tight text-white">Get a service recommendation before committing to a large monthly scope.</h2><p className="mt-4 text-base leading-7 text-champagne/75">Share the product, objective, timing, budget range, and audience. We will route the brief to the right campaign format.</p><CompanyCta label="Share a Campaign Brief" /></div></SectionWrapper>
+    <SectionWrapper><div className="mx-auto max-w-3xl rounded-[44px] border border-primary/15 bg-porcelain p-8 text-center shadow-card sm:p-12"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Start with a campaign brief</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Get a service recommendation before committing to a large monthly scope.</h2><p className="mt-4 text-base leading-7 text-cocoa">Share the product, objective, timing, budget range, and audience. We will route the brief to the right campaign format.</p><div className="mt-8"><CompanyCta label="Share a Campaign Brief" /></div></div></SectionWrapper>
   </>
 );
 
 export const ServicesPage = () => (
   <>
-    <PageHero eyebrow="Services" title="Modern Marketing Services Powered by Creators, Content, and Livestreams" description="From UGC and Reels to YouTube Live and product demos, Alina Popova builds creator-led marketing systems for companies that need human content at scale." actions={<CompanyCta label="Book Brand Campaign" />} />
+    <PageHero eyebrow="Services" title="Content, livestreams, and campaigns built around creators." description="From UGC and short-form social content to product demos and live shopping, each service is scoped around a practical campaign objective." actions={<CompanyCta label="Book Brand Campaign" />} />
     <SectionWrapper><ServiceGrid /></SectionWrapper>
     <SectionWrapper className="bg-champagne/45"><div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">{[['Content marketing', 'UGC videos, Reels, Shorts, ad creatives, product demos, and organic social content.'], ['Live marketing', 'Instagram Live, YouTube Live, livestream selling, live shopping, demos, and founder sessions.'], ['Campaign management', 'Creator shortlists, hook writing, calendars, production tracking, approvals, usage rights, and reporting.'], ['Creator network', 'Creator fit, language matching, creator acceptance, safety rules, and content usage consent.']].map(([title, description]) => <Card key={title} className="p-7"><FileCheck2 className="h-7 w-7 text-primary" aria-hidden /><h2 className="mt-6 font-display text-2xl text-espresso">{title}</h2><p className="mt-3 text-sm leading-6 text-cocoa">{description}</p></Card>)}</div></SectionWrapper>
   </>
@@ -78,6 +72,6 @@ export const AboutPage = () => (
   <>
     <PageHero eyebrow="About Alina Popova Studio" title="A marketing studio designed around better creator partnerships." description="Alina Popova Studio is based in Gujarat and works across India. We help companies run creator-led marketing while giving independent creators a clearer, safer route into brand campaigns." actions={<><CompanyCta /><Button href="/creators" variant="secondary">Join Creator Network</Button></>} />
     <SectionWrapper><div className="grid gap-5 lg:grid-cols-2"><Card className="p-8"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">We market for companies</p><h2 className="mt-4 font-display text-3xl text-espresso">Creator-led content and live experiences that have a commercial purpose.</h2><p className="mt-4 text-base leading-7 text-cocoa">The company-facing studio sells services: campaign planning, UGC, live marketing, creator campaigns, content production, and operational support.</p></Card><Card className="p-8"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">We partner with creators</p><h2 className="mt-4 font-display text-3xl text-espresso">A protected network, not a recruitment funnel.</h2><p className="mt-4 text-base leading-7 text-cocoa">Creators remain independent adults. They can apply free, receive relevant support if selected, and choose every commercial opportunity before they take it.</p></Card></div></SectionWrapper>
-    <SectionWrapper className="bg-ink text-ivory"><div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-neon">Our standard</p><h2 className="mt-4 font-display text-4xl leading-tight text-white">Clear work, creator choice, and marketing that brands can stand behind.</h2><p className="mt-4 text-base leading-7 text-champagne/75">We do not support adult, obscene, exploitative, unsafe, or unpaid commercial work. We do not promise guaranteed income, sales, or virality.</p></div></SectionWrapper>
+    <SectionWrapper><div className="mx-auto max-w-3xl rounded-[44px] border border-primary/15 bg-porcelain p-8 text-center shadow-card sm:p-12"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Our standard</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Clear work, creator choice, and marketing that brands can stand behind.</h2><p className="mt-4 text-base leading-7 text-cocoa">We do not support adult, obscene, exploitative, unsafe, or unpaid commercial work. We do not promise guaranteed income, sales, or virality.</p></div></SectionWrapper>
   </>
 );
