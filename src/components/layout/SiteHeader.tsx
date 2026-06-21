@@ -3,9 +3,8 @@
 import Link from 'next/link';
 import type { Route } from 'next';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import { ArrowRight, Menu, X } from 'lucide-react';
-import clsx from 'clsx';
+import { LogoWordmark } from '@/components/LogoWordmark';
 import { Button } from '@/components/ui/Button';
 
 type NavLink = {
@@ -15,13 +14,17 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { label: 'Home', href: { pathname: '/' } },
-  { label: 'For Companies', href: { pathname: '/companies' } },
-  { label: 'For Creators', href: { pathname: '/creators' } },
+  { label: 'Companies', href: { pathname: '/companies' } },
+  { label: 'Creators', href: { pathname: '/creators' } },
   { label: 'Services', href: { pathname: '/services' } },
   { label: 'Pricing', href: { pathname: '/pricing' } },
   { label: 'Safety', href: { pathname: '/safety' } },
   { label: 'FAQs', href: { pathname: '/faqs' } }
 ];
+
+const desktopNavLinks = navLinks.slice(0, -1);
+
+const headerButtonClass = 'h-11 min-h-0 whitespace-nowrap px-5 py-0 text-sm shadow-none hover:shadow-none';
 
 export const SiteHeader = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -42,57 +45,37 @@ export const SiteHeader = () => {
   }, [menuOpen]);
 
   return (
-    <motion.header
-      initial={{ y: -40, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className={clsx(
-        'sticky top-0 z-[60] border-b border-[#ECE8EC] backdrop-blur-xl transition-shadow',
-        menuOpen ? 'bg-white/95' : 'bg-white/90',
-        scrolled ? 'shadow-header' : 'shadow-none'
-      )}
-    >
-      <div className="mx-auto flex max-w-[1240px] items-center justify-between px-5 py-5 sm:px-8 lg:px-10">
-        <Link href="/" className="flex items-center gap-3 text-sm font-semibold text-primary">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-porcelain font-display text-sm text-primary">AP</span>
-          <div className="leading-tight text-foreground">
-            <span className="block text-[0.95rem] font-semibold">Alina Popova Studio</span>
-            <span className="text-xs text-cocoa leading-tight">Creator Marketing Studio</span>
-          </div>
+    <header className={`sticky top-0 z-[60] border-b border-black/[0.06] bg-white/90 backdrop-blur-xl transition-shadow ${scrolled ? 'shadow-header' : 'shadow-none'}`}>
+      <div className="mx-auto flex h-[68px] max-w-[1240px] items-center justify-between px-5 sm:px-8 xl:grid xl:h-20 xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.2fr)] xl:px-10">
+        <Link href="/" className="shrink-0" aria-label="Alina Popova Studio home" onClick={() => setMenuOpen(false)}>
+          <LogoWordmark />
         </Link>
-        <nav className="hidden items-center gap-1 text-sm font-medium text-cocoa xl:flex">
-          {navLinks.map((link) => (
+        <nav className="hidden items-center justify-self-center gap-0 text-sm font-medium text-cocoa xl:flex" aria-label="Primary navigation">
+          {desktopNavLinks.map((link) => (
             <Link
               key={`${link.href.pathname}-${link.href.hash ?? 'root'}`}
               href={link.href}
               scroll
-              className="rounded-full px-3 py-2 transition-colors hover:bg-porcelain hover:text-primary"
+              className="whitespace-nowrap rounded-full px-3 py-2.5 transition-colors hover:bg-porcelain hover:text-espresso focus-visible:bg-porcelain"
             >
               {link.label}
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-3">
-          <Button href="/apply" className="hidden xl:inline-flex" variant="secondary">
+        <div className="flex items-center justify-self-end gap-2.5">
+          <Button href="/apply" className={`hidden xl:inline-flex ${headerButtonClass}`} variant="secondary">
             Apply as Creator
           </Button>
-          <Button href="/companies" className="hidden md:inline-flex" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
+          <Button href="/companies" className={`hidden xl:inline-flex ${headerButtonClass}`}>
             Market My Company
-          </Button>
-          <Button
-            href="/companies"
-            className="px-4 py-2 text-xs md:hidden"
-            variant="secondary"
-            iconRight={<ArrowRight className="h-3.5 w-3.5" aria-hidden />}
-          >
-            For Companies
           </Button>
           <button
             type="button"
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-primary/15 bg-white text-cocoa shadow-card transition hover:border-primary hover:text-primary md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#ECE8EC] bg-white text-cocoa transition hover:border-primary/25 hover:bg-porcelain hover:text-espresso xl:hidden"
           >
             {menuOpen ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
           </button>
@@ -100,56 +83,51 @@ export const SiteHeader = () => {
       </div>
       {menuOpen && (
         <>
-          <div
-            className="fixed inset-0 z-40 bg-espresso/20 backdrop-blur-sm md:hidden"
+          <button
+            type="button"
+            tabIndex={-1}
+            aria-label="Close navigation menu"
+            className="fixed inset-0 z-40 cursor-default bg-espresso/10 backdrop-blur-sm xl:hidden"
             onClick={() => setMenuOpen(false)}
-            aria-hidden
           />
-          <motion.div
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden"
-          >
-            <div className="fixed inset-x-4 top-20 z-50 rounded-[32px] border border-primary/15 bg-white p-6 shadow-soft">
+          <div className="xl:hidden">
+            <div id="mobile-navigation" className="fixed inset-x-3 top-[76px] z-50 rounded-[28px] border border-[#ECE8EC] bg-white p-5 shadow-soft sm:inset-x-6">
               <div className="mb-4 flex items-center justify-between">
-                <p className="text-sm font-semibold uppercase tracking-[0.14em] text-cocoa">Menu</p>
+                <p className="text-sm font-semibold text-espresso">Menu</p>
                 <button
                   type="button"
                   aria-label="Close navigation menu"
                   onClick={() => setMenuOpen(false)}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-primary/15 text-cocoa transition hover:border-primary hover:text-primary"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#ECE8EC] text-cocoa transition hover:border-primary/25 hover:bg-porcelain hover:text-espresso"
                 >
                   <X className="h-5 w-5" aria-hidden />
                 </button>
               </div>
-              <nav className="flex flex-col gap-2 text-base font-semibold text-espresso">
+              <nav className="flex flex-col gap-1 text-base font-semibold text-espresso" aria-label="Mobile navigation">
                 {navLinks.map((link) => (
                   <Link
                     key={`mobile-${link.href.pathname}-${link.href.hash ?? 'root'}`}
                     href={link.href}
                     scroll
                     onClick={() => setMenuOpen(false)}
-                    className="rounded-xl px-3 py-3 transition hover:bg-porcelain hover:text-primary"
+                    className="rounded-xl px-4 py-3 transition hover:bg-porcelain hover:text-espresso"
                   >
                     {link.label}
                   </Link>
                 ))}
               </nav>
-              <div className="mt-6 grid gap-3">
-                <Button href="/companies" variant="ghost" className="w-full">
+              <div className="mt-5 grid gap-3 border-t border-[#ECE8EC] pt-5">
+                <Button href="/companies" className="w-full" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
                   Market My Company
                 </Button>
-                <Button href="/apply" className="w-full" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
-                  Apply Free
+                <Button href="/apply" className="w-full" variant="secondary">
+                  Apply as Creator
                 </Button>
               </div>
-              <p className="mt-6 text-center text-xs text-cocoa">Clear terms. Professional opportunities.</p>
             </div>
-          </motion.div>
+          </div>
         </>
       )}
-    </motion.header>
+    </header>
   );
 };
