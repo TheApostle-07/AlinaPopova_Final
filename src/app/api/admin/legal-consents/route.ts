@@ -1,7 +1,6 @@
-import { NextResponse } from 'next/server';
 import { ADMIN_COOKIE, isValidAdminSession } from '@/lib/admin-auth';
 import { adminError, adminErrorFrom, adminSuccess } from '@/lib/admin-response';
-import { getContactInquiries } from '@/lib/database';
+import { getLegalConsents } from '@/lib/database';
 
 const authorized = (request: Request) => {
   const cookieHeader = request.headers.get('cookie') ?? '';
@@ -12,8 +11,8 @@ const authorized = (request: Request) => {
 export async function GET(request: Request) {
   if (!authorized(request)) return adminError('Admin authentication is required.', 'UNAUTHORIZED', [], 401);
   try {
-    return adminSuccess({ inquiries: await getContactInquiries() });
+    return adminSuccess({ consents: await getLegalConsents() });
   } catch (error) {
-    return adminErrorFrom(error, 'Unable to load inbox messages. Please check the database connection.', []);
+    return adminErrorFrom(error, 'Unable to load legal consent records. Please check the database connection.', []);
   }
 }

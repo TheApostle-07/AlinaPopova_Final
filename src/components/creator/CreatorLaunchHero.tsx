@@ -1,8 +1,10 @@
 import { ArrowRight, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { CreatorLaunchDashboard } from '@/components/creator/CreatorLaunchDashboard';
+import { TypingText } from '@/components/creator/TypingText';
 
 const services = ['UGC', 'Instagram', 'YouTube', 'Livestreams', 'Product Demos', 'Creator Campaigns'];
+const heroWords = ['Modern Brands', 'Product Launches', 'Social Campaigns', 'Livestream Sales', 'Human Content'];
 
 export const CreatorLaunchHero = () => (
   <>
@@ -13,7 +15,8 @@ export const CreatorLaunchHero = () => (
           <BadgeCheck className="h-4 w-4" aria-hidden /> Creator Marketing Studio
         </p>
         <h1 className="mt-5 font-display text-[2.5rem] font-semibold leading-[1.08] tracking-normal text-espresso sm:text-5xl lg:text-6xl">
-          Creator-Led Growth for Modern Brands
+          <span className="sr-only">Creator-Led Growth for Modern Brands</span>
+          <span aria-hidden="true"><span className="block sm:inline">Creator-Led Growth for</span>{' '}<TypingText words={heroWords} className="mt-1 flex sm:mt-0 sm:inline-flex" /></span>
         </h1>
         <p className="mx-auto mt-5 max-w-3xl text-[0.95rem] leading-6 text-cocoa sm:text-lg sm:leading-8">
           We help companies plan and execute UGC, social content, livestreams, product demos, and creator-led campaigns, supported by a trusted network of trained creators.

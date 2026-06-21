@@ -53,6 +53,42 @@ export interface ContactInquiryRecord {
   createdAt: string;
 }
 
+export type ComplaintStatus = 'new' | 'under_review' | 'needs_information' | 'paused' | 'escalated' | 'resolved' | 'closed';
+export type ComplaintSeverity = 'low' | 'medium' | 'high' | 'urgent';
+
+export interface ComplaintRecord {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string | null;
+  reporterRole: string;
+  issueType: string;
+  relatedEntity: string;
+  description: string;
+  urgency: ComplaintSeverity;
+  evidenceUrl: string | null;
+  status: ComplaintStatus;
+  severity: ComplaintSeverity;
+  adminNotes: string | null;
+  resolution: string | null;
+  createdAt: string;
+}
+
+export interface LegalConsentRecord {
+  id: string;
+  userType: 'creator' | 'company' | 'general';
+  userId: string | null;
+  formType: string;
+  consentText: string;
+  legalVersion: string;
+  accepted: boolean;
+  ip: string | null;
+  userAgent: string | null;
+  email: string | null;
+  phone: string | null;
+  createdAt: string;
+}
+
 export type CampaignStatus = 'new_brief' | 'discovery' | 'scoped' | 'active' | 'complete' | 'declined';
 
 export type CompanyBriefStatus = 'new_brief' | 'qualified' | 'needs_call' | 'proposal_needed' | 'proposal_sent' | 'negotiation' | 'confirmed' | 'in_production' | 'delivered' | 'completed' | 'lost' | 'rejected_unsafe';
@@ -121,6 +157,7 @@ let operationsSchemaPromise: Promise<void> | null = null;
 let legalConsentSchemaPromise: Promise<void> | null = null;
 let companyBriefSchemaPromise: Promise<void> | null = null;
 let companyBriefMatchSchemaPromise: Promise<void> | null = null;
+let complaintSchemaPromise: Promise<void> | null = null;
 
 const createSqlClient = async () => {
   const connectionString = process.env.DATABASE_URL;
@@ -286,6 +323,117 @@ export const recordLegalConsent = async ({
       ${accepted}, ${ip ?? null}, ${userAgent ?? null}, ${email ?? null}, ${phone ?? null}
     )
   `;
+};
+
+export const getLegalConsents = async (): Promise<LegalConsentRecord[]> => {
+  await ensureLegalConsentsSchema();
+  const sql = await getSqlClient();
+  const rows = await sql`
+    SELECT
+      id::text AS id,
+      user_type AS "userType",
+      user_id AS "userId",
+      form_type AS "formType",
+      consent_text AS "consentText",
+      legal_version AS "legalVersion",
+      accepted,
+      ip,
+      user_agent AS "userAgent",
+      email,
+      phone,
+      created_at AS "createdAt"
+    FROM legal_consents
+    ORDER BY created_at DESC
+    LIMIT 250
+  `;
+  return rows as unknown as LegalConsentRecord[];
+};
+
+export const ensureComplaintsSchema = async () => {
+  complaintSchemaPromise ??= (async () => {
+    const sql = await getSqlClient();
+    await sql`
+      CREATE TABLE IF NOT EXISTS complaints (
+        id BIGSERIAL PRIMARY KEY,
+        full_name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone TEXT,
+        reporter_role TEXT NOT NULL,
+        issue_type TEXT NOT NULL,
+        related_entity TEXT NOT NULL DEFAULT '',
+        description TEXT NOT NULL,
+        urgency TEXT NOT NULL DEFAULT 'medium',
+        evidence_url TEXT,
+        status TEXT NOT NULL DEFAULT 'new',
+        severity TEXT NOT NULL DEFAULT 'medium',
+        admin_notes TEXT,
+        resolution TEXT,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS complaints_status_created_idx ON complaints (status, created_at DESC)`;
+  })();
+  return complaintSchemaPromise;
+};
+
+export const createComplaint = async ({
+  fullName,
+  email,
+  phone,
+  reporterRole,
+  issueType,
+  relatedEntity,
+  description,
+  urgency,
+  evidenceUrl
+}: Omit<ComplaintRecord, 'id' | 'status' | 'severity' | 'adminNotes' | 'resolution' | 'createdAt'>) => {
+  await ensureComplaintsSchema();
+  const sql = await getSqlClient();
+  const rows = await sql`
+    INSERT INTO complaints (full_name, email, phone, reporter_role, issue_type, related_entity, description, urgency, severity, evidence_url)
+    VALUES (${fullName}, ${email}, ${phone}, ${reporterRole}, ${issueType}, ${relatedEntity}, ${description}, ${urgency}, ${urgency}, ${evidenceUrl})
+    RETURNING id::text AS id
+  `;
+  return rows[0]?.id as string | undefined;
+};
+
+export const getComplaints = async (): Promise<ComplaintRecord[]> => {
+  await ensureComplaintsSchema();
+  const sql = await getSqlClient();
+  const rows = await sql`
+    SELECT
+      id::text AS id,
+      full_name AS "fullName",
+      email,
+      phone,
+      reporter_role AS "reporterRole",
+      issue_type AS "issueType",
+      related_entity AS "relatedEntity",
+      description,
+      urgency,
+      evidence_url AS "evidenceUrl",
+      status,
+      severity,
+      admin_notes AS "adminNotes",
+      resolution,
+      created_at AS "createdAt"
+    FROM complaints
+    ORDER BY CASE severity WHEN 'urgent' THEN 1 WHEN 'high' THEN 2 WHEN 'medium' THEN 3 ELSE 4 END, created_at DESC
+  `;
+  return rows as unknown as ComplaintRecord[];
+};
+
+export const updateComplaint = async ({ id, status, severity, adminNotes, resolution }: Pick<ComplaintRecord, 'id' | 'status' | 'severity' | 'adminNotes' | 'resolution'>) => {
+  await ensureComplaintsSchema();
+  const sql = await getSqlClient();
+  const rows = await sql`
+    UPDATE complaints
+    SET status = ${status}, severity = ${severity}, admin_notes = ${adminNotes}, resolution = ${resolution}, updated_at = NOW()
+    WHERE id = ${id}::bigint
+    RETURNING id::text AS id
+  `;
+  return rows.length > 0;
 };
 
 export const createContactInquiry = async ({

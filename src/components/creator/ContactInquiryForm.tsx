@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { CheckCircle2, Send } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { COMPANY_INQUIRY_CONSENT, CONTACT_CONSENT, companyAgreementLinks } from '@/lib/legal';
+import { safeJsonFetch } from '@/lib/safe-json-fetch';
 
 type InquiryType = 'creator_support' | 'brand_inquiry' | 'safety_concern' | 'general';
 
@@ -43,7 +44,7 @@ export const ContactInquiryForm = ({ initialInquiryType = 'brand_inquiry' }: Con
     setMessage('');
     try {
       const isCompanyInquiry = form.inquiryType === 'brand_inquiry';
-      const response = await fetch('/api/contact-inquiries', {
+      const result = await safeJsonFetch<{ id: string }>('/api/contact-inquiries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -63,8 +64,7 @@ export const ContactInquiryForm = ({ initialInquiryType = 'brand_inquiry' }: Con
           } : {}
         })
       });
-      const result = await response.json();
-      if (!response.ok || !result.ok) throw new Error(result.error ?? 'Unable to send your message right now.');
+      if (!result.ok) throw new Error(result.error ?? 'Unable to send your message right now.');
       setForm({ ...initialForm, inquiryType: initialInquiryType });
       setStatus('success');
       setMessage(isCompanyInquiry ? 'Your campaign brief has been received. We will respond using the contact details you provided.' : 'Your message has been received. The relevant team will respond using the contact details you provided.');
@@ -77,7 +77,7 @@ export const ContactInquiryForm = ({ initialInquiryType = 'brand_inquiry' }: Con
   const isCompanyInquiry = form.inquiryType === 'brand_inquiry';
   const consentCopy = isCompanyInquiry ? COMPANY_INQUIRY_CONSENT : CONTACT_CONSENT;
   const consentLabel = isCompanyInquiry
-    ? 'I have read and agree to the Terms, Privacy Policy, Company Agreement Summary, Refund Policy, and Safety Policy.'
+    ? 'I have read and agree to the Terms, Privacy Policy, Company Agreement Summary, Refund Policy, Content Usage Policy, Payment Policy, and Safety Policy.'
     : 'I agree to be contacted about this request.';
 
   return (

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import type { Route } from 'next';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { ArrowRight, Menu, X } from 'lucide-react';
 import { LogoWordmark } from '@/components/LogoWordmark';
 import { Button } from '@/components/ui/Button';
@@ -27,6 +28,7 @@ const desktopNavLinks = navLinks.slice(0, -1);
 const headerButtonClass = 'h-11 min-h-0 whitespace-nowrap px-5 py-0 text-sm shadow-none hover:shadow-none';
 
 export const SiteHeader = () => {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -43,6 +45,8 @@ export const SiteHeader = () => {
       document.body.style.overflow = '';
     };
   }, [menuOpen]);
+
+  if (pathname.startsWith('/admin')) return null;
 
   return (
     <header className={`sticky top-0 z-[60] border-b border-black/[0.06] bg-white/90 backdrop-blur-xl transition-shadow ${scrolled ? 'shadow-header' : 'shadow-none'}`}>

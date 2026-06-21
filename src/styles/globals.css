@@ -33,6 +33,16 @@ a:focus-visible {
   background-color: rgba(199, 53, 114, 0.12);
 }
 
+@keyframes typingCursor {
+  0%, 45% {
+    opacity: 1;
+  }
+
+  46%, 100% {
+    opacity: 0.18;
+  }
+}
+
 input[type='checkbox'] {
   accent-color: #c73572;
 }
