@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowUp, Building2, CheckCircle2, FileText, UsersRound } from 'lucide-react';
 import { PageHero } from '@/components/creator/PageHero';
+import { LegalTableOfContents } from '@/components/creator/LegalTableOfContents';
 import { SectionWrapper } from '@/components/layout/SectionWrapper';
 import { LEGAL_POLICY_VERSION } from '@/lib/legal';
 
@@ -97,23 +98,6 @@ const LegalMeaningGrid = ({ meaning }: { meaning: LegalMeaning }) => (
   </section>
 );
 
-const LegalTableOfContents = ({ sections }: { sections: LegalSection[] }) => (
-  <>
-    <nav className="sticky top-28 hidden rounded-[30px] border border-[#ECE8EC] bg-white p-6 shadow-card lg:block" aria-label="Legal page sections">
-      <p className="text-sm font-semibold text-espresso">On this page</p>
-      <ol className="mt-5 space-y-3 text-sm leading-6 text-cocoa">
-        {sections.map((section, index) => <li key={section.title}><a href={`#legal-${index + 1}`} className="transition hover:text-primary">{index + 1}. {section.title}</a></li>)}
-      </ol>
-    </nav>
-    <details className="rounded-[28px] border border-[#ECE8EC] bg-white p-6 shadow-card lg:hidden">
-      <summary className="cursor-pointer font-semibold text-espresso">On this page</summary>
-      <ol className="mt-5 space-y-3 text-sm leading-6 text-cocoa">
-        {sections.map((section, index) => <li key={section.title}><a href={`#legal-${index + 1}`}>{index + 1}. {section.title}</a></li>)}
-      </ol>
-    </details>
-  </>
-);
-
 const LegalSectionCard = ({ section, index }: { section: LegalSection; index: number }) => (
   <section id={`legal-${index + 1}`} className="scroll-mt-28 rounded-[34px] border border-[#ECE8EC] bg-white p-7 shadow-card sm:p-9">
     <p className="text-sm font-semibold text-primary">Section {index + 1}</p>
@@ -157,7 +141,7 @@ export const LegalPage = ({
         <LegalSummaryCard summary={summary} lastUpdated={lastUpdated} version={version} />
         <LegalMeaningGrid meaning={meaning} />
         <div className="mt-10 grid gap-8 lg:grid-cols-[250px_minmax(0,1fr)]">
-          <aside><LegalTableOfContents sections={sections} /></aside>
+          <aside><LegalTableOfContents items={sections.map((section, index) => ({ id: `legal-${index + 1}`, title: section.title }))} /></aside>
           <article className="space-y-6">
             {sections.map((section, index) => <LegalSectionCard key={section.title} section={section} index={index} />)}
           </article>

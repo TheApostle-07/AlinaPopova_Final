@@ -202,16 +202,16 @@ export const AgencyHomeSections = () => (
         title="Marketing built around creators, content, and live attention."
         copy="One studio for strategy, talent, content production, livestreams, and campaign delivery."
       />
-      <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mx-auto mt-12 grid max-w-[1080px] gap-8 lg:grid-cols-2">
         {servicePillars.map((pillar) => {
           const Icon = pillar.icon;
           return (
-            <Card key={pillar.title} className="flex min-h-[550px] flex-col p-8 sm:p-9">
+            <Card key={pillar.title} className="flex min-h-[520px] flex-col p-8 sm:p-10">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary"><Icon className="h-6 w-6" aria-hidden /></span>
               <p className="mt-7 text-sm font-semibold text-primary">{pillar.label}</p>
-              <h3 className="mt-3 font-display text-2xl leading-tight text-espresso">{pillar.title}</h3>
-              <p className="mt-4 text-sm leading-6 text-cocoa">{pillar.copy}</p>
-              <ul className="mt-6 space-y-3 text-sm leading-6 text-cocoa">
+              <h3 className="mt-3 font-display text-3xl leading-tight text-espresso">{pillar.title}</h3>
+              <p className="mt-4 max-w-xl text-base leading-7 text-cocoa">{pillar.copy}</p>
+              <ul className="mt-7 grid gap-3 text-sm leading-6 text-cocoa sm:grid-cols-2">
                 {pillar.items.map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}
               </ul>
               <p className="mt-auto border-t border-[#ECE8EC] pt-5 text-sm font-semibold leading-6 text-espresso">{pillar.outcome}</p>
@@ -273,16 +273,16 @@ export const AgencyHomeSections = () => (
         title="Start with a campaign package."
         copy="Choose a contained creator-led format first, then expand only when the brief, rights, and campaign fit are clear."
       />
-      <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mx-auto mt-12 grid max-w-[1080px] gap-8 lg:grid-cols-2">
         {packages.map((item) => {
           const Icon = item.icon;
           return (
-            <Card key={item.name} className="flex min-h-[500px] flex-col p-8 sm:p-9">
+            <Card key={item.name} className="flex min-h-[460px] flex-col p-8 sm:p-10">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary"><Icon className="h-6 w-6" aria-hidden /></span>
-              <h3 className="mt-7 font-display text-2xl leading-tight text-espresso">{item.name}</h3>
+              <h3 className="mt-7 font-display text-3xl leading-tight text-espresso">{item.name}</h3>
               <p className="mt-4 text-lg font-semibold text-primary">{item.price}</p>
               <p className="mt-5 text-sm leading-6 text-cocoa"><span className="font-semibold text-espresso">Best for:</span> {item.bestFor}</p>
-              <ul className="mt-6 space-y-3 text-sm leading-6 text-cocoa">
+              <ul className="mt-6 grid gap-3 text-sm leading-6 text-cocoa sm:grid-cols-2">
                 {item.includes.map((feature) => <li key={feature} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{feature}</li>)}
               </ul>
               <Button href="/companies/start" variant="ghost" className="mt-auto self-start">{item.cta}</Button>

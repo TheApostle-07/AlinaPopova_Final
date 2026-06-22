@@ -15,7 +15,7 @@ export const BrandLogo = ({ variant = 'dark', className }: BrandLogoProps) => {
         className={clsx(
           'relative h-10 w-10 shrink-0 overflow-hidden rounded-2xl',
           isLight
-            ? 'border border-white/80 bg-white p-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.18)]'
+            ? 'border border-white/10 bg-[#282527] p-px shadow-[0_18px_50px_rgba(0,0,0,0.18)]'
             : 'border border-black/[0.06] bg-[#282527] p-px'
         )}
       >

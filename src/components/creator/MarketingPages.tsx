@@ -48,10 +48,10 @@ const companyStandards = [
 ];
 
 const ServiceGrid = () => (
-  <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+  <div className="mx-auto grid max-w-[1080px] gap-8 lg:grid-cols-2">
     {servicePillars.map((service) => {
       const Icon = service.icon;
-      return <Card key={service.title} className="flex min-h-[470px] flex-col p-8 sm:p-9"><span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary"><Icon className="h-6 w-6" aria-hidden /></span><h3 className="mt-7 font-display text-2xl leading-tight text-espresso">{service.title}</h3><p className="mt-4 text-sm leading-6 text-cocoa">{service.description}</p><ul className="mt-6 space-y-3 text-sm leading-6 text-cocoa">{service.items.map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul><p className="mt-auto border-t border-[#ECE8EC] pt-5 text-sm font-semibold leading-6 text-espresso">{service.outcome}</p><Button href="/companies/start" variant="ghost" className="mt-5 self-start">{service.cta}</Button></Card>;
+      return <Card key={service.title} className="flex min-h-[440px] flex-col p-8 sm:p-10"><span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary"><Icon className="h-6 w-6" aria-hidden /></span><h3 className="mt-7 font-display text-3xl leading-tight text-espresso">{service.title}</h3><p className="mt-4 max-w-xl text-base leading-7 text-cocoa">{service.description}</p><ul className="mt-7 grid gap-3 text-sm leading-6 text-cocoa sm:grid-cols-2">{service.items.map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul><p className="mt-auto border-t border-[#ECE8EC] pt-5 text-sm font-semibold leading-6 text-espresso">{service.outcome}</p><Button href="/companies/start" variant="ghost" className="mt-5 self-start">{service.cta}</Button></Card>;
     })}
   </div>
 );
