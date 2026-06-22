@@ -5,7 +5,7 @@ import type { Route } from 'next';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { ArrowRight, Menu, X } from 'lucide-react';
-import { LogoWordmark } from '@/components/LogoWordmark';
+import { BrandLogo } from '@/components/BrandLogo';
 import { Button } from '@/components/ui/Button';
 
 type NavLink = {
@@ -52,7 +52,7 @@ export const SiteHeader = () => {
     <header className={`sticky top-0 z-[60] border-b border-black/[0.06] bg-white/90 backdrop-blur-xl transition-shadow ${scrolled ? 'shadow-header' : 'shadow-none'}`}>
       <div className="mx-auto flex h-[68px] max-w-[1240px] items-center justify-between px-5 sm:px-8 xl:grid xl:h-20 xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.2fr)] xl:px-10">
         <Link href="/" className="shrink-0" aria-label="Alina Popova Studio home" onClick={() => setMenuOpen(false)}>
-          <LogoWordmark />
+          <BrandLogo />
         </Link>
         <nav className="hidden items-center justify-self-center gap-0 text-sm font-medium text-cocoa xl:flex" aria-label="Primary navigation">
           {desktopNavLinks.map((link) => (

@@ -32,7 +32,7 @@ export const SectionWrapper = ({ id, children, className }: SectionWrapperProps)
       viewport={{ once: true, amount: 0.08 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
       variants={variants}
-      className={clsx('w-full py-16 sm:py-20 lg:py-28', className)}
+      className={clsx('w-full py-20 sm:py-24 lg:py-32', className)}
     >
       <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-10">{children}</div>
     </motion.section>

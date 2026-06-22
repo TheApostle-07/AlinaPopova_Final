@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 interface TypingTextProps {
   words: string[];
+  prefix?: string;
   typingSpeed?: number;
   deletingSpeed?: number;
   pauseMs?: number;
@@ -24,7 +25,7 @@ const useReducedMotion = () => {
   return reducedMotion;
 };
 
-export const TypingText = ({ words, typingSpeed = 85, deletingSpeed = 45, pauseMs = 1500, className = '' }: TypingTextProps) => {
+export const TypingText = ({ words, prefix, typingSpeed = 85, deletingSpeed = 45, pauseMs = 1500, className = '' }: TypingTextProps) => {
   const reducedMotion = useReducedMotion();
   const safeWords = useMemo(() => words.filter(Boolean), [words]);
   const [wordIndex, setWordIndex] = useState(0);
@@ -50,11 +51,14 @@ export const TypingText = ({ words, typingSpeed = 85, deletingSpeed = 45, pauseM
 
       if (deleting) {
         const nextText = activeWord.slice(0, Math.max(0, text.length - 1));
-        setText(nextText);
         if (!nextText) {
+          const nextWordIndex = (wordIndex + 1) % safeWords.length;
           setDeleting(false);
-          setWordIndex((current) => (current + 1) % safeWords.length);
+          setWordIndex(nextWordIndex);
+          setText((safeWords[nextWordIndex] ?? '').slice(0, 1));
+          return;
         }
+        setText(nextText);
         return;
       }
 
@@ -67,8 +71,9 @@ export const TypingText = ({ words, typingSpeed = 85, deletingSpeed = 45, pauseM
   }, [deleting, pauseMs, paused, reducedMotion, safeWords, text, typingSpeed, deletingSpeed, wordIndex]);
 
   return (
-    <span className={`inline-block min-w-0 text-left align-baseline text-primary sm:min-w-[16ch] ${className}`}>
-      <span className="inline-flex items-baseline whitespace-nowrap">
+    <span className={`inline-block min-w-0 text-center align-baseline text-primary ${className}`}>
+      <span className="inline-flex items-baseline justify-center whitespace-nowrap">
+        {prefix && <span className="mr-3 text-espresso">{prefix}</span>}
         <span>{text}</span>
         {!reducedMotion && <span aria-hidden="true" className="ml-1 inline-block h-[0.82em] w-[2px] translate-y-[0.08em] rounded-full bg-primary/70 animate-[typingCursor_1.15s_ease-in-out_infinite]" />}
       </span>

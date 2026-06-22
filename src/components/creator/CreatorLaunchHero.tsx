@@ -4,35 +4,39 @@ import { CreatorLaunchDashboard } from '@/components/creator/CreatorLaunchDashbo
 import { TypingText } from '@/components/creator/TypingText';
 
 const services = ['UGC', 'Instagram', 'YouTube', 'Livestreams', 'Product Demos', 'Creator Campaigns'];
-const heroWords = ['Modern Brands', 'Product Launches', 'Social Campaigns', 'Livestream Sales', 'Human Content'];
+const desktopHeroWords = ['Brands That Need Trust', 'Products That Need Attention', 'Campaigns That Need Creators', 'Businesses Ready to Scale', 'Creators Ready for Opportunity'];
+const mobileHeroWords = ['Trust', 'Attention', 'Campaigns', 'Sales', 'Opportunity'];
 
 export const CreatorLaunchHero = () => (
   <>
   <section className="bg-white">
-    <div className="mx-auto flex min-h-[62vh] max-w-[1200px] flex-col items-center justify-center px-5 pb-0 pt-14 text-center sm:px-8 sm:pb-10 sm:pt-20 lg:min-h-[68vh] lg:px-10 lg:pt-24">
-      <div className="mx-auto max-w-[860px]">
+    <div className="mx-auto flex min-h-[66vh] max-w-[1240px] flex-col items-center justify-center px-5 pb-4 pt-20 text-center sm:px-8 sm:pb-12 sm:pt-24 lg:min-h-[72vh] lg:px-10 lg:pt-28">
+      <div className="mx-auto w-full max-w-[1180px]">
         <p className="inline-flex items-center gap-2 rounded-full border border-neon/25 bg-porcelain px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-primary sm:text-xs">
           <BadgeCheck className="h-4 w-4" aria-hidden /> Creator Marketing Studio
         </p>
-        <h1 className="mt-5 font-display text-[2.5rem] font-semibold leading-[1.02] tracking-normal text-espresso sm:text-5xl lg:text-6xl">
-          <span className="sr-only">Creator-Led Growth for Modern Brands</span>
+        <h1 className="mx-auto mt-6 max-w-[1180px] font-display text-[2.625rem] font-semibold leading-[0.98] tracking-[-0.045em] text-espresso sm:text-6xl xl:text-[5.25rem]">
+          <span className="sr-only">Creator-Led Growth for Brands That Need Trust, Content, and Sales</span>
           <span aria-hidden="true">
-            <span className="block sm:inline">Creator-Led Growth</span>{' '}
-            <span className="block text-[0.77em] sm:inline sm:text-[1em]">for <TypingText words={heroWords} /></span>
+            <span className="block">Creator-Led Growth</span>
+            <span className="mt-2 block text-[0.72em] tracking-[-0.035em] xl:mt-3 xl:text-[0.6em]">
+              <span className="hidden xl:inline-block"><TypingText prefix="for" words={desktopHeroWords} className="w-[900px] text-center" /></span>
+              <span className="inline-block xl:hidden"><TypingText prefix="for" words={mobileHeroWords} className="min-w-[10ch] text-center" /></span>
+            </span>
           </span>
         </h1>
-        <p className="mx-auto mt-5 max-w-3xl text-[0.95rem] leading-6 text-cocoa sm:text-lg sm:leading-8">
-          We help companies plan and execute UGC, social content, livestreams, product demos, and creator-led campaigns, supported by a trusted network of trained creators.
+        <p className="mx-auto mt-7 max-w-4xl text-base leading-7 text-cocoa sm:text-lg sm:leading-8">
+          Companies get managed creator campaigns for content, trust, livestreams, and sales. Creators get a safer professional network for brand-safe opportunities, clear terms, and paid work if selected.
         </p>
-        <div className="mt-7 flex flex-wrap justify-center gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button href="/companies/start" className="min-w-[170px]" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Market My Company</Button>
           <Button href="/apply" className="min-w-[154px]" variant="secondary">Apply as Creator</Button>
         </div>
-        <p className="mt-6 text-sm font-medium text-cocoa">{services.join('  •  ')}</p>
+        <p className="mt-7 text-sm font-medium tracking-[0.02em] text-cocoa">{services.join('  •  ')}</p>
       </div>
     </div>
   </section>
-  <section className="border-b border-neon/15 bg-white pb-12 sm:pb-16">
+  <section className="border-b border-neon/15 bg-white pb-16 sm:pb-20">
     <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-10"><CreatorLaunchDashboard /></div>
   </section>
   </>
