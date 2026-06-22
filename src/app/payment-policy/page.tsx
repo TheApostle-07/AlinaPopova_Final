@@ -10,4 +10,9 @@ const sections: LegalSection[] = [
   { title: 'Disputes and records', paragraphs: ['Payment questions should be raised promptly with the campaign reference and written confirmation. Payment, invoice, and payout records may be retained for operational, accounting, and legal reasons.'] }
 ];
 
-export default function PaymentPolicyPage() { return <LegalPage eyebrow="Policy" title="Payment Policy" description="How company invoices, creator payouts, and disclosed fees are handled." summary="Company payments follow a written proposal or invoice. Creator payouts and any disclosed commission or fee are confirmed in writing before paid work is accepted." sections={sections} />; }
+const meaning = {
+  companies: ['Invoice schedules, taxes, campaign charges, and delivery expectations are set in the written proposal or agreement.', 'Raise payment questions with the campaign reference before a dispute becomes harder to resolve.'],
+  creators: ['Payout, timing, scope, usage rights, and any disclosed fee are shared before you accept paid work.', 'No joining fee or hidden deduction is supported. Ask for clarification before accepting if anything is unclear.']
+};
+
+export default function PaymentPolicyPage() { return <LegalPage eyebrow="Policy" title="Payment Policy" description="How company invoices, creator payouts, and disclosed fees are handled." summary="Company payments follow a written proposal or invoice. Creator payouts and any disclosed commission or fee are confirmed in writing before paid work is accepted." sections={sections} meaning={meaning} />; }

@@ -12,4 +12,9 @@ const sections: LegalSection[] = [
   { title: 'Cookies, children, and updates', paragraphs: ['The site may use essential cookies and limited analytics. See the Cookie Policy for more information. Creator applications are for adults aged 18 or older. This policy may change as the studio or applicable requirements evolve.'] }
 ];
 
-export default function PrivacyPage() { return <LegalPage eyebrow="Legal" title="Privacy Policy" description="How application, inquiry, campaign, and consent data is handled." summary="We collect only information needed to review creator applications, respond to company inquiries, manage campaigns, process payments, maintain safety records, and improve the website. We do not sell creator data, and creator contact details are not publicly listed without consent." sections={sections} />; }
+const meaning = {
+  companies: ['Your brief is used to respond, scope campaign options, and maintain operational or legal records.', 'Business and contact information is not sold or used outside legitimate studio operations.'],
+  creators: ['Your profile, boundaries, and contact details are reviewed for applications and matching, not publicly listed.', 'You can request access, correction, deletion, or consent withdrawal where applicable.']
+};
+
+export default function PrivacyPage() { return <LegalPage eyebrow="Legal" title="Privacy Policy" description="How application, inquiry, campaign, and consent data is handled." summary="We collect only information needed to review creator applications, respond to company inquiries, manage campaigns, process payments, maintain safety records, and improve the website. We do not sell creator data, and creator contact details are not publicly listed without consent." sections={sections} meaning={meaning} />; }

@@ -11,4 +11,9 @@ const sections: LegalSection[] = [
   { title: 'No guarantees', paragraphs: ['Creator-led marketing can support attention, trust, and content delivery, but sales, virality, follower growth, revenue, and platform outcomes are not guaranteed.'] }
 ];
 
-export default function BrandAgreementPage() { return <LegalPage eyebrow="Company summary" title="Company Agreement Summary" description="The essentials for a clear, respectful creator marketing engagement." summary="A company inquiry is not a booking. Campaign terms, creator fit, usage rights, payment, revisions, and cancellation are confirmed in writing before work begins." sections={sections} />; }
+const meaning = {
+  companies: ['A brief starts the conversation; it does not book creators or guarantee campaign results.', 'Written scope controls deliverables, revisions, payment, creator acceptance, content rights, and cancellation.'],
+  creators: ['Campaigns must be shared with clear scope, payout, usage rights, and professional conduct expectations.', 'You stay free to review, ask questions about, accept, or decline an opportunity before it begins.']
+};
+
+export default function BrandAgreementPage() { return <LegalPage eyebrow="Company summary" title="Company Agreement Summary" description="The essentials for a clear, respectful creator marketing engagement." summary="A company inquiry is not a booking. Campaign terms, creator fit, usage rights, payment, revisions, and cancellation are confirmed in writing before work begins." sections={sections} meaning={meaning} />; }

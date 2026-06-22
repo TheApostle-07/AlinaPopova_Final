@@ -10,4 +10,9 @@ const sections: LegalSection[] = [
   { title: 'Removal and misuse', paragraphs: ['Content may not be used beyond agreed rights. If an issue is identified, the studio may request pause, removal, clarification, or a new written rights agreement.'] }
 ];
 
-export default function ContentUsagePolicyPage() { return <LegalPage eyebrow="Policy" title="Content Usage Policy" description="Clear rights before creator content is posted, edited, boosted, or reused." summary="Creator content cannot be used however a company wants unless written rights are granted. Usage should be clear before content is used commercially." sections={sections} />; }
+const meaning = {
+  companies: ['Organic use, paid ads, whitelisting, edits, geography, duration, and exclusivity must be stated in writing.', 'Ask for updated rights before expanding content use beyond the original commercial agreement.'],
+  creators: ['Your work and likeness cannot be used beyond the written rights you accepted.', 'Report unauthorized use so the studio can review the issue, request a pause, or seek updated written terms.']
+};
+
+export default function ContentUsagePolicyPage() { return <LegalPage eyebrow="Policy" title="Content Usage Policy" description="Clear rights before creator content is posted, edited, boosted, or reused." summary="Creator content cannot be used however a company wants unless written rights are granted. Usage should be clear before content is used commercially." sections={sections} meaning={meaning} />; }

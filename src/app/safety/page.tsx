@@ -12,4 +12,9 @@ const sections: LegalSection[] = [
   { title: 'Complaints and consequences', paragraphs: ['A concern can be submitted through the Complaints page. We may document the issue, pause a campaign, ask for clarification, end a relationship, or escalate where required. Safety-first decisions take priority over campaign momentum.'] }
 ];
 
-export default function SafetyRoute() { return <LegalPage eyebrow="Safety" title="Clear terms. Safe work. Professional conduct." description="Standards for lawful, brand-safe, consent-based creator marketing and livestream work." summary="Every campaign should have written scope, usage rights, creator consent, clear payout terms, and professional conduct. We do not support adult, unsafe, exploitative, coercive, or unpaid commercial creator work." sections={sections} />; }
+const meaning = {
+  companies: ['Requests must stay within written scope, agreed usage rights, and respectful professional conduct.', 'Unsafe, coercive, adult, exploitative, or unpaid commercial requests can be rejected or paused.'],
+  creators: ['You can set boundaries, ask questions, decline opportunities, and report inappropriate conduct without pressure.', 'Paid work must have written scope, payout terms, and usage rights before you decide.']
+};
+
+export default function SafetyRoute() { return <LegalPage eyebrow="Safety" title="Clear terms. Safe work. Professional conduct." description="Standards for lawful, brand-safe, consent-based creator marketing and livestream work." summary="Every campaign should have written scope, usage rights, creator consent, clear payout terms, and professional conduct. We do not support adult, unsafe, exploitative, coercive, or unpaid commercial creator work." sections={sections} meaning={meaning} />; }

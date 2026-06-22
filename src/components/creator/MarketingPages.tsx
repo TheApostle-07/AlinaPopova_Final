@@ -6,10 +6,38 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 
 const servicePillars = [
-  { title: 'UGC & Social Content', description: 'UGC videos, Instagram Reels, YouTube Shorts, product demos, and ad creatives.', icon: Clapperboard },
-  { title: 'Livestream & Live Shopping', description: 'YouTube Live, Instagram Live, launch streams, live shopping, and product demos.', icon: Video },
-  { title: 'Creator Campaigns', description: 'Creator-led launches, social proof, brand storytelling, and ambassador-style content.', icon: UsersRound },
-  { title: 'Campaign Management', description: 'Creator shortlisting, scripts, approvals, usage rights, delivery, and reporting.', icon: FileCheck2 }
+  {
+    title: 'UGC & Social Content',
+    description: 'Creator-led videos that make products easier to trust, understand, and remember.',
+    icon: Clapperboard,
+    items: ['UGC product videos', 'Instagram Reels and YouTube Shorts', 'Product demos and ad creatives'],
+    outcome: 'Best for brands that need more human content and social proof.',
+    cta: 'Explore Content'
+  },
+  {
+    title: 'Livestream & Live Shopping',
+    description: 'Structured live sessions for launches, demos, education, and real-time buyer engagement.',
+    icon: Video,
+    items: ['YouTube and Instagram Live', 'Launch streams and live shopping', 'Product walkthroughs and Q&A'],
+    outcome: 'Best for brands that need attention, explanation, and guided selling.',
+    cta: 'Plan a Live Campaign'
+  },
+  {
+    title: 'Creator Campaigns',
+    description: 'Managed campaigns that connect the right creator, message, format, and platform.',
+    icon: UsersRound,
+    items: ['Creator-led launches', 'Social proof and brand storytelling', 'Awareness and ambassador content'],
+    outcome: 'Best for companies that want creator reach without management chaos.',
+    cta: 'Build Campaign'
+  },
+  {
+    title: 'Campaign Management',
+    description: 'A complete operating layer for planning, approvals, usage rights, delivery, and reporting.',
+    icon: FileCheck2,
+    items: ['Creator shortlisting and scripts', 'Approvals and usage rights', 'Delivery tracking and reporting'],
+    outcome: 'Best for teams that want clean execution from brief to delivery.',
+    cta: 'Manage My Campaign'
+  }
 ];
 
 const companyStandards = [
@@ -20,8 +48,11 @@ const companyStandards = [
 ];
 
 const ServiceGrid = () => (
-  <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-    {servicePillars.map((service) => <Card key={service.title} className="flex min-h-[246px] flex-col p-7"><service.icon className="h-7 w-7 text-primary" aria-hidden /><h3 className="mt-8 text-xl font-semibold leading-7 text-espresso">{service.title}</h3><p className="mt-4 text-sm leading-7 text-cocoa">{service.description}</p></Card>)}
+  <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+    {servicePillars.map((service) => {
+      const Icon = service.icon;
+      return <Card key={service.title} className="flex min-h-[470px] flex-col p-8 sm:p-9"><span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary"><Icon className="h-6 w-6" aria-hidden /></span><h3 className="mt-7 font-display text-2xl leading-tight text-espresso">{service.title}</h3><p className="mt-4 text-sm leading-6 text-cocoa">{service.description}</p><ul className="mt-6 space-y-3 text-sm leading-6 text-cocoa">{service.items.map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul><p className="mt-auto border-t border-[#ECE8EC] pt-5 text-sm font-semibold leading-6 text-espresso">{service.outcome}</p><Button href="/companies/start" variant="ghost" className="mt-5 self-start">{service.cta}</Button></Card>;
+    })}
   </div>
 );
 
@@ -45,7 +76,8 @@ export const ServicesPage = () => (
   <>
     <PageHero eyebrow="Services" title="Content, livestreams, and campaigns built around creators." description="From UGC and short-form social content to product demos and live shopping, each service is scoped around a practical campaign objective." actions={<CompanyCta label="Book Brand Campaign" />} />
     <SectionWrapper><ServiceGrid /></SectionWrapper>
-    <SectionWrapper className="bg-champagne/45"><div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">{[['Content marketing', 'UGC videos, Reels, Shorts, ad creatives, product demos, and organic social content.'], ['Live marketing', 'Instagram Live, YouTube Live, livestream selling, live shopping, demos, and founder sessions.'], ['Campaign management', 'Creator shortlists, hook writing, calendars, production tracking, approvals, usage rights, and reporting.'], ['Creator network', 'Creator fit, language matching, creator acceptance, safety rules, and content usage consent.']].map(([title, description]) => <Card key={title} className="p-7"><FileCheck2 className="h-7 w-7 text-primary" aria-hidden /><h2 className="mt-6 font-display text-2xl text-espresso">{title}</h2><p className="mt-3 text-sm leading-6 text-cocoa">{description}</p></Card>)}</div></SectionWrapper>
+    <SectionWrapper className="bg-champagne/45"><div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold text-primary">Choose by outcome</p><h2 className="mt-3 font-display text-3xl leading-tight text-espresso sm:text-4xl">Start with the business result you need next.</h2><p className="mt-4 text-base leading-7 text-cocoa">The right campaign is not always the biggest one. Choose the outcome, then shape the creator, content, and delivery plan around it.</p></div><div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">{[['I need content', 'UGC, Reels, Shorts, product demos, and ad creative tests.'], ['I need live attention', 'Live selling, product demos, launches, founder sessions, and Q&A.'], ['I need growth', 'A clearer content path for Instagram, YouTube, lead flow, and social proof.'], ['I need talent', 'The right creators, hosts, editors, writers, and production support.']].map(([title, description]) => <Card key={title} className="min-h-[250px] p-8"><FileCheck2 className="h-7 w-7 text-primary" aria-hidden /><h2 className="mt-6 font-display text-2xl text-espresso">{title}</h2><p className="mt-4 text-sm leading-7 text-cocoa">{description}</p></Card>)}</div></SectionWrapper>
+    <SectionWrapper><div className="mx-auto max-w-4xl rounded-[48px] border border-primary/15 bg-porcelain p-8 text-center shadow-card sm:p-12"><p className="text-sm font-semibold text-primary">Not sure where to start?</p><h2 className="mt-4 font-display text-3xl leading-tight text-espresso sm:text-4xl">Share the business goal. We will recommend the practical campaign path.</h2><p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-cocoa">A good brief covers the product, audience, platform, budget, timeline, and what success should look like. It does not lock you into a campaign.</p><div className="mt-8"><CompanyCta label="Build My Campaign" /></div></div></SectionWrapper>
   </>
 );
 

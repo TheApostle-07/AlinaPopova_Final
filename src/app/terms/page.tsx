@@ -14,4 +14,9 @@ const sections: LegalSection[] = [
   { title: 'Privacy, liability, and disputes', paragraphs: ['Personal data is handled under the Privacy Policy. We are not responsible for indirect loss, lost profit, platform algorithm changes, third-party outages, company product issues, or events outside reasonable control.', 'These Terms are governed by the laws of India, subject to applicable law. We encourage good-faith resolution first. Policies may be updated, with the current version date displayed on the relevant page.'] }
 ];
 
-export default function TermsPage() { return <LegalPage eyebrow="Legal" title="Terms & Conditions" description="Clear rules for company marketing services and the independent creator network." summary="Alina Popova Studio provides creator-led marketing services and maintains a selection-based creator network. Applications and inquiries do not guarantee work, income, sales, or a campaign. Commercial work begins only after written scope, payment, usage rights, and acceptance are confirmed." sections={sections} />; }
+const meaning = {
+  companies: ['An inquiry is not a confirmed booking or promise of sales, virality, or platform results.', 'Campaign scope, creator acceptance, usage rights, pricing, and timing must be confirmed in writing.'],
+  creators: ['Applying is free and does not guarantee selection, paid work, or income.', 'You can accept or decline opportunities and refuse any work, use, or location you do not accept.']
+};
+
+export default function TermsPage() { return <LegalPage eyebrow="Legal" title="Terms & Conditions" description="Clear rules for company marketing services and the independent creator network." summary="Alina Popova Studio provides creator-led marketing services and maintains a selection-based creator network. Applications and inquiries do not guarantee work, income, sales, or a campaign. Commercial work begins only after written scope, payment, usage rights, and acceptance are confirmed." sections={sections} meaning={meaning} />; }

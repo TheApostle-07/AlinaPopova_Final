@@ -9,4 +9,9 @@ const sections: LegalSection[] = [
   { title: 'Local application drafts', paragraphs: ['The creator application may save an unfinished draft in the current browser session. This draft remains in that browser session until submission, clearing, or browser closure.'] }
 ];
 
-export default function CookiePolicyPage() { return <LegalPage eyebrow="Policy" title="Cookie Policy" description="How essential browser storage and any future analytics tools are handled." summary="We use only the browser storage and cookies needed to operate forms, protect the site, and understand basic performance. This policy will be updated before any expanded analytics or advertising cookie use." sections={sections} />; }
+const meaning = {
+  companies: ['Essential browser storage supports reliable forms and basic site operations rather than campaign tracking or sale of data.', 'Any expanded analytics or advertising cookies will require this policy and any related consent mechanism to be updated.'],
+  creators: ['An unfinished application can be saved in the current browser session so you do not lose progress.', 'You can manage cookies through browser settings, though essential form features may be affected.']
+};
+
+export default function CookiePolicyPage() { return <LegalPage eyebrow="Policy" title="Cookie Policy" description="How essential browser storage and any future analytics tools are handled." summary="We use only the browser storage and cookies needed to operate forms, protect the site, and understand basic performance. This policy will be updated before any expanded analytics or advertising cookie use." sections={sections} meaning={meaning} />; }

@@ -11,4 +11,9 @@ const sections: LegalSection[] = [
   { title: 'Ending the relationship', paragraphs: ['Either side may end the relationship according to the relevant agreement. Existing obligations such as accepted campaign deliverables, payment, confidentiality, or usage rights may continue where written terms require.'] }
 ];
 
-export default function CreatorAgreementPage() { return <LegalPage eyebrow="Creator summary" title="Creator Agreement Summary" description="The core protections behind a professional creator relationship." summary="This is a plain-language guide, not a replacement for campaign-specific terms. Applying is free, work is never forced, and paid commercial work should be confirmed in writing before it starts." sections={sections} />; }
+const meaning = {
+  companies: ['Creator acceptance, boundaries, payout, and content rights must be clear before assigning commercial work.', 'Treat creators as independent professionals and keep requests within the agreed scope.'],
+  creators: ['Applying is free, work is not forced, and you can accept or decline each commercial opportunity.', 'Campaign-specific scope, payout, timing, usage rights, and any agency fee should be clear in writing before work starts.']
+};
+
+export default function CreatorAgreementPage() { return <LegalPage eyebrow="Creator summary" title="Creator Agreement Summary" description="The core protections behind a professional creator relationship." summary="This is a plain-language guide, not a replacement for campaign-specific terms. Applying is free, work is never forced, and paid commercial work should be confirmed in writing before it starts." sections={sections} meaning={meaning} />; }
