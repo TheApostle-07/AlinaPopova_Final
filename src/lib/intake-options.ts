@@ -22,6 +22,8 @@ export const COMPANY_BUSINESS_CATEGORIES: IntakeOption[] = [
 ];
 
 export const COMPANY_GOALS: IntakeOption[] = [
+  { value: 'content_volume', label: 'Get more content' },
+  { value: 'trust', label: 'Build buyer trust' },
   { value: 'leads', label: 'Get more leads' },
   { value: 'sales', label: 'Get more sales' },
   { value: 'awareness', label: 'Build brand awareness' },
@@ -36,7 +38,10 @@ export const COMPANY_GOALS: IntakeOption[] = [
   { value: 'ads', label: 'Create ad creatives' },
   { value: 'creator_campaign', label: 'Build a creator campaign' },
   { value: 'monetization', label: 'Monetize content or audience' },
-  { value: 'content_engine', label: 'Build a recurring content engine' }
+  { value: 'content_engine', label: 'Build a recurring content engine' },
+  { value: 'follow_up_system', label: 'Build a follow-up system' },
+  { value: 'full_package', label: 'Build a full campaign package' },
+  { value: 'not_sure', label: 'Not sure - recommend the best path' }
 ];
 
 export const COMPANY_PLATFORMS: IntakeOption[] = [
@@ -254,7 +259,7 @@ export type CompanyBriefRoutingInput = {
 
 export const recommendCompanyPackage = ({ goals, platforms, services, talentNeeds, budgetRange }: CompanyBriefRoutingInput) => {
   const hasLive = goals.includes('livestream') || platforms.includes('youtube_live') || platforms.includes('instagram_live') || services.some((service) => ['instagram_live', 'youtube_live', 'product_demo_live', 'live_shopping', 'launch_live', 'live_host'].includes(service));
-  const hasRecurringScope = goals.includes('content_engine') || services.includes('content_calendar') || services.includes('social_management') || platforms.includes('all_platforms') || ['250000_500000', '500000_plus'].includes(budgetRange);
+  const hasRecurringScope = goals.includes('content_engine') || goals.includes('full_package') || services.includes('content_calendar') || services.includes('social_management') || platforms.includes('all_platforms') || ['250000_500000', '500000_plus'].includes(budgetRange);
   const hasLaunchScope = goals.includes('product_launch') || goals.includes('awareness') || goals.includes('creator_campaign') || talentNeeds.filter((talent) => ['female_creator', 'male_creator', 'ugc_creator', 'model', 'presenter'].includes(talent)).length >= 2 || ['50000_100000', '100000_250000'].includes(budgetRange);
   const hasUgcScope = goals.includes('ugc') || services.some((service) => ['ugc_videos', 'instagram_reels', 'youtube_shorts', 'product_demo_videos', 'testimonial_videos'].includes(service)) || talentNeeds.includes('ugc_creator');
 

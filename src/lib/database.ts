@@ -21,6 +21,7 @@ export interface ApplicationRecord {
   availabilityTags: string[];
   experienceLevel: string;
   expectedPayout: string;
+  roleDetails: Record<string, Record<string, string | string[]>>;
   availability: string;
   boundaries: string;
   status: ApplicationStatus;
@@ -673,6 +674,7 @@ export const getApplications = async (): Promise<ApplicationRecord[]> => {
       COALESCE(a.availability_tags, '[]'::jsonb) AS "availabilityTags",
       COALESCE(a.experience_level, '') AS "experienceLevel",
       COALESCE(a.expected_payout, '') AS "expectedPayout",
+      COALESCE(a.payload -> 'roleDetails', '{}'::jsonb) AS "roleDetails",
       a.availability,
       COALESCE(a.boundaries, '') AS boundaries,
       a.status,

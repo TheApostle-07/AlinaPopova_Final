@@ -2,8 +2,8 @@ import type { ReactNode } from 'react';
 
 interface PageHeroProps {
   eyebrow: string;
-  title: string;
-  description: string;
+  title: ReactNode;
+  description: ReactNode;
   actions?: ReactNode;
   highlights?: string[];
   compact?: boolean;
