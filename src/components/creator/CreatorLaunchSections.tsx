@@ -69,7 +69,7 @@ export const CreatorLaunchSections = ({ creatorFocused = false }: CreatorLaunchS
     <SectionWrapper className="bg-white">
       <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Included for selected creators</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">What selected creators may receive</p>
           <h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Everything you need to become camera-ready and brand-ready.</h2>
           <p className="mt-4 text-base leading-7 text-cocoa">The program is free to apply for and selection-based. We do not use inflated value claims or hide charges behind training language.</p>
           <p className="mt-6 inline-flex rounded-full border border-primary/15 bg-porcelain px-4 py-3 text-sm font-semibold text-espresso">Total upfront cost: ₹0</p>
@@ -88,7 +88,7 @@ export const CreatorLaunchSections = ({ creatorFocused = false }: CreatorLaunchS
 
     <SectionWrapper>
       <div className="text-center">
-        <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Built for the new creator economy</p>
+        <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Skills that brands can use responsibly</p>
         <h2 className="mx-auto mt-4 max-w-3xl font-display text-4xl leading-tight text-espresso">Build skills that brands can use responsibly.</h2>
       </div>
       <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -128,7 +128,7 @@ export const CreatorLaunchSections = ({ creatorFocused = false }: CreatorLaunchS
     </SectionWrapper>
 
     <SectionWrapper className="text-center">
-      <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Applications are open</p>
+      <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Apply when the path fits your skills</p>
       <h2 className="mx-auto mt-4 max-w-3xl font-display text-4xl leading-tight text-espresso">Your creator path should feel safe, clear, and professional from day one.</h2>
       <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-cocoa">Apply if you are 18+, serious about camera-based work, and interested in Instagram, YouTube Live, livestream hosting, product demos, modelling, or brand-safe creator opportunities.</p>
       <div className="mt-7 flex flex-wrap justify-center gap-3"><Button href="/apply" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Apply Free</Button><Button href="/safety" variant="secondary">Read Safety Promise</Button></div>

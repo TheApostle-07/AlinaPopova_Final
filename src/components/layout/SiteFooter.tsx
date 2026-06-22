@@ -33,19 +33,27 @@ const FooterMobileGroup = ({ title, links }: typeof groups[number]) => (
   </details>
 );
 
-const FooterCtaPanel = () => (
+const FooterCtaPanel = ({ eyebrow, title, copy, primaryLabel, primaryHref, secondaryLabel, secondaryHref }: { eyebrow: string; title: string; copy: string; primaryLabel: string; primaryHref: '/companies/start' | '/apply'; secondaryLabel: string; secondaryHref: '/pricing' | '/safety' | '/contact' | '/apply' }) => (
   <section className="bg-softwhite px-5 pt-20 sm:px-8 sm:pt-24 lg:px-10 lg:pt-32">
-    <div className="mx-auto max-w-[1160px] rounded-[52px] border border-primary/15 bg-porcelain px-7 py-14 text-center shadow-card sm:px-12 lg:px-16 lg:py-16">
-      <p className="text-sm font-semibold text-primary">Start here</p>
-      <h2 className="mt-4 font-display text-3xl leading-tight text-espresso sm:text-4xl">Start with the right path.</h2>
-      <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-cocoa">Companies can plan a creator-led campaign. Creators can apply to join a professional network. Both begin with clear terms and no pressure.</p>
+    <div className="cta-surface mx-auto max-w-[1160px] rounded-[52px] border border-primary/15 px-7 py-14 text-center shadow-card sm:px-12 lg:px-16 lg:py-16">
+      <p className="text-sm font-semibold text-primary">{eyebrow}</p>
+      <h2 className="mt-4 font-display text-3xl leading-tight text-espresso sm:text-4xl">{title}</h2>
+      <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-cocoa">{copy}</p>
       <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-        <Link href="/companies/start" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-card transition hover:bg-[#A8245C]"><span>Market My Company</span><ArrowRight className="h-4 w-4" aria-hidden /></Link>
-        <Link href="/apply" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#ECE8EC] bg-white px-6 py-3 text-sm font-semibold text-espresso shadow-card transition hover:border-primary/25 hover:bg-porcelain">Apply as Creator</Link>
+        <Link href={primaryHref} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-card transition hover:bg-[#A8245C]"><span>{primaryLabel}</span><ArrowRight className="h-4 w-4" aria-hidden /></Link>
+        <Link href={secondaryHref} className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#ECE8EC] bg-white px-6 py-3 text-sm font-semibold text-espresso shadow-card transition hover:border-primary/25 hover:bg-porcelain">{secondaryLabel}</Link>
       </div>
     </div>
   </section>
 );
+
+const getFooterCta = (pathname: string) => {
+  if (pathname.startsWith('/companies')) return { eyebrow: 'For companies', title: 'Ready to plan a creator-led campaign?', copy: 'Share your product, objective, platform, budget range, and timeline. We will route the brief to the right campaign format.', primaryLabel: 'Share a Campaign Brief', primaryHref: '/companies/start' as const, secondaryLabel: 'View Pricing', secondaryHref: '/pricing' as const };
+  if (pathname.startsWith('/creators') || pathname.startsWith('/creator-launch-program')) return { eyebrow: 'For creators', title: 'Ready to apply as a creator or talent partner?', copy: 'Submit your role, skills, availability, and boundaries. If shortlisted, the next step is a discovery call or matching review.', primaryLabel: 'Apply Free', primaryHref: '/apply' as const, secondaryLabel: 'Read Safety Policy', secondaryHref: '/safety' as const };
+  if (pathname === '/services') return { eyebrow: 'Find the right service path', title: 'Not sure which service fits?', copy: 'Start with your business goal. We will recommend the practical campaign path before you commit to a larger scope.', primaryLabel: 'Build My Campaign', primaryHref: '/companies/start' as const, secondaryLabel: 'View Pricing', secondaryHref: '/pricing' as const };
+  if (pathname === '/pricing') return { eyebrow: 'Package guidance', title: 'Need help choosing a package?', copy: 'Share a brief and we will suggest the best starting point based on your goal, platform, content need, and budget range.', primaryLabel: 'Share a Campaign Brief', primaryHref: '/companies/start' as const, secondaryLabel: 'Contact Studio', secondaryHref: '/contact' as const };
+  return { eyebrow: 'Next step', title: 'Plan the right creator-led path.', copy: 'Companies can share a campaign goal. Creators can apply to join a professional network with clear terms and no pressure.', primaryLabel: 'Market My Company', primaryHref: '/companies/start' as const, secondaryLabel: 'Apply as Creator', secondaryHref: '/apply' as const };
+};
 
 const FooterBrand = () => (
   <div>
@@ -69,8 +77,8 @@ export const SiteFooter = () => {
 
   return (
     <>
-      {showCta && <FooterCtaPanel />}
-      <footer className="rounded-t-[56px] bg-[#111014] text-white">
+      {showCta && <FooterCtaPanel {...getFooterCta(pathname)} />}
+      <footer className="footer-surface rounded-t-[56px] text-white">
         <div className="mx-auto max-w-[1240px] px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
           <div className="hidden gap-10 lg:grid lg:grid-cols-[1.7fr_repeat(4,minmax(0,0.8fr))] lg:gap-12">
             <FooterBrand />

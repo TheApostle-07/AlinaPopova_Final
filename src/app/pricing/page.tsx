@@ -29,6 +29,15 @@ const creatorIncluded = [
   'Paid opportunity shortlisting'
 ];
 
+const pricingFactors = [
+  ['Number of creators', 'The size and specialist mix of the creator roster.'],
+  ['Content formats', 'UGC, short-form video, product demos, lives, or campaign assets.'],
+  ['Usage rights', 'Organic posting, paid ads, whitelisting, duration, and exclusivity.'],
+  ['Livestream complexity', 'Host requirements, runbooks, moderation, and production support.'],
+  ['Editing and revisions', 'Approval rounds, production effort, and post-production needs.'],
+  ['Timeline urgency', 'Lead time, creator availability, and compressed delivery windows.']
+];
+
 export default function PricingPage() {
   return (
     <>
@@ -52,22 +61,31 @@ export default function PricingPage() {
           ))}
         </div>
       </SectionWrapper>
+      <SectionWrapper className="bg-porcelain/45">
+        <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">Campaign scope</p><h2 className="mt-3 font-display text-4xl leading-tight text-espresso">What affects pricing.</h2><p className="mt-4 text-base leading-7 text-cocoa">Every campaign is scoped around the work, rights, timing, and talent needed to deliver it professionally.</p></div>
+        <div className="mx-auto mt-10 grid max-w-[1080px] gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {pricingFactors.map(([title, copy]) => <Card key={title} className="min-h-[220px] p-7 sm:p-8"><p className="text-sm font-semibold text-primary">{title}</p><p className="mt-4 text-sm leading-7 text-cocoa">{copy}</p></Card>)}
+        </div>
+      </SectionWrapper>
       <SectionWrapper className="bg-white">
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <div>
             <CircleDollarSign className="h-8 w-8 text-primary" aria-hidden />
-            <p className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-primary">For creators</p>
+            <p className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-primary">Creator transparency</p>
             <h2 className="mt-3 font-display text-4xl text-espresso">For creators, applying is free.</h2>
             <p className="mt-4 text-base leading-7 text-cocoa">Creators do not pay a joining fee. Selected creators do not carry training debt. Alina Popova earns through company service fees or agreed marketing and management fees from agency-supported revenue. Any creator-side fee, commission, or deduction is shared clearly before a paid opportunity is accepted.</p>
             <p className="mt-5 text-sm leading-6 text-cocoa">Prices, creator payouts, deliverables, and timelines depend on campaign scope, usage rights, creator tier, company requirements, and written agreement. Income is not guaranteed for creators. Sales are not guaranteed for companies.</p>
           </div>
           <div className="overflow-x-auto rounded-xl border border-primary/15 bg-white shadow-card">
             <table className="w-full min-w-[440px] text-left text-sm">
-              <thead className="bg-porcelain text-espresso"><tr><th className="p-4 font-semibold">Included for selected creators</th><th className="p-4 font-semibold">Upfront cost</th></tr></thead>
+              <thead className="bg-porcelain text-espresso"><tr><th className="p-4 font-semibold">What selected creators may receive</th><th className="p-4 font-semibold">Upfront cost</th></tr></thead>
               <tbody>{creatorIncluded.map((item) => <tr key={item} className="border-t border-primary/10"><td className="p-4 text-cocoa">{item}</td><td className="p-4 font-semibold text-primary">₹0</td></tr>)}</tbody>
             </table>
           </div>
         </div>
+      </SectionWrapper>
+      <SectionWrapper>
+        <div className="cta-surface mx-auto max-w-4xl rounded-[48px] border border-primary/15 p-8 text-center shadow-card sm:p-12"><p className="text-sm font-semibold text-primary">Usage rights and creator payout clarity</p><h2 className="mt-4 font-display text-3xl leading-tight text-espresso sm:text-4xl">Need help choosing a package?</h2><p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-cocoa">Paid ad usage, whitelisting, long-term usage, exclusivity, creator tier, and production complexity can change pricing and creator payout terms. These are confirmed before campaign work begins.</p><div className="mt-8 flex flex-wrap justify-center gap-3"><Button href="/companies/start">Share a Campaign Brief</Button><Button href="/contact" variant="secondary">Contact Studio</Button></div></div>
       </SectionWrapper>
     </>
   );

@@ -15,4 +15,4 @@ const meaning = {
   creators: ['Payout, timing, scope, usage rights, and any disclosed fee are shared before you accept paid work.', 'No joining fee or hidden deduction is supported. Ask for clarification before accepting if anything is unclear.']
 };
 
-export default function PaymentPolicyPage() { return <LegalPage eyebrow="Policy" title="Payment Policy" description="How company invoices, creator payouts, and disclosed fees are handled." summary="Company payments follow a written proposal or invoice. Creator payouts and any disclosed commission or fee are confirmed in writing before paid work is accepted." sections={sections} meaning={meaning} />; }
+export default function PaymentPolicyPage() { return <LegalPage eyebrow="Payments" title="Payment Policy" description="How company payments, creator payouts, agency fees, revenue share, disputes, and taxes are handled." summary="Company payments, creator payouts, agency fees, and revenue-share arrangements must be confirmed in writing. Creators do not pay a joining fee and do not carry training debt." sections={sections} meaning={meaning} />; }

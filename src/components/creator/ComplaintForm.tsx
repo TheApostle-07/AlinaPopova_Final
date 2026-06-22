@@ -33,9 +33,9 @@ export const ComplaintForm = () => {
   return (
     <form onSubmit={submit} className="rounded-[40px] border border-[#ECE8EC] bg-white p-6 shadow-soft sm:p-8">
       <div className="text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">Private complaint route</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">Questions or concerns</p>
         <h2 className="mt-3 font-display text-3xl text-espresso">Report a concern safely and clearly.</h2>
-        <p className="mt-3 text-sm leading-6 text-cocoa">Do not include identity documents, intimate media, passwords, or anything you do not need to share for an initial review.</p>
+        <p className="mt-3 text-sm leading-6 text-cocoa">Share only what is needed to explain the concern. Do not include identity documents, intimate media, passwords, or anything unnecessary for an initial review.</p>
       </div>
       <div className="mt-7 grid gap-5 sm:grid-cols-2">
         <label className="text-sm font-semibold text-cocoa">Full name<input required value={form.fullName} onChange={(event) => update('fullName', event.target.value)} className={fieldClass} autoComplete="name" placeholder="Example: Alina Sharma" /></label>

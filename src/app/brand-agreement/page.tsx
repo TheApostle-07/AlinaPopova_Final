@@ -16,4 +16,4 @@ const meaning = {
   creators: ['Campaigns must be shared with clear scope, payout, usage rights, and professional conduct expectations.', 'You stay free to review, ask questions about, accept, or decline an opportunity before it begins.']
 };
 
-export default function BrandAgreementPage() { return <LegalPage eyebrow="Company summary" title="Company Agreement Summary" description="The essentials for a clear, respectful creator marketing engagement." summary="A company inquiry is not a booking. Campaign terms, creator fit, usage rights, payment, revisions, and cancellation are confirmed in writing before work begins." sections={sections} meaning={meaning} />; }
+export default function BrandAgreementPage() { return <LegalPage eyebrow="Company Agreement" title="Company Agreement Summary" description="A simple explanation of how company briefs, campaign scope, creator matching, usage rights, payments, revisions, and cancellations work." summary="Submitting a brief does not confirm a campaign. Final campaign terms are confirmed through written proposal, invoice, or service agreement." sections={sections} meaning={meaning} />; }

@@ -15,4 +15,4 @@ const meaning = {
   creators: ['Your work and likeness cannot be used beyond the written rights you accepted.', 'Report unauthorized use so the studio can review the issue, request a pause, or seek updated written terms.']
 };
 
-export default function ContentUsagePolicyPage() { return <LegalPage eyebrow="Policy" title="Content Usage Policy" description="Clear rights before creator content is posted, edited, boosted, or reused." summary="Creator content cannot be used however a company wants unless written rights are granted. Usage should be clear before content is used commercially." sections={sections} meaning={meaning} />; }
+export default function ContentUsagePolicyPage() { return <LegalPage eyebrow="Usage Rights" title="Content Usage Policy" description="How creator content may be posted, edited, promoted, licensed, extended, or restricted." summary="Creator content cannot be used beyond agreed rights. Organic posting, paid ads, whitelisting, editing, repurposing, exclusivity, duration, and geography must be confirmed in writing before commercial use." sections={sections} meaning={meaning} />; }

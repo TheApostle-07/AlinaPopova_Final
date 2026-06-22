@@ -63,8 +63,8 @@ const LegalSummaryCard = ({ summary, lastUpdated, version }: { summary: string; 
       <div className="flex items-center gap-4">
         <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-porcelain text-primary"><FileText className="h-6 w-6" aria-hidden /></span>
         <div>
-          <p className="font-semibold text-espresso">Plain-English summary</p>
-          <p className="mt-1 text-sm leading-6 text-cocoa">The key points before you read the full policy.</p>
+          <p className="font-semibold text-espresso">At a glance</p>
+          <p className="mt-1 text-sm leading-6 text-cocoa">Key things to know before you continue.</p>
         </div>
       </div>
       <PolicyVersionBadge lastUpdated={lastUpdated} version={version} />
@@ -76,8 +76,8 @@ const LegalSummaryCard = ({ summary, lastUpdated, version }: { summary: string; 
 const LegalMeaningGrid = ({ meaning }: { meaning: LegalMeaning }) => (
   <section className="mt-8">
     <div className="mx-auto max-w-3xl text-center">
-      <p className="text-sm font-semibold text-primary">What this means for you</p>
-      <h2 className="mt-3 font-display text-3xl leading-tight text-espresso sm:text-4xl">Clear expectations on both sides of the work.</h2>
+      <p className="text-sm font-semibold text-primary">What this means</p>
+      <h2 className="mt-3 font-display text-3xl leading-tight text-espresso sm:text-4xl">Your rights and responsibilities, clearly set out.</h2>
     </div>
     <div className="mt-8 grid gap-6 lg:grid-cols-2">
       <section className="rounded-[34px] border border-[#ECE8EC] bg-white p-7 shadow-card sm:p-9">
@@ -118,9 +118,9 @@ const RelatedPolicies = () => (
 
 const LegalContactCard = () => (
   <section className="rounded-[34px] border border-[#ECE8EC] bg-white p-7 shadow-card sm:p-9">
-    <p className="text-sm font-semibold text-espresso">Questions, rights requests, or a concern</p>
-    <p className="mt-3 text-sm leading-7 text-cocoa">For privacy, safety, payment, or policy questions, contact support@alinapopova.com. Do not send identity documents or private media through ordinary email.</p>
-    <Link href="/complaints" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary underline underline-offset-4">Report a concern <ArrowUp className="h-4 w-4 rotate-45" aria-hidden /></Link>
+    <p className="text-sm font-semibold text-espresso">Questions or concerns</p>
+    <p className="mt-3 text-sm leading-7 text-cocoa">Contact Alina Popova Studio if you need help understanding this policy, reporting a concern, or requesting a privacy-related action.</p>
+    <div className="mt-5 flex flex-wrap gap-4"><Link href="/contact" className="inline-flex items-center gap-2 text-sm font-semibold text-primary underline underline-offset-4">Contact Studio <ArrowUp className="h-4 w-4 rotate-45" aria-hidden /></Link><Link href="/complaints" className="inline-flex items-center gap-2 text-sm font-semibold text-primary underline underline-offset-4">Submit a complaint <ArrowUp className="h-4 w-4 rotate-45" aria-hidden /></Link></div>
   </section>
 );
 
@@ -136,7 +136,7 @@ export const LegalPage = ({
 }: LegalPageProps) => (
   <>
     <PageHero compact eyebrow={eyebrow} title={title} description={description} />
-    <SectionWrapper className="bg-softwhite">
+    <SectionWrapper className="!py-10 bg-softwhite sm:!py-12 lg:!py-14">
       <div id="legal-top" className="mx-auto max-w-[1120px]">
         <LegalSummaryCard summary={summary} lastUpdated={lastUpdated} version={version} />
         <LegalMeaningGrid meaning={meaning} />
