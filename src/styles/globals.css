@@ -86,6 +86,14 @@ a {
   gap: 0.75rem;
 }
 
+.card-icon {
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .card-icon {
+  transform: translateY(-2px);
+}
+
 @media (max-width: 639px) {
   .cta-row {
     width: 100%;
