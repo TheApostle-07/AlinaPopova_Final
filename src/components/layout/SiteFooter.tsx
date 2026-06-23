@@ -72,7 +72,7 @@ const FooterBrand = () => (
 export const SiteFooter = () => {
   const pathname = usePathname();
   const year = new Date().getFullYear();
-  const showCta = pathname !== '/' && !legalPaths.has(pathname);
+  const showCta = pathname !== '/' && pathname !== '/companies' && !legalPaths.has(pathname);
 
   if (pathname.startsWith('/admin')) return null;
 

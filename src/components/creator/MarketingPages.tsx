@@ -1,6 +1,8 @@
-import { ArrowRight, CheckCircle2, Clapperboard, FileCheck2, ShieldCheck, UsersRound, Video } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clapperboard, FileCheck2, Radio, ShieldCheck, UsersRound, Video } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { PageHero } from '@/components/creator/PageHero';
 import { BrandOperationsPreview } from '@/components/creator/BrandOperationsPreview';
+import { Reveal } from '@/components/motion/Reveal';
 import { SectionWrapper } from '@/components/layout/SectionWrapper';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -48,76 +50,75 @@ const companyStandards = [
 ];
 
 const campaignProtections = [
-  ['Written scope before work', 'Goals, deliverables, timings, and revision boundaries are confirmed before production starts.'],
-  ['Creator acceptance before assignment', 'Creators review the brief and choose whether the opportunity is a fit before they are assigned.'],
-  ['Usage rights stated clearly', 'Organic, paid, editing, whitelisting, and extended use are agreed in writing.'],
-  ['Payment and payout terms documented', 'Company payment and creator payout terms are recorded before commercial work begins.']
-];
+  ['Written scope before work', 'Scope, deliverables, timing, and revisions are confirmed first.'],
+  ['Creator acceptance before assignment', 'Creators review the brief before assignment.'],
+  ['Usage rights stated clearly', 'Organic, paid, editing, and extended use are written.'],
+  ['Payment and payout terms documented', 'Commercial payment terms are recorded before work.']
+] as const;
 
 const companyPackageCards = [
   {
     title: 'Campaign strategy',
-    description: 'We turn your product, offer, audience, platform, budget, and timeline into a clear campaign direction.',
-    items: ['Campaign goal', 'Target audience', 'Platform priority', 'Content angle', 'Deliverable plan'],
-    outcome: 'You know what is being created, why it matters, and how it supports the business objective.',
+    description: 'Turn your product, audience, offer, platform, and budget into a clear campaign direction.',
+    items: ['Campaign goal', 'Audience fit', 'Content angle', 'Delivery plan'],
+    outcome: 'Know what is being created and why.',
     icon: FileCheck2
   },
   {
-    title: 'Creator and talent matching',
-    description: 'We shortlist creators, presenters, hosts, models, editors, writers, and production support around the campaign need.',
-    items: ['UGC creators', 'Campaign talent', 'Livestream hosts', 'Presenters', 'Editors and writers'],
-    outcome: 'Your campaign gets the right talent mix instead of random creator outreach.',
+    title: 'Creator matching',
+    description: 'Shortlist the right creators, hosts, models, editors, writers, or production support.',
+    items: ['UGC creators', 'Models / hosts', 'Editors / writers', 'Production talent'],
+    outcome: 'Get the right talent mix for the campaign.',
     icon: UsersRound
   },
   {
     title: 'Content production',
-    description: 'We create or coordinate human content that makes your product easier to understand, trust, and remember.',
-    items: ['UGC videos', 'Instagram Reels', 'YouTube Shorts', 'Product demos', 'Scripts and hooks'],
-    outcome: 'Your brand receives usable content assets for organic marketing and agreed usage.',
+    description: 'Create campaign assets that make your product easier to understand, trust, and remember.',
+    items: ['UGC videos', 'Reels / Shorts', 'Product demos', 'Ad creatives'],
+    outcome: 'Receive usable content assets.',
     icon: Clapperboard
   },
   {
     title: 'Platform marketing',
-    description: 'We shape content and campaign formats for the channel where your audience needs to see you.',
-    items: ['Instagram Reels and Stories', 'YouTube Shorts', 'Instagram Live', 'YouTube Live', 'Content calendar support'],
-    outcome: 'Your campaign is built for the channel, not copied blindly across every platform.',
+    description: 'Shape content for the platforms where your buyers pay attention.',
+    items: ['Instagram', 'YouTube', 'Livestreams', 'Landing / follow-up direction'],
+    outcome: 'Avoid copying the same content everywhere.',
     icon: Video
   },
   {
-    title: 'Livestream and product demos',
-    description: 'For products, launches, education, and live selling, we structure sessions with hosts, talking points, demos, and CTA moments.',
-    items: ['Live runbook', 'Trained host', 'Product demo flow', 'Q&A planning', 'Post-live clips'],
-    outcome: 'Your brand gets a prepared live marketing moment, not an unplanned live session.',
-    icon: Video
+    title: 'Livestream system',
+    description: 'Build prepared live sessions for product demos, launches, Q&A, or guided selling.',
+    items: ['Host flow', 'Runbook', 'CTA moments', 'Post-live clips'],
+    outcome: 'Run lives with structure, not guesswork.',
+    icon: Radio
   },
   {
-    title: 'Campaign management and reporting',
-    description: 'We manage briefs, approvals, creator communication, usage rights, deliverables, and campaign notes.',
-    items: ['Creator coordination', 'Approval flow', 'Usage rights clarity', 'Delivery tracking', 'Campaign notes'],
-    outcome: 'You get a cleaner campaign process from brief to delivery.',
+    title: 'Campaign management',
+    description: 'Keep the campaign organized from brief to delivery with approvals, rights, and reporting notes.',
+    items: ['Approvals', 'Usage rights', 'Creator coordination', 'Reporting notes'],
+    outcome: 'Keep execution clean and trackable.',
     icon: ShieldCheck
   }
 ];
 
-const fullPackageGroups: Array<[string, string[]]> = [
-  ['Strategy', ['Campaign objective', 'Audience and offer clarity', 'Platform recommendation', 'Content angle', 'Campaign roadmap']],
-  ['Content', ['UGC videos', 'Reels and Shorts', 'Product demos', 'Ad creatives', 'Scripts and hooks']],
-  ['Platforms', ['Instagram', 'YouTube', 'Instagram and YouTube Live', 'Website direction', 'WhatsApp follow-up path']],
-  ['Talent', ['UGC creators', 'Models and presenters', 'Livestream hosts', 'Editors and writers', 'Production support']],
-  ['Management', ['Creator shortlisting', 'Creator acceptance', 'Approvals', 'Usage rights', 'Delivery tracking and reporting']],
-  ['Follow-up', ['CTA planning', 'Lead capture direction', 'WhatsApp follow-up suggestions', 'Campaign message flow', 'Post-campaign next steps']]
-];
+const fullPackageGroups = [
+  ['Strategy', ['Campaign objective', 'Audience and offer', 'Platform recommendation', 'Content roadmap']],
+  ['Content', ['UGC videos', 'Reels / Shorts', 'Product demos', 'Ad creatives', 'Hooks and scripts']],
+  ['Talent', ['Creators', 'Models', 'Presenters', 'Livestream hosts', 'Editors / writers']],
+  ['Platforms', ['Instagram', 'YouTube', 'Livestreams', 'Website direction', 'WhatsApp follow-up']],
+  ['Delivery', ['Approvals', 'Usage rights', 'Tracking', 'Campaign notes']]
+] as const;
 
 const platformPaths = [
-  { title: 'Instagram Growth', description: 'For visual content, Reels, Stories, creator proof, product education, and community attention.', items: ['Reels', 'UGC videos', 'Product storytelling', 'Campaign content'], bestFor: 'Beauty, fashion, wellness, local services, lifestyle products, and personal brands.', cta: 'Build Instagram Campaign' },
-  { title: 'YouTube Growth', description: 'For useful videos, product education, trust-building, Shorts, and searchable content.', items: ['YouTube Shorts', 'Creator-led demos', 'Educational angles', 'Clip repurposing'], bestFor: 'Education, services, apps, personal brands, and trust-heavy businesses.', cta: 'Build YouTube Campaign' },
-  { title: 'Livestream Sales', description: 'For live attention, product demos, launch sessions, Q&A, community engagement, and guided selling.', items: ['Instagram Live', 'YouTube Live', 'Live runbook', 'Product demo flow'], bestFor: 'Product launches, beauty, fashion, wellness, education, and live commerce.', cta: 'Plan Live Campaign' },
-  { title: 'UGC and Ad Creative', description: 'For human product content for organic posting, paid testing, landing pages, and social proof.', items: ['UGC videos', 'Testimonials-style content', 'Problem-solution videos', 'Hook options'], bestFor: 'E-commerce, apps, service businesses, and offers that need trust.', cta: 'Start UGC Pack' },
-  { title: 'E-commerce and Product Sales', description: 'For content that helps buyers understand the product, trust it, and take the next step.', items: ['Product demos', 'Launch content', 'Live shopping support', 'Product FAQ content'], bestFor: 'D2C, premium local products, beauty, fashion, jewellery, wellness, and lifestyle.', cta: 'Promote My Product' },
-  { title: 'WhatsApp and Lead Follow-up', description: 'For creator-led attention connected to a practical follow-up path after an inquiry.', items: ['CTA planning', 'Lead capture direction', 'WhatsApp suggestions', 'Landing page direction'], bestFor: 'Clinics, education, coaching, real estate, local services, and appointment businesses.', cta: 'Build Lead Path' },
-  { title: 'All-Platform Campaign', description: 'For brands that need Instagram, YouTube, UGC, livestreams, and follow-up phased properly.', items: ['Platform roadmap', 'Monthly content system', 'Creator campaign plan', 'Repurposing plan'], bestFor: 'Brands ready for a recurring creator marketing engine.', cta: 'Build Full Package' },
-  { title: 'Not Sure Yet', description: 'For companies that know the business goal but need a practical campaign route.', items: ['Campaign diagnosis', 'Platform recommendation', 'Service recommendation', 'Next-step plan'], bestFor: 'Teams that want a focused starting point before committing to a larger scope.', cta: 'Recommend My Path' }
-];
+  { id: 'instagram-growth', title: 'Instagram Growth', description: 'For Reels, Stories, creator proof, visual product storytelling, launches, and daily social activity.', items: ['Reels', 'UGC videos', 'Product storytelling', 'Campaign content'], bestFor: 'Beauty, fashion, wellness, local services, lifestyle products, and personal brands.', cta: 'Build Instagram Path', icon: Video },
+  { id: 'youtube-growth', title: 'YouTube Growth', description: 'For Shorts, product explainers, useful videos, trust-building content, and searchable education.', items: ['YouTube Shorts', 'Explainers', 'Live planning', 'Clip repurposing'], bestFor: 'Education, apps, services, personal brands, and products that need explanation.', cta: 'Build YouTube Path', icon: Clapperboard },
+  { id: 'livestream-sales', title: 'Livestream Sales', description: 'For live attention, product demos, launches, Q&A, community engagement, and guided selling.', items: ['Instagram Live', 'YouTube Live', 'Runbook', 'Host flow'], bestFor: 'Launches, beauty, fashion, wellness, education, and live commerce.', cta: 'Plan Live Campaign', icon: Radio },
+  { id: 'ugc-ad-creative', title: 'UGC & Ad Creative', description: 'For human product content used in organic posts, paid tests, landing pages, and social proof.', items: ['UGC videos', 'Demos', 'Hook variations', 'Ad creative angles'], bestFor: 'E-commerce, apps, product brands, service businesses, and offers that need trust.', cta: 'Start UGC Path', icon: Clapperboard },
+  { id: 'ecommerce-product-sales', title: 'E-commerce & Product Sales', description: 'For content that helps buyers understand the product, trust it, and take the next step.', items: ['Product demos', 'FAQ-style content', 'Live shopping support', 'Launch assets'], bestFor: 'D2C, jewellery, beauty, wellness, fashion, lifestyle, and premium products.', cta: 'Promote Product', icon: UsersRound },
+  { id: 'whatsapp-lead-followup', title: 'WhatsApp & Lead Follow-Up', description: 'For creator-led attention connected to a practical inquiry and follow-up path.', items: ['CTA planning', 'Lead flow direction', 'WhatsApp follow-up ideas', 'Landing page direction'], bestFor: 'Clinics, coaching, local services, real estate, education, and appointment businesses.', cta: 'Build Lead Path', icon: FileCheck2 },
+  { id: 'all-platform-campaign', title: 'All-Platform Campaign', description: 'For brands ready to combine Instagram, YouTube, UGC, lives, and follow-up in phases.', items: ['Platform roadmap', 'Content system', 'Live calendar', 'Repurposing plan'], bestFor: 'Companies ready for a recurring creator marketing engine.', cta: 'Build Full Package', icon: ShieldCheck },
+  { id: 'not-sure-yet', title: 'Not Sure Yet', description: 'For companies that know the business goal but need help choosing the service, platform, or package.', items: ['Campaign diagnosis', 'Platform recommendation', 'Service mix', 'Package suggestion'], bestFor: 'Early-stage campaign planning.', cta: 'Recommend My Path', icon: FileCheck2 }
+] as const;
 
 const businessOutcomes = [
   ['More human content', 'Creator-led content helps your brand feel more real, clear, and relatable.'],
@@ -125,8 +126,8 @@ const businessOutcomes = [
   ['Stronger social proof', 'UGC, creator videos, and campaign content can help reduce buyer hesitation.'],
   ['More platform activity', 'Reels, Shorts, Lives, and repurposed clips help your brand show up more consistently.'],
   ['Cleaner launch support', 'Campaign planning helps launches feel structured instead of rushed.'],
-  ['Better campaign clarity', 'Written scope, deliverables, and usage rights reduce confusion before production begins.']
-];
+  ['Clearer campaign decisions', 'Reporting notes help you choose the next step.']
+] as const;
 
 const ServiceGrid = () => (
   <div className="mx-auto grid max-w-[1080px] gap-8 lg:grid-cols-2">
@@ -137,51 +138,186 @@ const ServiceGrid = () => (
   </div>
 );
 
-const CompanyCta = ({ label = 'Build My Campaign' }: { label?: string }) => <Button href="/companies/start" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>{label}</Button>;
+interface CompanySectionIntroProps {
+  eyebrow: string;
+  title: string;
+  copy: string;
+}
+
+const CompanySectionIntro = ({ eyebrow, title, copy }: CompanySectionIntroProps) => (
+  <div className="mx-auto max-w-3xl text-center">
+    <p className="text-sm font-semibold text-primary">{eyebrow}</p>
+    <h2 className="mt-4 font-display text-3xl leading-tight text-espresso sm:text-4xl lg:text-[3rem]">{title}</h2>
+    <p className="mt-5 text-base leading-7 text-cocoa sm:text-lg sm:leading-8">{copy}</p>
+  </div>
+);
+
+const CompanyIconTile = ({ icon: Icon }: { icon: LucideIcon }) => (
+  <span className="card-icon flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary">
+    <Icon className="h-6 w-6" aria-hidden />
+  </span>
+);
+
+const CompanyBulletList = ({ items, compact = false }: { items: readonly string[]; compact?: boolean }) => (
+  <ul className={`grid text-sm leading-6 text-cocoa ${compact ? 'mt-5 gap-2.5' : 'mt-7 gap-3 sm:grid-cols-2'}`}>
+    {items.map((item) => (
+      <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>
+    ))}
+  </ul>
+);
+
+const CompanyCta = ({ label = 'Build My Campaign' }: { label?: string }) => (
+  <Button href="/companies/start" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>{label}</Button>
+);
 
 export const CompanyMarketingPage = () => (
   <>
     <PageHero
       eyebrow="For Companies"
-      title={<>Creator-led marketing for brands that need <span className="hero-gradient-text">content, trust, and attention.</span></>}
-      description="Alina Popova Studio helps companies plan and execute UGC, Instagram, YouTube, livestreams, product demos, creator campaigns, and follow-up systems - with clear scope, creator consent, usage rights, and campaign delivery."
-      actions={<><CompanyCta label="Build My Campaign" /><Button href="/pricing" variant="secondary">View Packages</Button><p className="basis-full pt-2 text-center text-sm font-semibold text-cocoa">UGC <span aria-hidden>·</span> Instagram <span aria-hidden>·</span> YouTube <span aria-hidden>·</span> Livestreams <span aria-hidden>·</span> Product Demos <span aria-hidden>·</span> Creator Campaigns <span aria-hidden>·</span> Follow-up Systems</p></>}
+      title={<>Creator-led marketing for brands that need <span className="hero-gradient-text">trust, content, and sales support.</span></>}
+      description="Plan UGC, Instagram, YouTube, livestreams, product demos, creator campaigns, and follow-up paths through one managed studio system."
+      actions={<><CompanyCta label="Build My Campaign" /><Button href="/pricing" variant="secondary">View Packages</Button><p className="basis-full pt-2 text-center text-sm font-semibold text-cocoa">UGC <span aria-hidden>·</span> Instagram <span aria-hidden>·</span> YouTube <span aria-hidden>·</span> Livestreams <span aria-hidden>·</span> Product Demos <span aria-hidden>·</span> Creator Campaigns <span aria-hidden>·</span> Follow-Up Paths</p></>}
     />
 
     <SectionWrapper>
-      <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">What companies get</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">A complete creator-led marketing package, built around your business goal.</h2><p className="mt-4 text-base leading-7 text-cocoa">Instead of hiring creators, editors, writers, and managers separately, we plan the campaign, choose the platform path, manage the people, and deliver usable marketing assets.</p></div>
-      <div className="mt-12 grid gap-7 md:grid-cols-2 xl:grid-cols-3">{companyPackageCards.map((card) => { const Icon = card.icon; return <Card key={card.title} className="flex min-h-[410px] flex-col rounded-[34px] p-8 sm:p-9"><span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary"><Icon className="h-6 w-6" aria-hidden /></span><h3 className="mt-7 font-display text-2xl leading-tight text-espresso">{card.title}</h3><p className="mt-4 text-sm leading-7 text-cocoa">{card.description}</p><ul className="mt-6 space-y-3 text-sm leading-6 text-cocoa">{card.items.map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul><p className="mt-auto border-t border-[#ECE8EC] pt-5 text-sm font-semibold leading-6 text-espresso">{card.outcome}</p></Card>; })}</div>
+      <Reveal>
+        <CompanySectionIntro
+          eyebrow="What companies get"
+          title="A complete creator-led marketing system around your business goal."
+          copy="Instead of managing scattered creators, editors, writers, and platforms yourself, you get one structured path from campaign idea to delivery."
+        />
+        <div className="mt-12 grid auto-rows-fr gap-7 md:grid-cols-2 xl:grid-cols-3">
+          {companyPackageCards.map((card) => (
+            <Card key={card.title} className="flex h-full min-h-[400px] flex-col p-8 sm:p-10">
+              <CompanyIconTile icon={card.icon} />
+              <h3 className="mt-7 font-display text-2xl leading-tight text-espresso">{card.title}</h3>
+              <p className="mt-4 text-sm leading-7 text-cocoa">{card.description}</p>
+              <CompanyBulletList items={card.items} />
+              <p className="mt-auto border-t border-[#ECE8EC] pt-5 text-sm font-semibold leading-6 text-espresso">{card.outcome}</p>
+            </Card>
+          ))}
+        </div>
+      </Reveal>
     </SectionWrapper>
 
     <SectionWrapper className="bg-porcelain/45">
-      <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-center"><div><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Full package</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">One managed path for content, creators, platforms, and campaign delivery.</h2><p className="mt-4 text-base leading-7 text-cocoa">Choose a focused campaign or build a recurring marketing engine. The full package can combine strategy, creators, content, Instagram, YouTube, livestreams, product demos, editing, and reporting.</p><div className="mt-7"><CompanyCta label="Build Full Package" /></div></div><BrandOperationsPreview /></div>
-      <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{fullPackageGroups.map(([title, items]) => <Card key={title} className="min-h-[265px] rounded-[30px] p-7"><h3 className="text-xl font-semibold text-espresso">{title}</h3><ul className="mt-5 space-y-2.5 text-sm leading-6 text-cocoa">{items.map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul></Card>)}</div>
+      <Reveal>
+        <CompanySectionIntro
+          eyebrow="Full package"
+          title="One managed path for content, creators, platforms, and campaign delivery."
+          copy="Build a focused campaign or a recurring marketing engine across UGC, Instagram, YouTube, livestreams, product demos, editing, and follow-up."
+        />
+        <div className="panel-gradient mt-12 rounded-[44px] border border-primary/15 p-7 shadow-card sm:p-10 lg:p-12">
+          <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-5 xl:gap-0">
+            {fullPackageGroups.map(([title, items], index) => (
+              <div key={title} className={`xl:px-7 ${index > 0 ? 'xl:border-l xl:border-[#ECE8EC]' : 'xl:pl-0'}`}>
+                <h3 className="text-xl font-semibold text-espresso">{title}</h3>
+                <CompanyBulletList items={items} compact />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="mt-10 text-center"><CompanyCta label="Build Full Package" /></div>
+      </Reveal>
     </SectionWrapper>
 
     <SectionWrapper>
-      <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Platform paths</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Choose the platform path that matches your business goal.</h2><p className="mt-4 text-base leading-7 text-cocoa">Every platform has a different job. We help you choose the practical route instead of trying to do everything randomly.</p></div>
-      <div className="mx-auto mt-12 grid max-w-[1120px] gap-7 lg:grid-cols-2">{platformPaths.map((path) => <Card key={path.title} className="flex min-h-[390px] flex-col rounded-[34px] p-8 sm:p-9"><h3 className="font-display text-2xl leading-tight text-espresso">{path.title}</h3><p className="mt-4 text-sm leading-7 text-cocoa">{path.description}</p><ul className="mt-6 grid gap-2 text-sm leading-6 text-cocoa sm:grid-cols-2">{path.items.map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul><p className="mt-6 border-t border-[#ECE8EC] pt-5 text-sm leading-6 text-cocoa"><span className="font-semibold text-espresso">Best for: </span>{path.bestFor}</p><Button href="/companies/start" variant="ghost" className="mt-auto self-start pt-6">{path.cta}</Button></Card>)}</div>
+      <CompanySectionIntro
+        eyebrow="Platform paths"
+        title="Choose the platform path that matches your next objective."
+        copy="Every platform has a different job. Start focused, then expand once the campaign direction is clear."
+      />
+      <div className="mx-auto mt-12 grid max-w-[1120px] auto-rows-fr gap-7 lg:grid-cols-2">
+        {platformPaths.map((path, index) => (
+          <Reveal key={path.id} delay={Math.min(index * 0.04, 0.2)} className="h-full">
+            <Card className="flex h-full min-h-[400px] flex-col p-8 sm:p-10">
+              <CompanyIconTile icon={path.icon} />
+              <h3 className="mt-7 font-display text-2xl leading-tight text-espresso">{path.title}</h3>
+              <p className="mt-4 text-sm leading-7 text-cocoa">{path.description}</p>
+              <CompanyBulletList items={path.items} />
+              <p className="mt-7 border-t border-[#ECE8EC] pt-5 text-sm leading-6 text-cocoa"><span className="font-semibold text-espresso">Best for: </span>{path.bestFor}</p>
+              <Button href="/companies/start" variant="ghost" className="mt-auto self-start pt-6">{path.cta}</Button>
+            </Card>
+          </Reveal>
+        ))}
+      </div>
     </SectionWrapper>
 
     <SectionWrapper className="bg-porcelain/45">
-      <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Business outcomes</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Built to support attention, trust, content volume, and buyer confidence.</h2><p className="mt-4 text-base leading-7 text-cocoa">The goal is not random posting. It is a campaign system that gives your audience more reasons to notice, understand, trust, and act.</p></div>
-      <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">{businessOutcomes.map(([title, description]) => <Card key={title} className="min-h-[225px] rounded-[30px] p-8"><CheckCircle2 className="h-6 w-6 text-primary" aria-hidden /><h3 className="mt-6 text-xl font-semibold text-espresso">{title}</h3><p className="mt-3 text-sm leading-7 text-cocoa">{description}</p></Card>)}</div>
+      <Reveal>
+        <CompanySectionIntro
+          eyebrow="Business outcomes"
+          title="Built to support attention, trust, content volume, and buyer confidence."
+          copy="The goal is not random posting. The goal is to give your audience more reasons to notice, understand, trust, and act."
+        />
+        <div className="mt-12 grid auto-rows-fr gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {businessOutcomes.map(([title, description]) => (
+            <Card key={title} className="flex min-h-[220px] flex-col p-8">
+              <CheckCircle2 className="card-icon h-6 w-6 text-primary" aria-hidden />
+              <h3 className="mt-6 text-xl font-semibold text-espresso">{title}</h3>
+              <p className="mt-3 text-sm leading-7 text-cocoa">{description}</p>
+            </Card>
+          ))}
+        </div>
+      </Reveal>
     </SectionWrapper>
 
     <SectionWrapper>
-      <div className="text-center"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Services we can deliver</p><h2 className="mx-auto mt-4 max-w-3xl font-display text-4xl leading-tight text-espresso">Focused services for the campaign you actually need.</h2></div><div className="mt-12"><ServiceGrid /></div>
+      <Reveal>
+        <CompanySectionIntro
+          eyebrow="Clear expectations"
+          title="Serious marketing, not fake guarantees."
+          copy="We create content systems designed to improve attention, trust, and engagement quality. Platform outcomes depend on offer strength, content quality, audience, consistency, budget, platform algorithms, and market response."
+        />
+        <div className="mx-auto mt-12 grid max-w-[1120px] auto-rows-fr gap-7 lg:grid-cols-2">
+          <Card className="flex min-h-[380px] flex-col p-8 sm:p-10">
+            <CompanyIconTile icon={CheckCircle2} />
+            <p className="mt-7 text-sm font-semibold text-primary">We support</p>
+            <h3 className="mt-3 font-display text-3xl leading-tight text-espresso">A managed creator marketing system.</h3>
+            <CompanyBulletList items={['Creator-led content', 'Platform-native campaigns', 'Product demos', 'Livestream planning', 'Social proof assets', 'Campaign structure', 'Usage clarity', 'Reporting notes']} />
+          </Card>
+          <Card className="flex min-h-[380px] flex-col border-primary/20 p-8 sm:p-10">
+            <CompanyIconTile icon={ShieldCheck} />
+            <p className="mt-7 text-sm font-semibold text-primary">We do not promise</p>
+            <h3 className="mt-3 font-display text-3xl leading-tight text-espresso">Artificial engagement or guaranteed outcomes.</h3>
+            <CompanyBulletList items={['Guaranteed sales', 'Guaranteed followers', 'Guaranteed likes or shares', 'Guaranteed virality', 'Fake engagement', 'Platform algorithm control', 'Results without strong offer and follow-up']} />
+          </Card>
+        </div>
+        <div className="mt-10 text-center"><Button href="/terms" variant="secondary">Read Terms</Button></div>
+      </Reveal>
     </SectionWrapper>
 
     <SectionWrapper className="bg-porcelain/45">
-      <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Clear expectations</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">What we do - and what we do not promise.</h2><p className="mt-4 text-base leading-7 text-cocoa">We build the campaign system and content assets; market response depends on the offer, audience, platform, budget, consistency, and market conditions.</p></div>
-      <div className="mx-auto mt-10 grid max-w-[1080px] gap-7 lg:grid-cols-2"><Card className="min-h-[360px] rounded-[34px] p-8 sm:p-10"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">We do</p><h3 className="mt-4 font-display text-3xl text-espresso">Build a managed creator marketing system.</h3><ul className="mt-7 space-y-3 text-sm leading-6 text-cocoa">{['Plan creator-led campaigns', 'Produce or coordinate content', 'Match creators and talent', 'Structure live sessions', 'Manage deliverables and usage rights', 'Provide campaign notes and recommendations'].map((item) => <li key={item} className="flex gap-3"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul></Card><Card className="min-h-[360px] rounded-[34px] border-primary/20 p-8 sm:p-10"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">We do not promise</p><h3 className="mt-4 font-display text-3xl text-espresso">Artificial engagement or guaranteed platform outcomes.</h3><ul className="mt-7 space-y-3 text-sm leading-6 text-cocoa">{['Guaranteed sales', 'Guaranteed followers', 'Guaranteed likes or shares', 'Guaranteed virality', 'Fake engagement or purchased followers', 'Control over platform algorithms'].map((item) => <li key={item} className="flex gap-3"><ShieldCheck className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul></Card></div>
+      <Reveal>
+        <CompanySectionIntro
+          eyebrow="Campaign protection"
+          title="Clear campaign terms from brief to delivery."
+          copy="Written scope, creator acceptance, usage rights, and payment terms protect the company, the creators, and the campaign work."
+        />
+        <div className="mt-12 grid auto-rows-fr gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {campaignProtections.map(([title, description], index) => (
+            <Card key={title} className="flex min-h-[260px] flex-col p-8">
+              <span className="font-mono text-xs text-primary">0{index + 1}</span>
+              <CheckCircle2 className="card-icon mt-7 h-6 w-6 text-primary" aria-hidden />
+              <h3 className="mt-5 text-lg font-semibold text-espresso">{title}</h3>
+              <p className="mt-3 text-sm leading-6 text-cocoa">{description}</p>
+            </Card>
+          ))}
+        </div>
+      </Reveal>
     </SectionWrapper>
 
     <SectionWrapper>
-      <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Terms that protect both sides</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Clear campaign terms from first brief to delivery.</h2><p className="mt-4 text-base leading-7 text-cocoa">Written commitments protect the brand, the creators, and the work itself.</p></div><div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">{campaignProtections.map(([title, description], index) => <Card key={title} className="min-h-[290px] rounded-[30px] p-8"><span className="font-mono text-xs text-primary">0{index + 1}</span><CheckCircle2 className="mt-7 h-6 w-6 text-primary" aria-hidden /><h3 className="mt-5 text-lg font-semibold text-espresso">{title}</h3><p className="mt-3 text-sm leading-6 text-cocoa">{description}</p></Card>)}</div>
+      <Reveal>
+        <div className="cta-surface mx-auto max-w-4xl rounded-[52px] border border-primary/15 px-7 py-14 text-center shadow-card sm:px-12 lg:px-16 lg:py-16">
+          <p className="text-sm font-semibold text-primary">Next step for companies</p>
+          <h2 className="mt-4 font-display text-3xl leading-tight text-espresso sm:text-4xl">Ready to build a creator-led marketing package?</h2>
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-cocoa">Share your product, platform, goal, budget range, and timeline. We will recommend a practical campaign path before you commit to a larger scope.</p>
+          <div className="cta-row mt-9"><CompanyCta label="Submit Company Brief" /><Button href="/pricing" variant="secondary">View Packages</Button></div>
+          <p className="mt-5 text-sm font-semibold text-cocoa">No pressure. No fake guarantees. Just a clear campaign recommendation.</p>
+        </div>
+      </Reveal>
     </SectionWrapper>
-
-    <SectionWrapper><div className="cta-surface mx-auto max-w-3xl rounded-[48px] border border-primary/15 p-8 text-center shadow-card sm:p-12"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Next step for companies</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Ready to build a creator-led marketing package?</h2><p className="mt-4 text-base leading-7 text-cocoa">Share your product, platform, goal, budget range, and timeline. We will recommend a practical campaign path before you commit to a larger scope.</p><div className="cta-row mt-8"><CompanyCta label="Submit Company Brief" /><Button href="/pricing" variant="secondary">View Packages</Button></div><p className="mt-5 text-sm font-semibold text-cocoa">No pressure. No fake guarantees. Just a clear campaign recommendation.</p></div></SectionWrapper>
   </>
 );
 
