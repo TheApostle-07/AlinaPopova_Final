@@ -9,7 +9,7 @@ export default function CompanyBriefSuccessPage() {
         <p className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-primary">Brief received</p>
         <h1 className="mt-4 font-display text-4xl text-espresso">Your company brief is in the review queue.</h1>
         <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-cocoa">We will review the goal, channel, service needs, budget, and timeline before suggesting a next step. Scope, pricing, creator availability, usage rights, and outcomes are always confirmed in writing.</p>
-        <Button href="/" className="mt-8">Return Home</Button>
+        <Button href="/services" className="mt-8">Explore Services</Button>
       </div>
     </section>
   );

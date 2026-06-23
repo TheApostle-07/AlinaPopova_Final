@@ -137,7 +137,7 @@ const ServiceGrid = () => (
   </div>
 );
 
-const CompanyCta = ({ label = 'Market My Company' }: { label?: string }) => <Button href="/companies/start" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>{label}</Button>;
+const CompanyCta = ({ label = 'Build My Campaign' }: { label?: string }) => <Button href="/companies/start" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>{label}</Button>;
 
 export const CompanyMarketingPage = () => (
   <>
@@ -181,7 +181,7 @@ export const CompanyMarketingPage = () => (
       <div className="mx-auto max-w-3xl text-center"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Terms that protect both sides</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Clear campaign terms from first brief to delivery.</h2><p className="mt-4 text-base leading-7 text-cocoa">Written commitments protect the brand, the creators, and the work itself.</p></div><div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">{campaignProtections.map(([title, description], index) => <Card key={title} className="min-h-[290px] rounded-[30px] p-8"><span className="font-mono text-xs text-primary">0{index + 1}</span><CheckCircle2 className="mt-7 h-6 w-6 text-primary" aria-hidden /><h3 className="mt-5 text-lg font-semibold text-espresso">{title}</h3><p className="mt-3 text-sm leading-6 text-cocoa">{description}</p></Card>)}</div>
     </SectionWrapper>
 
-    <SectionWrapper><div className="cta-surface mx-auto max-w-3xl rounded-[48px] border border-primary/15 p-8 text-center shadow-card sm:p-12"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Next step for companies</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Ready to build a creator-led marketing package?</h2><p className="mt-4 text-base leading-7 text-cocoa">Share your product, platform, goal, budget range, and timeline. We will recommend a practical campaign path before you commit to a larger scope.</p><div className="mt-8 flex flex-wrap justify-center gap-3"><CompanyCta label="Submit Company Brief" /><Button href="/pricing" variant="secondary">View Packages</Button></div><p className="mt-5 text-sm font-semibold text-cocoa">No pressure. No fake guarantees. Just a clear campaign recommendation.</p></div></SectionWrapper>
+    <SectionWrapper><div className="cta-surface mx-auto max-w-3xl rounded-[48px] border border-primary/15 p-8 text-center shadow-card sm:p-12"><p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Next step for companies</p><h2 className="mt-4 font-display text-4xl leading-tight text-espresso">Ready to build a creator-led marketing package?</h2><p className="mt-4 text-base leading-7 text-cocoa">Share your product, platform, goal, budget range, and timeline. We will recommend a practical campaign path before you commit to a larger scope.</p><div className="cta-row mt-8"><CompanyCta label="Submit Company Brief" /><Button href="/pricing" variant="secondary">View Packages</Button></div><p className="mt-5 text-sm font-semibold text-cocoa">No pressure. No fake guarantees. Just a clear campaign recommendation.</p></div></SectionWrapper>
   </>
 );
 

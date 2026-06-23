@@ -28,9 +28,9 @@ export const CreatorLaunchHero = () => (
         <p className="mx-auto mt-7 max-w-4xl text-base leading-7 text-cocoa sm:text-lg sm:leading-8">
           Companies get managed creator campaigns for content, trust, livestreams, and sales. Creators get a safer professional network for brand-safe opportunities, clear terms, and paid work if selected.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button href="/companies/start" className="min-w-[170px]" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Market My Company</Button>
-          <Button href="/apply" className="min-w-[154px]" variant="secondary">Apply as Creator</Button>
+        <div className="cta-row mt-8">
+          <Button href="/companies/start" size="lg" className="sm:min-w-[190px]" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Build My Campaign</Button>
+          <Button href="/apply" className="sm:min-w-[154px]" variant="secondary">Apply as Creator</Button>
         </div>
         <p className="mt-7 text-sm font-medium tracking-[0.02em] text-cocoa">{services.join('  •  ')}</p>
       </div>

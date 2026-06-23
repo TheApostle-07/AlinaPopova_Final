@@ -11,7 +11,7 @@ export default function ApplicationSuccessPage() {
         <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-cocoa">
           Your application is now in the review pool. Submission does not guarantee selection or paid work. If shortlisted, the team will contact you about a possible next step.
         </p>
-        <Button href="/" className="mt-8">Return Home</Button>
+        <Button href="/creators" className="mt-8">Explore Creator Roles</Button>
       </div>
     </section>
   );

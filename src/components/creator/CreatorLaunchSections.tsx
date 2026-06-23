@@ -131,7 +131,7 @@ export const CreatorLaunchSections = ({ creatorFocused = false }: CreatorLaunchS
       <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Apply when the path fits your skills</p>
       <h2 className="mx-auto mt-4 max-w-3xl font-display text-4xl leading-tight text-espresso">Your creator path should feel safe, clear, and professional from day one.</h2>
       <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-cocoa">Apply if you are 18+, serious about camera-based work, and interested in Instagram, YouTube Live, livestream hosting, product demos, modelling, or brand-safe creator opportunities.</p>
-      <div className="mt-7 flex flex-wrap justify-center gap-3"><Button href="/apply" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Apply Free</Button><Button href="/safety" variant="secondary">Read Safety Promise</Button></div>
+      <div className="cta-row mt-7"><Button href="/apply" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Apply Free</Button><Button href="/safety" variant="secondary">Read Safety Promise</Button></div>
     </SectionWrapper>
   </>
 );

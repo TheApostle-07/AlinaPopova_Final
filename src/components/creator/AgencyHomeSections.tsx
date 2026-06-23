@@ -298,7 +298,7 @@ export const AgencyHomeSections = () => (
         <p className="text-sm font-semibold text-primary">For brands and talent</p>
         <h2 className="mt-4 font-display text-3xl leading-tight text-espresso sm:text-4xl">Two paths. One clear beginning.</h2>
         <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-cocoa">Companies can build a campaign brief for content, trust, livestreams, and sales. Creators can apply across on-camera and behind-the-scenes roles with clear terms and no pressure.</p>
-        <div className="mt-9 flex flex-wrap justify-center gap-3"><Button href="/companies/start" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Build My Campaign</Button><Button href="/apply" variant="secondary">Apply as Creator</Button></div>
+        <div className="cta-row mt-9"><Button href="/companies/start" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Build My Campaign</Button><Button href="/apply" variant="secondary">Apply as Creator</Button></div>
       </div>
     </SectionWrapper>
   </>

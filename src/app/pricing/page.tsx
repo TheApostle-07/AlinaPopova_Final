@@ -45,7 +45,7 @@ export default function PricingPage() {
       <SectionWrapper>
         <div className="flex items-end justify-between gap-6">
           <div><p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">For companies</p><h2 className="mt-3 font-display text-4xl text-espresso">Marketing packages for a clear first engagement.</h2></div>
-          <Button href="/contact" className="hidden sm:inline-flex">Share a Campaign Brief</Button>
+          <Button href="/companies/start" className="hidden sm:inline-flex">Share a Campaign Brief</Button>
         </div>
         <div className="mt-10 grid gap-8 lg:grid-cols-2">
           {packages.map((item, index) => (
@@ -56,7 +56,7 @@ export default function PricingPage() {
               <ul className="mt-6 grid gap-3 border-t border-primary/15 pt-6 text-sm text-cocoa sm:grid-cols-2">
                 {item.features.map((feature) => <li key={feature} className="flex gap-2"><Check className="h-4 w-4 shrink-0 text-primary" aria-hidden />{feature}</li>)}
               </ul>
-              <Button href="/contact" variant={index === 1 ? 'primary' : 'secondary'} className="mt-8 self-start">{item.cta}</Button>
+              <Button href="/companies/start" variant={index === 1 ? 'primary' : 'secondary'} className="mt-8 self-start">{item.cta}</Button>
             </Card>
           ))}
         </div>
@@ -85,7 +85,7 @@ export default function PricingPage() {
         </div>
       </SectionWrapper>
       <SectionWrapper>
-        <div className="cta-surface mx-auto max-w-4xl rounded-[48px] border border-primary/15 p-8 text-center shadow-card sm:p-12"><p className="text-sm font-semibold text-primary">Usage rights and creator payout clarity</p><h2 className="mt-4 font-display text-3xl leading-tight text-espresso sm:text-4xl">Need help choosing a package?</h2><p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-cocoa">Paid ad usage, whitelisting, long-term usage, exclusivity, creator tier, and production complexity can change pricing and creator payout terms. These are confirmed before campaign work begins.</p><div className="mt-8 flex flex-wrap justify-center gap-3"><Button href="/companies/start">Share a Campaign Brief</Button><Button href="/contact" variant="secondary">Contact Studio</Button></div></div>
+        <div className="cta-surface mx-auto max-w-4xl rounded-[48px] border border-primary/15 p-8 text-center shadow-card sm:p-12"><p className="text-sm font-semibold text-primary">Usage rights and creator payout clarity</p><h2 className="mt-4 font-display text-3xl leading-tight text-espresso sm:text-4xl">Need help choosing a package?</h2><p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-cocoa">Paid ad usage, whitelisting, long-term usage, exclusivity, creator tier, and production complexity can change pricing and creator payout terms. These are confirmed before campaign work begins.</p><div className="cta-row mt-8"><Button href="/companies/start">Share a Campaign Brief</Button><Button href="/contact" variant="secondary">Contact Studio</Button></div></div>
       </SectionWrapper>
     </>
   );

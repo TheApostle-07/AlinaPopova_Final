@@ -25,8 +25,6 @@ const navLinks: NavLink[] = [
 
 const desktopNavLinks = navLinks.slice(0, -1);
 
-const headerButtonClass = 'h-11 min-h-0 whitespace-nowrap px-5 py-0 text-sm shadow-none hover:shadow-none';
-
 export const SiteHeader = () => {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -55,23 +53,25 @@ export const SiteHeader = () => {
           <BrandLogo />
         </Link>
         <nav className="hidden items-center justify-self-center gap-0 text-sm font-medium text-cocoa xl:flex" aria-label="Primary navigation">
-          {desktopNavLinks.map((link) => (
-            <Link
+          {desktopNavLinks.map((link) => {
+            const active = link.href.pathname === '/' ? pathname === '/' : pathname.startsWith(link.href.pathname);
+            return <Link
               key={`${link.href.pathname}-${link.href.hash ?? 'root'}`}
               href={link.href}
               scroll
-              className="whitespace-nowrap rounded-full px-3 py-2.5 transition-colors hover:bg-porcelain hover:text-espresso focus-visible:bg-porcelain"
+              aria-current={active ? 'page' : undefined}
+              className={`whitespace-nowrap rounded-full px-3 py-2.5 no-underline transition-colors hover:bg-porcelain hover:text-espresso hover:no-underline focus-visible:bg-porcelain ${active ? 'bg-porcelain text-espresso' : ''}`}
             >
               {link.label}
-            </Link>
-          ))}
+            </Link>;
+          })}
         </nav>
         <div className="flex items-center justify-self-end gap-2.5">
-          <Button href="/apply" className={`hidden xl:inline-flex ${headerButtonClass}`} variant="secondary">
+          <Button href="/apply" size="sm" className="hidden xl:inline-flex shadow-none hover:shadow-none" variant="secondary">
             Apply as Creator
           </Button>
-          <Button href="/companies/start" className={`hidden xl:inline-flex ${headerButtonClass}`}>
-            Market My Company
+          <Button href="/companies/start" size="sm" className="hidden xl:inline-flex shadow-none hover:shadow-none">
+            Build My Campaign
           </Button>
           <button
             type="button"
@@ -108,23 +108,25 @@ export const SiteHeader = () => {
                 </button>
               </div>
               <nav className="flex flex-col gap-1 text-base font-semibold text-espresso" aria-label="Mobile navigation">
-                {navLinks.map((link) => (
-                  <Link
+                {navLinks.map((link) => {
+                  const active = link.href.pathname === '/' ? pathname === '/' : pathname.startsWith(link.href.pathname);
+                  return <Link
                     key={`mobile-${link.href.pathname}-${link.href.hash ?? 'root'}`}
                     href={link.href}
                     scroll
                     onClick={() => setMenuOpen(false)}
-                    className="rounded-xl px-4 py-3 transition hover:bg-porcelain hover:text-espresso"
+                    aria-current={active ? 'page' : undefined}
+                    className={`rounded-xl px-4 py-3 no-underline transition hover:bg-porcelain hover:text-espresso hover:no-underline ${active ? 'bg-porcelain text-espresso' : ''}`}
                   >
                     {link.label}
-                  </Link>
-                ))}
+                  </Link>;
+                })}
               </nav>
               <div className="mt-5 grid gap-3 border-t border-[#ECE8EC] pt-5">
-                <Button href="/companies/start" className="w-full" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
-                  Market My Company
+                <Button href="/companies/start" fullWidth iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
+                  Build My Campaign
                 </Button>
-                <Button href="/apply" className="w-full" variant="secondary">
+                <Button href="/apply" fullWidth variant="secondary">
                   Apply as Creator
                 </Button>
               </div>

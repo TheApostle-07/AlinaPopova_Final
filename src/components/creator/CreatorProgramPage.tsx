@@ -95,7 +95,7 @@ export const CreatorProgramPage = () => (
       <p className="text-sm font-semibold uppercase tracking-[0.13em] text-primary">Your next step</p>
       <h2 className="mx-auto mt-4 max-w-3xl font-display text-4xl leading-tight text-espresso">Ready to apply for the role that fits you?</h2>
       <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-cocoa">Start with one role. You can add more roles inside the application.</p>
-      <div className="mt-8 flex flex-wrap justify-center gap-3"><Button href="#roles" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Choose Your Role</Button><Button href="/safety" variant="secondary">Read Safety Policy</Button></div>
+      <div className="cta-row mt-8"><Button href="#roles" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Choose Your Role</Button><Button href="/safety" variant="secondary">Read Safety Policy</Button></div>
       <p className="mt-5 flex justify-center gap-2 text-sm text-cocoa"><CheckCircle2 className="h-5 w-5 text-primary" aria-hidden />Brand-safe work, clear consent, and written commercial terms.</p>
     </SectionWrapper>
   </>

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowRight, BadgeCheck, ShieldCheck } from 'lucide-react';
 import { BrandLogo } from '@/components/BrandLogo';
+import { Button } from '@/components/ui/Button';
 import { siteConfig } from '@/lib/config';
 
 const groups = [
@@ -19,7 +20,7 @@ const FooterLinkGroup = ({ title, links }: typeof groups[number]) => (
   <div>
     <p className="text-sm font-semibold text-white">{title}</p>
     <div className="mt-5 space-y-3.5">
-      {links.map(([label, href]) => <Link key={`${label}-${href}`} href={href} className="block text-sm text-white/65 transition-colors hover:text-[#E9A1BF] focus-visible:text-white">{label}</Link>)}
+      {links.map(([label, href]) => <Link key={`${label}-${href}`} href={href} className="block text-sm text-white/65 no-underline transition-colors hover:text-[#E9A1BF] hover:no-underline focus-visible:text-white">{label}</Link>)}
     </div>
   </div>
 );
@@ -28,7 +29,7 @@ const FooterMobileGroup = ({ title, links }: typeof groups[number]) => (
   <details className="border-b border-white/10 py-5 last:border-b-0">
     <summary className="cursor-pointer list-none text-sm font-semibold text-white">{title}</summary>
     <div className="mt-4 grid gap-3 pl-1">
-      {links.map(([label, href]) => <Link key={`${label}-${href}`} href={href} className="text-sm text-white/65 transition-colors hover:text-[#E9A1BF]">{label}</Link>)}
+      {links.map(([label, href]) => <Link key={`${label}-${href}`} href={href} className="text-sm text-white/65 no-underline transition-colors hover:text-[#E9A1BF] hover:no-underline">{label}</Link>)}
     </div>
   </details>
 );
@@ -40,8 +41,8 @@ const FooterCtaPanel = ({ eyebrow, title, copy, primaryLabel, primaryHref, secon
       <h2 className="mt-4 font-display text-3xl leading-tight text-espresso sm:text-4xl">{title}</h2>
       <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-cocoa">{copy}</p>
       <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-        <Link href={primaryHref} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-card transition hover:bg-[#A8245C]"><span>{primaryLabel}</span><ArrowRight className="h-4 w-4" aria-hidden /></Link>
-        <Link href={secondaryHref} className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#ECE8EC] bg-white px-6 py-3 text-sm font-semibold text-espresso shadow-card transition hover:border-primary/25 hover:bg-porcelain">{secondaryLabel}</Link>
+        <Button href={primaryHref} size="lg" className="sm:min-w-[210px]" iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>{primaryLabel}</Button>
+        <Button href={secondaryHref} size="lg" className="sm:min-w-[180px]" variant="secondary">{secondaryLabel}</Button>
       </div>
     </div>
   </section>
@@ -52,7 +53,7 @@ const getFooterCta = (pathname: string) => {
   if (pathname.startsWith('/creators') || pathname.startsWith('/creator-launch-program')) return { eyebrow: 'For creators', title: 'Ready to apply as a creator or talent partner?', copy: 'Submit your role, skills, availability, and boundaries. If shortlisted, the next step is a discovery call or matching review.', primaryLabel: 'Apply Free', primaryHref: '/apply' as const, secondaryLabel: 'Read Safety Policy', secondaryHref: '/safety' as const };
   if (pathname === '/services') return { eyebrow: 'Find the right service path', title: 'Not sure which service fits?', copy: 'Start with your business goal. We will recommend the practical campaign path before you commit to a larger scope.', primaryLabel: 'Build My Campaign', primaryHref: '/companies/start' as const, secondaryLabel: 'View Pricing', secondaryHref: '/pricing' as const };
   if (pathname === '/pricing') return { eyebrow: 'Package guidance', title: 'Need help choosing a package?', copy: 'Share a brief and we will suggest the best starting point based on your goal, platform, content need, and budget range.', primaryLabel: 'Share a Campaign Brief', primaryHref: '/companies/start' as const, secondaryLabel: 'Contact Studio', secondaryHref: '/contact' as const };
-  return { eyebrow: 'Next step', title: 'Plan the right creator-led path.', copy: 'Companies can share a campaign goal. Creators can apply to join a professional network with clear terms and no pressure.', primaryLabel: 'Market My Company', primaryHref: '/companies/start' as const, secondaryLabel: 'Apply as Creator', secondaryHref: '/apply' as const };
+  return { eyebrow: 'Next step', title: 'Plan the right creator-led path.', copy: 'Companies can share a campaign goal. Creators can apply to join a professional network with clear terms and no pressure.', primaryLabel: 'Build My Campaign', primaryHref: '/companies/start' as const, secondaryLabel: 'Apply as Creator', secondaryHref: '/apply' as const };
 };
 
 const FooterBrand = () => (
@@ -87,8 +88,8 @@ export const SiteFooter = () => {
           <div className="lg:hidden">
             <FooterBrand />
             <div className="mt-10 grid gap-3 sm:grid-cols-2">
-              <Link href="/companies/start" className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-white">Market My Company</Link>
-              <Link href="/apply" className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 px-4 py-2.5 text-sm font-semibold text-white">Apply as Creator</Link>
+              <Button href="/companies/start" fullWidth>Build My Campaign</Button>
+              <Button href="/apply" fullWidth variant="secondary" className="border-white/20 bg-white/5 text-white hover:border-white/35 hover:bg-white/10 hover:text-white">Apply as Creator</Button>
             </div>
             <div className="mt-9">{groups.map((group) => <FooterMobileGroup key={group.title} {...group} />)}</div>
           </div>
