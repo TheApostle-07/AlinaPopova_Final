@@ -74,8 +74,8 @@ export const TypingText = ({ words, prefix, typingSpeed = 85, deletingSpeed = 45
     <span className={`inline-block min-w-0 text-center align-baseline text-primary ${className}`}>
       <span className="inline-flex items-baseline justify-center whitespace-nowrap">
         {prefix && <span className="mr-3 text-espresso">{prefix}</span>}
-        <span>{text}</span>
-        {!reducedMotion && <span aria-hidden="true" className="ml-1 inline-block h-[0.82em] w-[2px] translate-y-[0.08em] rounded-full bg-primary/70 animate-[typingCursor_1.15s_ease-in-out_infinite]" />}
+        <span className="hero-gradient-text">{text}</span>
+        {!reducedMotion && <span aria-hidden="true" className="ml-1 inline-block h-[0.85em] w-[2px] translate-y-[0.08em] rounded-full bg-primary/45 animate-[typingCursor_1.6s_ease-in-out_infinite]" />}
       </span>
     </span>
   );
