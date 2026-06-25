@@ -158,11 +158,25 @@ const IconTile = ({ children }: { children: ReactNode }) => (
 );
 
 const BulletList = ({ items }: { items: readonly string[] }) => (
-  <ul className="mt-7 grid gap-3 text-sm leading-6 text-cocoa sm:grid-cols-2">
+  <ul className="mt-7 grid gap-x-6 gap-y-3 text-sm leading-6 text-cocoa sm:grid-cols-2">
     {items.map((item) => (
-      <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>
+      <li key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-primary" aria-hidden /><span>{item}</span></li>
     ))}
   </ul>
+);
+
+const OutcomeLine = ({ children }: { children: ReactNode }) => (
+  <div className="mt-6 border-t border-[#ECE8EC] pt-5">
+    <p className="text-sm font-semibold leading-6 text-espresso">{children}</p>
+  </div>
+);
+
+const CardCta = ({ href, children }: { href: string; children: ReactNode }) => (
+  <div className="mt-auto pt-8">
+    <Button href={href} variant="ghost" className="self-start">
+      {children}
+    </Button>
+  </div>
 );
 
 export const AgencyHomeSections = () => (
@@ -174,17 +188,17 @@ export const AgencyHomeSections = () => (
           title="Built for both sides of creator growth."
           copy="Brands need trusted content. Creators need safe opportunities. The path should be clear from the first click."
         />
-        <div className="mt-12 grid auto-rows-fr gap-7 lg:grid-cols-2 lg:gap-8">
+        <div className="mt-12 grid auto-rows-fr items-stretch gap-7 lg:grid-cols-2 lg:gap-8">
           {audienceFit.map((audience) => {
             const Icon = audience.icon;
             return (
-              <Card key={audience.title} className="flex min-h-[430px] flex-col p-8 sm:p-10">
+              <Card key={audience.title} className="flex h-full min-h-[430px] flex-col p-8 sm:p-10 lg:p-12">
                 <IconTile><Icon className="h-6 w-6" aria-hidden /></IconTile>
                 <p className="mt-7 text-sm font-semibold text-primary">{audience.eyebrow}</p>
                 <h3 className="mt-3 font-display text-3xl leading-tight text-espresso">{audience.title}</h3>
                 <p className="mt-4 max-w-xl text-base leading-7 text-cocoa">{audience.copy}</p>
                 <BulletList items={audience.items} />
-                <p className="mt-auto border-t border-[#ECE8EC] pt-5 text-sm font-semibold leading-6 text-espresso">{audience.outcome}</p>
+                <div className="mt-auto pt-6"><OutcomeLine>{audience.outcome}</OutcomeLine></div>
               </Card>
             );
           })}
@@ -199,22 +213,26 @@ export const AgencyHomeSections = () => (
           title="Two paths. One managed studio."
           copy="Companies build campaigns. Creators apply for opportunities. Both move through clear terms and managed execution."
         />
-        <div className="mt-12 grid auto-rows-fr gap-7 lg:grid-cols-2 lg:gap-8">
-          <Card className="flex min-h-[420px] flex-col border-primary/20 p-8 sm:p-10">
+        <div className="mt-12 grid auto-rows-fr items-stretch gap-7 lg:grid-cols-2 lg:gap-8">
+          <Card className="flex h-full min-h-[420px] flex-col border-primary/20 p-8 sm:p-10 lg:p-12">
             <IconTile><Building2 className="h-6 w-6" aria-hidden /></IconTile>
             <p className="mt-7 text-sm font-semibold text-primary">For Companies</p>
             <h3 className="mt-3 font-display text-3xl leading-tight text-espresso">Build a creator-led campaign.</h3>
             <p className="mt-5 text-base leading-7 text-cocoa">Get strategy, creator matching, content formats, live structure, usage rights, approvals, and delivery in one managed flow.</p>
             <BulletList items={['Campaign strategy', 'Creator matching', 'Content and live formats', 'Usage rights and delivery']} />
-            <Button href="/companies/start" className="mt-auto self-start">Build My Campaign</Button>
+            <div className="mt-auto pt-10">
+              <Button href="/companies/start" className="min-h-[52px] px-[26px]">Build My Campaign</Button>
+            </div>
           </Card>
-          <Card className="flex min-h-[420px] flex-col border-primary/20 p-8 sm:p-10">
+          <Card className="flex h-full min-h-[420px] flex-col border-primary/20 p-8 sm:p-10 lg:p-12">
             <IconTile><UsersRound className="h-6 w-6" aria-hidden /></IconTile>
             <p className="mt-7 text-sm font-semibold text-primary">For Creators</p>
             <h3 className="mt-3 font-display text-3xl leading-tight text-espresso">Apply for brand-safe work.</h3>
             <p className="mt-5 text-base leading-7 text-cocoa">Join as creator, model, host, editor, writer, designer, or campaign support. Paid work is shared with written scope before acceptance.</p>
             <BulletList items={['Multiple creator roles', 'Clear boundaries', 'Written terms', 'Accept or decline']} />
-            <Button href="/apply" className="mt-auto self-start" variant="secondary">Apply as Creator</Button>
+            <div className="mt-auto pt-10">
+              <Button href="/apply" className="min-h-[52px] px-6" variant="secondary">Apply as Creator</Button>
+            </div>
           </Card>
         </div>
       </Reveal>
@@ -227,23 +245,23 @@ export const AgencyHomeSections = () => (
           title="Marketing built around creators, content, and live attention."
           copy="One studio for strategy, talent, content production, livestreams, and campaign delivery."
         />
-        <div className="mx-auto mt-12 grid max-w-[1120px] auto-rows-fr gap-8 lg:grid-cols-2">
+        <div className="mx-auto mt-12 grid max-w-[1120px] auto-rows-fr items-stretch gap-8 lg:grid-cols-2">
           {servicePillars.map((pillar) => {
             const Icon = pillar.icon;
             return (
-              <Card key={pillar.title} className="flex min-h-[470px] flex-col p-8 sm:p-10">
+              <Card key={pillar.title} className="flex h-full min-h-[470px] flex-col p-8 sm:p-10">
                 <IconTile><Icon className="h-6 w-6" aria-hidden /></IconTile>
                 <p className="mt-7 text-sm font-semibold text-primary">{pillar.label}</p>
                 <h3 className="mt-3 font-display text-3xl leading-tight text-espresso">{pillar.title}</h3>
                 <p className="mt-4 max-w-xl text-base leading-7 text-cocoa">{pillar.copy}</p>
                 <BulletList items={pillar.items} />
-                <p className="mt-auto border-t border-[#ECE8EC] pt-5 text-sm font-semibold leading-6 text-espresso">{pillar.outcome}</p>
-                <Button href="/companies/start" variant="ghost" className="mt-5 self-start">{pillar.cta}</Button>
+                <OutcomeLine>{pillar.outcome}</OutcomeLine>
+                <CardCta href="/companies/start">{pillar.cta}</CardCta>
               </Card>
             );
           })}
         </div>
-        <div className="mt-10 text-center"><Button href="/services" variant="secondary">Explore Services</Button></div>
+        <div className="mt-14 flex justify-center"><Button href="/services" variant="secondary">Explore Services</Button></div>
       </Reveal>
     </SectionWrapper>
 
@@ -254,16 +272,29 @@ export const AgencyHomeSections = () => (
           title="A cleaner way to run creator campaigns."
           copy="No scattered DMs, unclear deliverables, missing usage rights, or last-minute confusion. The process stays structured from brief to delivery."
         />
-        <div className="relative mt-12">
-          <span className="absolute left-[7%] right-[7%] top-6 hidden h-px bg-primary/20 md:block" aria-hidden />
-          <div className="relative grid gap-5 md:grid-cols-5 md:gap-0">
+        <div className="relative mx-auto mt-16 max-w-[1080px]">
+          <div className="grid gap-4 md:hidden">
             {process.map(([number, title, description]) => (
-              <article key={number} className="flex min-h-[210px] flex-col rounded-[28px] border border-primary/15 bg-white p-7 shadow-card md:rounded-none md:border-0 md:bg-transparent md:px-5 md:py-0 md:shadow-none md:first:pl-0 md:last:pr-0">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/20 bg-white font-display text-lg text-primary shadow-card">{number}</span>
-                <h3 className="mt-6 text-lg font-semibold text-espresso">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-cocoa">{description}</p>
+              <article key={number} className="rounded-[28px] border border-primary/15 bg-white p-6 shadow-card">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-neon bg-white font-display text-sm text-primary">{number}</span>
+                  <h3 className="text-lg font-semibold text-espresso">{title}</h3>
+                </div>
+                <p className="mt-4 text-sm leading-6 text-cocoa">{description}</p>
               </article>
             ))}
+          </div>
+          <div className="relative hidden md:block">
+            <div className="absolute left-[9%] right-[9%] top-6 h-px bg-gradient-to-r from-transparent via-neon to-transparent" aria-hidden />
+            <div className="relative grid gap-8 md:grid-cols-5">
+              {process.map(([number, title, description]) => (
+                <article key={number} className="relative text-center">
+                  <span className="relative z-10 mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-neon bg-white font-display text-lg text-primary shadow-[0_12px_30px_rgba(199,53,114,0.10)]">{number}</span>
+                  <h3 className="mt-8 text-lg font-semibold text-espresso">{title}</h3>
+                  <p className="mx-auto mt-3 max-w-[170px] text-sm leading-6 text-cocoa">{description}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </Reveal>
@@ -285,7 +316,7 @@ export const AgencyHomeSections = () => (
             </Card>
           ))}
         </div>
-        <div className="mt-10 text-center"><Button href="/creators" variant="secondary">Explore Creator Network</Button></div>
+        <div className="mt-14 flex justify-center"><Button href="/creators" variant="secondary">Explore Creator Network</Button></div>
       </Reveal>
     </SectionWrapper>
 
@@ -306,7 +337,7 @@ export const AgencyHomeSections = () => (
               </Card>
             ))}
           </div>
-          <div className="mt-10 text-center"><Button href="/safety" variant="secondary">Read Safety Policy</Button></div>
+          <div className="mt-14 flex justify-center"><Button href="/safety" variant="secondary">Read Safety Policy</Button></div>
         </div>
       </Reveal>
     </SectionWrapper>
@@ -318,22 +349,22 @@ export const AgencyHomeSections = () => (
           title="Start with a campaign package."
           copy="Choose a contained creator-led format first, then expand when the brief, rights, and campaign fit are clear."
         />
-        <div className="mx-auto mt-12 grid max-w-[1120px] auto-rows-fr gap-8 lg:grid-cols-2">
+        <div className="mx-auto mt-12 grid max-w-[1120px] auto-rows-fr items-stretch gap-8 lg:grid-cols-2">
           {packages.map((item) => {
             const Icon = item.icon;
             return (
-              <Card key={item.name} className="flex min-h-[440px] flex-col p-8 sm:p-10">
+              <Card key={item.name} className="flex h-full min-h-[440px] flex-col p-8 sm:p-10">
                 <IconTile><Icon className="h-6 w-6" aria-hidden /></IconTile>
-                <h3 className="mt-7 font-display text-3xl leading-tight text-espresso">{item.name}</h3>
+                <h3 className="mt-8 min-h-[72px] font-display text-3xl leading-tight text-espresso">{item.name}</h3>
                 <p className="mt-4 text-lg font-semibold text-primary">{item.price}</p>
-                <p className="mt-5 text-sm leading-6 text-cocoa">{item.bestFor}</p>
+                <p className="mt-5 min-h-[48px] text-sm leading-6 text-cocoa">{item.bestFor}</p>
                 <BulletList items={item.includes} />
-                <Button href="/companies/start" variant="ghost" className="mt-auto self-start">{item.cta}</Button>
+                <CardCta href="/companies/start">{item.cta}</CardCta>
               </Card>
             );
           })}
         </div>
-        <div className="mt-10 text-center"><Button href="/pricing" variant="secondary">View Pricing</Button></div>
+        <div className="mt-14 flex justify-center"><Button href="/pricing" variant="secondary">View Pricing</Button></div>
       </Reveal>
     </SectionWrapper>
 

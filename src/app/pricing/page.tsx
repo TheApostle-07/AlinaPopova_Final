@@ -47,16 +47,20 @@ export default function PricingPage() {
           <div><p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">For companies</p><h2 className="mt-3 font-display text-4xl text-espresso">Marketing packages for a clear first engagement.</h2></div>
           <Button href="/companies/start" className="hidden sm:inline-flex">Share a Campaign Brief</Button>
         </div>
-        <div className="mt-10 grid gap-8 lg:grid-cols-2">
+        <div className="mt-10 grid auto-rows-fr items-stretch gap-8 lg:grid-cols-2">
           {packages.map((item, index) => (
             <Card key={item.name} className={`flex min-h-[500px] h-full flex-col p-8 sm:p-10 ${index === 1 ? 'border-neon shadow-soft' : ''}`}>
-              <p className="text-xs font-semibold uppercase tracking-[0.13em] text-primary">{index === 1 ? 'Popular for launches' : 'Best for a focused start'}</p><h3 className="mt-4 font-display text-3xl text-espresso">{item.name}</h3>
-              <p className="mt-3 text-2xl font-semibold text-primary">{item.price}</p><p className="mt-3 text-sm font-semibold leading-6 text-espresso">Best for: {item.bestFor}</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.13em] text-primary">{index === 1 ? 'Popular for launches' : 'Best for a focused start'}</p>
+              <h3 className="mt-4 min-h-[72px] font-display text-3xl leading-tight text-espresso">{item.name}</h3>
+              <p className="mt-3 text-2xl font-semibold text-primary">{item.price}</p>
+              <p className="mt-4 min-h-[48px] text-sm font-semibold leading-6 text-espresso">Best for: {item.bestFor}</p>
               <p className="mt-4 text-sm leading-6 text-cocoa">{item.description}</p>
-              <ul className="mt-6 grid gap-3 border-t border-primary/15 pt-6 text-sm text-cocoa sm:grid-cols-2">
-                {item.features.map((feature) => <li key={feature} className="flex gap-2"><Check className="h-4 w-4 shrink-0 text-primary" aria-hidden />{feature}</li>)}
+              <ul className="mt-7 grid gap-x-6 gap-y-3 text-sm leading-6 text-cocoa sm:grid-cols-2">
+                {item.features.map((feature) => <li key={feature} className="flex items-center gap-2"><Check className="h-4 w-4 shrink-0 text-primary" aria-hidden /><span>{feature}</span></li>)}
               </ul>
-              <Button href="/companies/start" variant={index === 1 ? 'primary' : 'secondary'} className="mt-8 self-start">{item.cta}</Button>
+              <div className="mt-auto pt-8">
+                <Button href="/companies/start" variant={index === 1 ? 'primary' : 'secondary'} className="self-start">{item.cta}</Button>
+              </div>
             </Card>
           ))}
         </div>

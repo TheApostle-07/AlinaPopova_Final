@@ -130,10 +130,21 @@ const businessOutcomes = [
 ] as const;
 
 const ServiceGrid = () => (
-  <div className="mx-auto grid max-w-[1080px] gap-8 lg:grid-cols-2">
+  <div className="mx-auto grid max-w-[1080px] auto-rows-fr items-stretch gap-8 lg:grid-cols-2">
     {servicePillars.map((service) => {
       const Icon = service.icon;
-      return <Card key={service.title} className="flex min-h-[440px] flex-col p-8 sm:p-10"><span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary"><Icon className="h-6 w-6" aria-hidden /></span><h3 className="mt-7 font-display text-3xl leading-tight text-espresso">{service.title}</h3><p className="mt-4 max-w-xl text-base leading-7 text-cocoa">{service.description}</p><ul className="mt-7 grid gap-3 text-sm leading-6 text-cocoa sm:grid-cols-2">{service.items.map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>)}</ul><p className="mt-auto border-t border-[#ECE8EC] pt-5 text-sm font-semibold leading-6 text-espresso">{service.outcome}</p><Button href="/companies/start" variant="ghost" className="mt-5 self-start">{service.cta}</Button></Card>;
+      return (
+        <Card key={service.title} className="flex h-full min-h-[440px] flex-col p-8 sm:p-10">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary"><Icon className="h-6 w-6" aria-hidden /></span>
+          <h3 className="mt-7 font-display text-3xl leading-tight text-espresso">{service.title}</h3>
+          <p className="mt-4 max-w-xl text-base leading-7 text-cocoa">{service.description}</p>
+          <ul className="mt-7 grid gap-x-6 gap-y-3 text-sm leading-6 text-cocoa sm:grid-cols-2">
+            {service.items.map((item) => <li key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-primary" aria-hidden /><span>{item}</span></li>)}
+          </ul>
+          <div className="mt-6 border-t border-[#ECE8EC] pt-5"><p className="text-sm font-semibold leading-6 text-espresso">{service.outcome}</p></div>
+          <div className="mt-auto pt-8"><Button href="/companies/start" variant="ghost" className="self-start">{service.cta}</Button></div>
+        </Card>
+      );
     })}
   </div>
 );
@@ -159,9 +170,9 @@ const CompanyIconTile = ({ icon: Icon }: { icon: LucideIcon }) => (
 );
 
 const CompanyBulletList = ({ items, compact = false }: { items: readonly string[]; compact?: boolean }) => (
-  <ul className={`grid text-sm leading-6 text-cocoa ${compact ? 'mt-5 gap-2.5' : 'mt-7 gap-3 sm:grid-cols-2'}`}>
+  <ul className={`grid text-sm leading-6 text-cocoa ${compact ? 'mt-5 gap-2.5' : 'mt-7 gap-x-6 gap-y-3 sm:grid-cols-2'}`}>
     {items.map((item) => (
-      <li key={item} className="flex gap-2"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-primary" aria-hidden />{item}</li>
+      <li key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-primary" aria-hidden /><span>{item}</span></li>
     ))}
   </ul>
 );
@@ -193,7 +204,7 @@ export const CompanyMarketingPage = () => (
               <h3 className="mt-7 font-display text-2xl leading-tight text-espresso">{card.title}</h3>
               <p className="mt-4 text-sm leading-7 text-cocoa">{card.description}</p>
               <CompanyBulletList items={card.items} />
-              <p className="mt-auto border-t border-[#ECE8EC] pt-5 text-sm font-semibold leading-6 text-espresso">{card.outcome}</p>
+              <div className="mt-auto pt-6"><p className="border-t border-[#ECE8EC] pt-5 text-sm font-semibold leading-6 text-espresso">{card.outcome}</p></div>
             </Card>
           ))}
         </div>
@@ -235,8 +246,8 @@ export const CompanyMarketingPage = () => (
               <h3 className="mt-7 font-display text-2xl leading-tight text-espresso">{path.title}</h3>
               <p className="mt-4 text-sm leading-7 text-cocoa">{path.description}</p>
               <CompanyBulletList items={path.items} />
-              <p className="mt-7 border-t border-[#ECE8EC] pt-5 text-sm leading-6 text-cocoa"><span className="font-semibold text-espresso">Best for: </span>{path.bestFor}</p>
-              <Button href="/companies/start" variant="ghost" className="mt-auto self-start pt-6">{path.cta}</Button>
+              <div className="mt-6 border-t border-[#ECE8EC] pt-5"><p className="text-sm leading-6 text-cocoa"><span className="font-semibold text-espresso">Best for: </span>{path.bestFor}</p></div>
+              <div className="mt-auto pt-8"><Button href="/companies/start" variant="ghost" className="self-start">{path.cta}</Button></div>
             </Card>
           </Reveal>
         ))}
