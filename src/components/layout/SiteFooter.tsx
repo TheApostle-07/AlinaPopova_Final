@@ -10,7 +10,7 @@ import { siteConfig } from '@/lib/config';
 const groups = [
   { title: 'Companies', links: [['For Companies', '/companies'], ['Services', '/services'], ['Campaigns', '/campaigns'], ['Live Studio', '/live-studio'], ['Pricing', '/pricing'], ['Book Campaign', '/companies/start']] },
   { title: 'Creators', links: [['Creator Network', '/creators'], ['Apply as Creator', '/apply'], ['Creator Roles', '/creators#roles'], ['How It Works', '/how-it-works'], ['Safety', '/safety'], ['Complaints', '/complaints']] },
-  { title: 'Studio', links: [['About', '/about'], ['Contact', '/contact'], ['FAQs', '/faqs'], ['Safety', '/safety'], ['How It Works', '/how-it-works'], ['Studio Login', '/login']] },
+  { title: 'Studio', links: [['About', '/about'], ['Contact', '/contact'], ['FAQs', '/faqs'], ['Safety', '/safety'], ['How It Works', '/how-it-works'], ['Log in', '/login']] },
   { title: 'Legal', links: [['Terms', '/terms'], ['Privacy', '/privacy'], ['Refunds', '/refunds'], ['Content Usage', '/content-usage-policy'], ['Payment Policy', '/payment-policy'], ['Creator Agreement', '/creator-agreement-summary'], ['Company Agreement', '/brand-agreement-summary'], ['Cookie Policy', '/cookie-policy'], ['Complaints', '/complaints']] }
 ] as const;
 

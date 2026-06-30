@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { classifyIdentifier, findPlatformUserByIdentifier, verifyOtpToken } from '@/lib/platform-database';
+import { getPlatformHomePath } from '@/lib/platform-routes';
 import {
   PLATFORM_REGISTRATION_COOKIE,
   PLATFORM_SESSION_COOKIE,
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
     if (user) {
       const session = createPlatformSession({ userId: user.id, userType: user.userType, email: user.email, phone: user.phone });
       if (!session) return json({ ok: false, error: 'Authentication is not configured.', code: 'AUTH_NOT_CONFIGURED', data: null }, 503);
-      const response = json({ ok: true, error: null, code: null, data: { requiresRegistration: false, redirectTo: '/dashboard', userType: user.userType } });
+      const response = json({ ok: true, error: null, code: null, data: { requiresRegistration: false, redirectTo: getPlatformHomePath(user.userType), userType: user.userType } });
       response.cookies.set(PLATFORM_SESSION_COOKIE, session, platformCookieOptions);
       response.cookies.set(PLATFORM_REGISTRATION_COOKIE, '', { ...registrationCookieOptions, maxAge: 0 });
       return response;

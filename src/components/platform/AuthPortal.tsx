@@ -82,10 +82,10 @@ export const AuthPortal = () => {
               <BrandLogo className="justify-center lg:justify-start" />
               <p className="mt-10 inline-flex rounded-full border border-primary/15 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">Campaign OS</p>
               <h1 className="mt-6 font-display text-4xl font-semibold leading-tight tracking-[-0.045em] text-espresso sm:text-5xl lg:text-6xl">
-                One login for campaigns, creators, tasks, files, and approvals.
+                Log in or start your profile.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-8 text-cocoa lg:text-lg">
-                Verify once, then complete the right path for your role. Companies submit briefs. Creators set skills and boundaries. Teams work through clear assignments.
+                Use one secure login for creator applications, company briefs, campaign projects, files, approvals, and messages.
               </p>
               <div className="mt-8 grid gap-3 text-left sm:grid-cols-3 lg:max-w-2xl">
                 {['OTP protected', 'Role-specific', 'Consent recorded'].map((item) => (
@@ -101,7 +101,7 @@ export const AuthPortal = () => {
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary">
                 {step === 'identifier' ? <LockKeyhole className="h-6 w-6" aria-hidden /> : <MailCheck className="h-6 w-6" aria-hidden />}
               </div>
-              <h2 className="mt-7 font-display text-3xl font-semibold text-espresso">{step === 'identifier' ? 'Sign in or register' : 'Enter verification code'}</h2>
+              <h2 className="mt-7 font-display text-3xl font-semibold text-espresso">{step === 'identifier' ? 'Enter email or phone' : 'Enter verification code'}</h2>
               <p className="mt-3 text-sm leading-7 text-cocoa">
                 {step === 'identifier'
                   ? 'Use your email or phone number. If your account does not exist yet, we will guide you through registration after verification.'
@@ -120,7 +120,7 @@ export const AuthPortal = () => {
                     />
                   </label>
                   <Button type="submit" size="lg" fullWidth disabled={loading || !identifier.trim()} iconRight={loading ? <RefreshCw className="h-4 w-4 animate-spin" aria-hidden /> : <ArrowRight className="h-4 w-4" aria-hidden />}>
-                    {loading ? 'Sending code...' : 'Send secure code'}
+                    {loading ? 'Sending code...' : 'Continue'}
                   </Button>
                 </form>
               ) : (

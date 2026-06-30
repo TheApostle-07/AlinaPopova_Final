@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Route } from 'next';
 import { ArrowRight, Building2, Check, FileCheck2, Sparkles, UserRound, UsersRound } from 'lucide-react';
@@ -41,9 +42,14 @@ const readJson = async <T,>(response: Response): Promise<ApiResult<T>> => {
 };
 
 const pathCards = [
-  { value: 'company', title: 'I am a company', copy: 'I need creators, content, livestreams, campaigns, or follow-up systems.', icon: Building2 },
-  { value: 'creator', title: 'I am a creator / talent', copy: 'I want to apply for brand-safe creator or campaign opportunities.', icon: UserRound },
-  { value: 'specialist', title: 'I am a specialist', copy: 'I edit, write, design, shoot, coordinate, or support campaign work.', icon: Sparkles }
+  { value: 'company', title: "I'm a company", copy: 'I want creator-led marketing, content, livestreams, product demos, or a campaign package.', cta: 'Create Company Profile', icon: Building2 },
+  { value: 'creator', title: "I'm a creator / talent", copy: 'I want to apply for brand-safe creator, model, host, editing, writing, design, or campaign roles.', cta: 'Create Creator Profile', icon: UserRound },
+  { value: 'specialist', title: "I'm a specialist", copy: 'I edit, write, design, shoot, coordinate, or support campaign work behind the scenes.', cta: 'Create Specialist Profile', icon: Sparkles }
+] as const;
+
+const invitePathCards = [
+  { title: "I'm a client / project member", copy: 'I was invited to review files, approve deliverables, or collaborate on a project.', cta: 'Continue With Invite', href: '/login' as Route, icon: UsersRound },
+  { title: "I'm internal team", copy: 'I manage campaigns, tasks, deliverables, creators, clients, or operations.', cta: 'Continue to Workspace', href: '/admin' as Route, icon: FileCheck2 }
 ] as const;
 
 const serviceOptions = COMPANY_SERVICE_GROUPS.flatMap((group) => group.options);
@@ -202,8 +208,8 @@ export const RegistrationWizard = () => {
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">Registration</p>
-                <h1 className="mt-3 font-display text-3xl font-semibold tracking-[-0.035em] text-espresso sm:text-5xl">Set up your platform profile.</h1>
-                <p className="mt-4 max-w-3xl text-sm leading-7 text-cocoa sm:text-base">Choose the path that fits you. The platform will collect only the details needed for review, matching, project work, consent, and professional collaboration.</p>
+                <h1 className="mt-3 font-display text-3xl font-semibold tracking-[-0.035em] text-espresso sm:text-5xl">What brings you to Alina Popova Studio?</h1>
+                <p className="mt-4 max-w-3xl text-sm leading-7 text-cocoa sm:text-base">Choose the path that fits you. Public profiles collect only the details needed for review, matching, project work, consent, and professional collaboration.</p>
               </div>
               <div className="rounded-full border border-primary/15 bg-porcelain px-4 py-2 text-sm font-semibold text-primary">Step {step + 1} of 4</div>
             </div>
@@ -212,25 +218,44 @@ export const RegistrationWizard = () => {
             </div>
 
             {step === 0 && (
-              <div className="mt-10 grid gap-5 lg:grid-cols-3">
-                {pathCards.map((card) => {
-                  const Icon = card.icon;
-                  const active = form.userType === card.value;
-                  return (
-                    <button
-                      key={card.value}
-                      type="button"
-                      onClick={() => set('userType', card.value)}
-                      className={`group rounded-[34px] border p-7 text-left transition hover:-translate-y-1 hover:shadow-soft ${active ? 'border-primary bg-porcelain shadow-card' : 'border-[#ECE8EC] bg-white'}`}
-                    >
-                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-white text-primary"><Icon className="h-6 w-6" aria-hidden /></span>
-                      <h2 className="mt-7 font-display text-2xl font-semibold text-espresso">{card.title}</h2>
-                      <p className="mt-3 text-sm leading-7 text-cocoa">{card.copy}</p>
-                      <span className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-primary">Use this path <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden /></span>
-                    </button>
-                  );
-                })}
-              </div>
+              <>
+                <div className="mt-10 grid gap-5 lg:grid-cols-3">
+                  {pathCards.map((card) => {
+                    const Icon = card.icon;
+                    const active = form.userType === card.value;
+                    return (
+                      <button
+                        key={card.value}
+                        type="button"
+                        onClick={() => set('userType', card.value)}
+                        className={`group rounded-[34px] border p-7 text-left transition hover:-translate-y-1 hover:shadow-soft ${active ? 'border-primary bg-porcelain shadow-card' : 'border-[#ECE8EC] bg-white'}`}
+                      >
+                        <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-white text-primary"><Icon className="h-6 w-6" aria-hidden /></span>
+                        <h2 className="mt-7 font-display text-2xl font-semibold text-espresso">{card.title}</h2>
+                        <p className="mt-3 text-sm leading-7 text-cocoa">{card.copy}</p>
+                        <span className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-primary">{card.cta} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden /></span>
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="mt-5 grid gap-5 lg:grid-cols-2">
+                  {invitePathCards.map((card) => {
+                    const Icon = card.icon;
+                    return (
+                      <Link
+                        key={card.title}
+                        href={card.href}
+                        className="group rounded-[30px] border border-[#ECE8EC] bg-white p-6 text-left no-underline transition hover:-translate-y-1 hover:border-primary/25 hover:bg-porcelain/60 hover:no-underline hover:shadow-card"
+                      >
+                        <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary"><Icon className="h-5 w-5" aria-hidden /></span>
+                        <h2 className="mt-5 font-display text-xl font-semibold text-espresso">{card.title}</h2>
+                        <p className="mt-3 text-sm leading-7 text-cocoa">{card.copy}</p>
+                        <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">{card.cta} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden /></span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </>
             )}
 
             {step === 1 && (

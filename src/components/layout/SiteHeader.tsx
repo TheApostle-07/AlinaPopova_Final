@@ -14,16 +14,12 @@ type NavLink = {
 };
 
 const navLinks: NavLink[] = [
-  { label: 'Home', href: { pathname: '/' } },
   { label: 'Companies', href: { pathname: '/companies' } },
   { label: 'Creators', href: { pathname: '/creators' } },
   { label: 'Services', href: { pathname: '/services' } },
   { label: 'Pricing', href: { pathname: '/pricing' } },
-  { label: 'Safety', href: { pathname: '/safety' } },
-  { label: 'FAQs', href: { pathname: '/faqs' } }
+  { label: 'Safety', href: { pathname: '/safety' } }
 ];
-
-const desktopNavLinks = navLinks.slice(0, -1);
 
 export const SiteHeader = () => {
   const pathname = usePathname();
@@ -48,13 +44,13 @@ export const SiteHeader = () => {
 
   return (
     <header className={`sticky top-0 z-[60] border-b border-black/[0.06] bg-white/90 backdrop-blur-xl transition-shadow ${scrolled ? 'shadow-header' : 'shadow-none'}`}>
-      <div className="mx-auto flex h-[68px] max-w-[1240px] items-center justify-between px-5 sm:px-8 xl:grid xl:h-20 xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.2fr)] xl:px-10">
-        <Link href="/" className="shrink-0" aria-label="Alina Popova Studio home" onClick={() => setMenuOpen(false)}>
+      <div className="mx-auto flex h-[76px] max-w-[1240px] items-center justify-between px-5 lg:px-8">
+        <Link href="/" className="max-w-[230px] shrink-0" aria-label="Alina Popova Studio home" onClick={() => setMenuOpen(false)}>
           <BrandLogo />
         </Link>
-        <nav className="hidden items-center justify-self-center gap-0 text-sm font-medium text-cocoa xl:flex" aria-label="Primary navigation">
-          {desktopNavLinks.map((link) => {
-            const active = link.href.pathname === '/' ? pathname === '/' : pathname.startsWith(link.href.pathname);
+        <nav className="hidden items-center gap-1 text-sm font-medium text-cocoa lg:flex" aria-label="Primary navigation">
+          {navLinks.map((link) => {
+            const active = pathname.startsWith(link.href.pathname);
             return <Link
               key={`${link.href.pathname}-${link.href.hash ?? 'root'}`}
               href={link.href}
@@ -66,14 +62,11 @@ export const SiteHeader = () => {
             </Link>;
           })}
         </nav>
-        <div className="flex items-center justify-self-end gap-2.5">
-          <Button href="/apply" size="sm" className="hidden xl:inline-flex shadow-none hover:shadow-none" variant="secondary">
-            Apply as Creator
+        <div className="flex items-center gap-3">
+          <Button href="/login" size="sm" variant="secondary" className="hidden min-h-11 px-4 shadow-none hover:shadow-card lg:inline-flex">
+            Log in
           </Button>
-          <Link href="/login" className="hidden rounded-full px-3 py-2 text-sm font-semibold text-cocoa transition hover:bg-porcelain hover:text-espresso xl:inline-flex">
-            Studio Login
-          </Link>
-          <Button href="/companies/start" size="sm" className="hidden xl:inline-flex shadow-none hover:shadow-none">
+          <Button href="/companies/start" size="sm" className="hidden min-h-11 px-[18px] shadow-none hover:shadow-card lg:inline-flex">
             Build My Campaign
           </Button>
           <button
@@ -82,7 +75,7 @@ export const SiteHeader = () => {
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#ECE8EC] bg-white text-cocoa transition hover:border-primary/25 hover:bg-porcelain hover:text-espresso xl:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#ECE8EC] bg-white text-cocoa transition hover:border-primary/25 hover:bg-porcelain hover:text-espresso lg:hidden"
           >
             {menuOpen ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
           </button>
@@ -94,10 +87,10 @@ export const SiteHeader = () => {
             type="button"
             tabIndex={-1}
             aria-label="Close navigation menu"
-            className="fixed inset-0 z-40 cursor-default bg-espresso/10 backdrop-blur-sm xl:hidden"
+            className="fixed inset-0 z-40 cursor-default bg-espresso/10 backdrop-blur-sm lg:hidden"
             onClick={() => setMenuOpen(false)}
           />
-          <div className="xl:hidden">
+          <div className="lg:hidden">
             <div id="mobile-navigation" className="fixed inset-x-3 top-[76px] z-50 rounded-[28px] border border-[#ECE8EC] bg-white p-5 shadow-soft sm:inset-x-6">
               <div className="mb-4 flex items-center justify-between">
                 <p className="text-sm font-semibold text-espresso">Menu</p>
@@ -110,9 +103,17 @@ export const SiteHeader = () => {
                   <X className="h-5 w-5" aria-hidden />
                 </button>
               </div>
-              <nav className="flex flex-col gap-1 text-base font-semibold text-espresso" aria-label="Mobile navigation">
+              <div className="grid gap-3">
+                <Button href="/companies/start" fullWidth iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
+                  Build My Campaign
+                </Button>
+                <Button href="/apply" fullWidth variant="secondary">
+                  Apply as Creator
+                </Button>
+              </div>
+              <nav className="mt-5 flex flex-col gap-1 border-t border-[#ECE8EC] pt-5 text-base font-semibold text-espresso" aria-label="Mobile navigation">
                 {navLinks.map((link) => {
-                  const active = link.href.pathname === '/' ? pathname === '/' : pathname.startsWith(link.href.pathname);
+                  const active = pathname.startsWith(link.href.pathname);
                   return <Link
                     key={`mobile-${link.href.pathname}-${link.href.hash ?? 'root'}`}
                     href={link.href}
@@ -124,18 +125,14 @@ export const SiteHeader = () => {
                     {link.label}
                   </Link>;
                 })}
+                <Link
+                  href="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-xl px-4 py-3 no-underline transition hover:bg-porcelain hover:text-espresso hover:no-underline"
+                >
+                  Log in
+                </Link>
               </nav>
-              <div className="mt-5 grid gap-3 border-t border-[#ECE8EC] pt-5">
-                <Button href="/companies/start" fullWidth iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
-                  Build My Campaign
-                </Button>
-                <Button href="/apply" fullWidth variant="secondary">
-                  Apply as Creator
-                </Button>
-                <Button href="/login" fullWidth variant="secondary">
-                  Studio Login
-                </Button>
-              </div>
             </div>
           </div>
         </>

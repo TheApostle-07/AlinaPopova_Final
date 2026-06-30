@@ -8,6 +8,7 @@ import {
   platformCookieOptions
 } from '@/lib/platform-auth';
 import { registerCompanyUser, registerCreatorUser, type PlatformUserType } from '@/lib/platform-database';
+import { getPlatformHomePath } from '@/lib/platform-routes';
 import {
   BUDGET_RANGES,
   COMPANY_BUSINESS_CATEGORIES,
@@ -176,7 +177,7 @@ export async function POST(request: Request) {
 
     const session = createPlatformSession({ userId, userType: resolvedUserType, email, phone });
     if (!session) return json({ ok: false, error: 'Authentication is not configured.', code: 'AUTH_NOT_CONFIGURED', data: null }, 503);
-    const response = json({ ok: true, error: null, code: null, data: { redirectTo: '/dashboard', userId, userType: resolvedUserType } }, 201);
+    const response = json({ ok: true, error: null, code: null, data: { redirectTo: getPlatformHomePath(resolvedUserType), userId, userType: resolvedUserType } }, 201);
     response.cookies.set(PLATFORM_SESSION_COOKIE, session, platformCookieOptions);
     response.cookies.set(PLATFORM_REGISTRATION_COOKIE, '', expiredPlatformCookieOptions);
     return response;
