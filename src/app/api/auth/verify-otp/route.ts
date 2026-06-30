@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 
     const registration = createRegistrationSession({ identifier, identifierType });
     if (!registration) return json({ ok: false, error: 'Authentication is not configured.', code: 'AUTH_NOT_CONFIGURED', data: null }, 503);
-    const response = json({ ok: true, error: null, code: null, data: { requiresRegistration: true, redirectTo: '/register', identifierType } });
+    const response = json({ ok: true, error: null, code: null, data: { requiresRegistration: true, redirectTo: '/onboarding/role', identifierType } });
     response.cookies.set(PLATFORM_REGISTRATION_COOKIE, registration, registrationCookieOptions);
     return response;
   } catch (error) {

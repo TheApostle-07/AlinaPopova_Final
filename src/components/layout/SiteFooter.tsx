@@ -74,7 +74,7 @@ export const SiteFooter = () => {
   const year = new Date().getFullYear();
   const showCta = pathname !== '/' && pathname !== '/companies' && !legalPaths.has(pathname);
 
-  if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard') || pathname.startsWith('/workspace') || pathname.startsWith('/login') || pathname.startsWith('/register')) return null;
+  if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard') || pathname.startsWith('/workspace') || pathname.startsWith('/login') || pathname.startsWith('/register') || pathname.startsWith('/onboarding')) return null;
 
   return (
     <>

@@ -40,7 +40,7 @@ export const SiteHeader = () => {
     };
   }, [menuOpen]);
 
-  if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard') || pathname.startsWith('/workspace') || pathname.startsWith('/login') || pathname.startsWith('/register')) return null;
+  if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard') || pathname.startsWith('/workspace') || pathname.startsWith('/login') || pathname.startsWith('/register') || pathname.startsWith('/onboarding')) return null;
 
   return (
     <header className={`sticky top-0 z-[60] border-b border-black/[0.06] bg-white/90 backdrop-blur-xl transition-shadow ${scrolled ? 'shadow-header' : 'shadow-none'}`}>
