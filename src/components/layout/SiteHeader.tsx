@@ -44,7 +44,7 @@ export const SiteHeader = () => {
     };
   }, [menuOpen]);
 
-  if (pathname.startsWith('/admin')) return null;
+  if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard') || pathname.startsWith('/workspace') || pathname.startsWith('/login') || pathname.startsWith('/register')) return null;
 
   return (
     <header className={`sticky top-0 z-[60] border-b border-black/[0.06] bg-white/90 backdrop-blur-xl transition-shadow ${scrolled ? 'shadow-header' : 'shadow-none'}`}>
@@ -70,6 +70,9 @@ export const SiteHeader = () => {
           <Button href="/apply" size="sm" className="hidden xl:inline-flex shadow-none hover:shadow-none" variant="secondary">
             Apply as Creator
           </Button>
+          <Link href="/login" className="hidden rounded-full px-3 py-2 text-sm font-semibold text-cocoa transition hover:bg-porcelain hover:text-espresso xl:inline-flex">
+            Studio Login
+          </Link>
           <Button href="/companies/start" size="sm" className="hidden xl:inline-flex shadow-none hover:shadow-none">
             Build My Campaign
           </Button>
@@ -128,6 +131,9 @@ export const SiteHeader = () => {
                 </Button>
                 <Button href="/apply" fullWidth variant="secondary">
                   Apply as Creator
+                </Button>
+                <Button href="/login" fullWidth variant="secondary">
+                  Studio Login
                 </Button>
               </div>
             </div>

@@ -180,6 +180,7 @@ const createSqlClient = async () => {
     max: 3,
     connect_timeout: 10,
     idle_timeout: 20,
+    onnotice: () => undefined,
     ssl: url.searchParams.get('sslmode') === 'disable' ? false : { servername: originalHost, rejectUnauthorized: true }
   });
 };
