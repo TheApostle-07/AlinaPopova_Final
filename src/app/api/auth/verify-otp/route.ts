@@ -42,7 +42,10 @@ export async function POST(request: Request) {
     const user = await findPlatformUserByIdentifier(identifier);
     if (user) {
       const session = createPlatformSession({ userId: user.id, userType: user.userType, email: user.email, phone: user.phone });
-      if (!session) return json({ ok: false, error: 'Authentication is not configured.', code: 'AUTH_NOT_CONFIGURED', data: null }, 503);
+      if (!session) {
+        console.error('Platform session secret is not configured.');
+        return json({ ok: false, error: 'Verification is temporarily unavailable. Please contact support.', code: 'AUTH_NOT_CONFIGURED', data: null }, 503);
+      }
       const response = json({ ok: true, error: null, code: null, data: { requiresRegistration: false, redirectTo: getPlatformHomePath(user.userType), userType: user.userType } });
       response.cookies.set(PLATFORM_SESSION_COOKIE, session, platformCookieOptions);
       response.cookies.set(PLATFORM_REGISTRATION_COOKIE, '', { ...registrationCookieOptions, maxAge: 0 });
@@ -50,15 +53,19 @@ export async function POST(request: Request) {
     }
 
     const registration = createRegistrationSession({ identifier, identifierType });
-    if (!registration) return json({ ok: false, error: 'Authentication is not configured.', code: 'AUTH_NOT_CONFIGURED', data: null }, 503);
+    if (!registration) {
+      console.error('Registration session secret is not configured.');
+      return json({ ok: false, error: 'Verification is temporarily unavailable. Please contact support.', code: 'AUTH_NOT_CONFIGURED', data: null }, 503);
+    }
     const response = json({ ok: true, error: null, code: null, data: { requiresRegistration: true, redirectTo: '/onboarding/role', identifierType } });
     response.cookies.set(PLATFORM_REGISTRATION_COOKIE, registration, registrationCookieOptions);
     return response;
   } catch (error) {
     const message = error instanceof Error && error.message.includes('DATABASE_URL is not configured')
-      ? 'Database is not configured. Set DATABASE_URL before using OTP login.'
+      ? 'Verification is temporarily unavailable. Please contact support.'
       : 'We could not verify the code. Please try again shortly.';
-    const status = message.startsWith('Database') ? 503 : 500;
+    if (error instanceof Error && error.message.includes('DATABASE_URL is not configured')) console.error('OTP verification database is not configured.');
+    const status = error instanceof Error && error.message.includes('DATABASE_URL is not configured') ? 503 : 500;
     return json({ ok: false, error: message, code: status === 503 ? 'DATABASE_NOT_CONFIGURED' : 'SERVER_ERROR', data: null }, status);
   }
 }

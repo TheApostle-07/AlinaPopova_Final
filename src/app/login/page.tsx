@@ -3,8 +3,8 @@ import { Suspense } from 'react';
 import { AuthPortal } from '@/components/platform/AuthPortal';
 
 export const metadata: Metadata = {
-  title: 'Login | Alina Popova Studio OS',
-  description: 'Secure OTP login for companies, creators, specialists, and campaign collaborators.'
+  title: 'Login | Alina Popova Studio',
+  description: 'Secure OTP login for company briefs, creator applications, and Alina Popova Studio accounts.'
 };
 
 export default function LoginPage() {

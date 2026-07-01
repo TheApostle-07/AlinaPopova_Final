@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import type { Route } from 'next';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, Building2, CheckCircle2, ClipboardCheck, LockKeyhole, MailCheck, RefreshCw, ShieldCheck, Sparkles, UsersRound } from 'lucide-react';
+import { ArrowRight, CheckCircle2, LockKeyhole, MailCheck, RefreshCw, ShieldCheck } from 'lucide-react';
 import { OtpInput } from '@/components/platform/OtpInput';
 import { Button } from '@/components/ui/Button';
 
@@ -69,46 +69,10 @@ const homePathForUserType = (userType: string) => {
   return '/dashboard/creator';
 };
 
-const getIntentContext = (intent: string, nextPath: string, invite: string) => {
-  if (invite || intent.includes('invite')) {
-    return {
-      title: 'Verify to continue your invite',
-      copy: 'We sent a 6-digit code so you can open the invited project workspace securely.',
-      helper: 'After verification, we will route you to the right review or collaboration space.'
-    };
-  }
-  if (intent.includes('company') || intent.includes('brief') || nextPath.startsWith('/brief') || nextPath.startsWith('/companies')) {
-    return {
-      title: 'Verify to continue your campaign brief',
-      copy: 'We sent a 6-digit code so you can save your brief and continue securely.',
-      helper: 'After verification, your campaign brief continues with the same details and intent.'
-    };
-  }
-  if (intent.includes('creator') || intent.includes('apply') || nextPath.startsWith('/apply') || nextPath.startsWith('/creators')) {
-    return {
-      title: 'Verify to continue your creator profile',
-      copy: 'We sent a 6-digit code so you can save your role preferences and application.',
-      helper: 'After verification, we will route you to role selection or your creator workspace.'
-    };
-  }
-  return {
-    title: 'Enter verification code',
-    copy: '',
-    helper: 'Enter the code to continue securely into the right workspace.'
-  };
-};
-
 const trustCards = [
-  { title: 'OTP protected', copy: 'Secure code-based access for every role.', icon: ShieldCheck },
-  { title: 'Role-specific', copy: 'Companies, creators, clients, and team members see the right workspace.', icon: UsersRound },
-  { title: 'Consent recorded', copy: 'Important submissions store agreement, version, and timestamp.', icon: ClipboardCheck }
-];
-
-const routePreviewCards = [
-  { title: 'Companies', copy: 'Submit briefs, upload materials, review deliverables, and approve work.', icon: Building2 },
-  { title: 'Creators', copy: 'Apply for roles, receive opportunities, manage tasks, and track payouts.', icon: Sparkles },
-  { title: 'Team', copy: 'Manage assigned projects, files, messages, revisions, and approvals.', icon: UsersRound },
-  { title: 'Admin', copy: 'Control users, projects, tasks, payments, usage rights, and complaints.', icon: LockKeyhole }
+  { title: 'Secure verification', copy: 'Access is protected with a one-time code.', icon: ShieldCheck },
+  { title: 'Right next step', copy: 'After verification, we guide you to the correct profile or dashboard.', icon: ArrowRight },
+  { title: 'Privacy first', copy: 'Your details are used only to continue your request or account.', icon: LockKeyhole }
 ];
 
 export const AuthPortal = () => {
@@ -131,8 +95,6 @@ export const AuthPortal = () => {
   const lastSubmittedCode = useRef('');
 
   const maskedIdentifier = useMemo(() => maskIdentifier(identifier), [identifier]);
-  const intentContext = useMemo(() => getIntentContext(intent, nextPath, invite), [intent, invite, nextPath]);
-
   useEffect(() => {
     if (resendSeconds <= 0) return undefined;
     const interval = window.setInterval(() => setResendSeconds((current) => Math.max(0, current - 1)), 1000);
@@ -245,13 +207,13 @@ export const AuthPortal = () => {
 
       <div className="relative mx-auto max-w-[1120px] text-center">
         <p className="inline-flex rounded-full border border-primary/15 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary shadow-[0_10px_30px_rgba(17,16,20,0.04)]">
-          Secure Campaign OS Login
+          Secure Login
         </p>
         <h1 className="mx-auto mt-6 max-w-[760px] font-display text-[38px] font-semibold leading-[1.02] tracking-[-0.05em] text-espresso sm:text-5xl lg:text-6xl">
           Log in or start your profile.
         </h1>
         <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-cocoa">
-          One secure login for company briefs, creator applications, project workspaces, approvals, files, and messages.
+          Use one secure login to continue your company brief, creator application, or Alina Popova Studio account.
         </p>
 
         <div className="mx-auto mt-10 max-w-[520px] rounded-[38px] border border-primary/15 bg-white p-6 text-left shadow-[0_28px_90px_rgba(17,16,20,0.08)] sm:p-9 lg:p-11">
@@ -262,9 +224,9 @@ export const AuthPortal = () => {
           {activeHomePath ? (
             <div className="mt-7 text-center">
               <h2 className="font-display text-3xl font-semibold leading-tight text-espresso">You&apos;re already logged in.</h2>
-              <p className="mt-3 text-sm leading-7 text-cocoa">Continue to your workspace or use another account to start a different profile.</p>
+              <p className="mt-3 text-sm leading-7 text-cocoa">Continue to your account or switch to another email or phone.</p>
               <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                <Button href={activeHomePath} size="lg" fullWidth>Continue to dashboard</Button>
+                <Button href={activeHomePath} size="lg" fullWidth>Continue</Button>
                 <Button type="button" size="lg" fullWidth variant="secondary" onClick={() => void handleUseAnotherAccount()}>
                   Use another account
                 </Button>
@@ -280,7 +242,7 @@ export const AuthPortal = () => {
             >
               <div className="text-center">
                 <h2 className="font-display text-3xl font-semibold leading-tight text-espresso">Continue securely</h2>
-                <p className="mt-3 text-sm leading-7 text-cocoa">Enter your email or phone. We&apos;ll send a 6-digit code.</p>
+                <p className="mt-3 text-sm leading-7 text-cocoa">Enter your email or phone. We&apos;ll send a 6-digit code to verify it&apos;s you.</p>
               </div>
               <label className="block text-sm font-semibold text-espresso">
                 Email or phone
@@ -295,14 +257,13 @@ export const AuthPortal = () => {
               <Button type="submit" size="lg" fullWidth disabled={sending} iconRight={sending ? <RefreshCw className="h-4 w-4 animate-spin" aria-hidden /> : <ArrowRight className="h-4 w-4" aria-hidden />}>
                 {sending ? 'Sending code...' : 'Send verification code'}
               </Button>
-              <p className="text-center text-sm leading-6 text-cocoa">New here? Use the same email or phone and we&apos;ll guide you to the right profile.</p>
+              <p className="text-center text-sm leading-6 text-cocoa">New here? Use the same email or phone and we&apos;ll guide you to the right next step.</p>
             </form>
           ) : (
             <div className="mt-7">
               <div className="text-center">
-                <h2 className="font-display text-3xl font-semibold leading-tight text-espresso">{intentContext.title}</h2>
-                <p className="mt-3 text-sm leading-7 text-cocoa">{intentContext.copy || `We sent a 6-digit code to ${maskedIdentifier}.`}</p>
-                {intentContext.copy && <p className="mt-2 text-sm leading-6 text-cocoa">Code sent to {maskedIdentifier}.</p>}
+                <h2 className="font-display text-3xl font-semibold leading-tight text-espresso">Enter verification code</h2>
+                <p className="mt-3 text-sm leading-7 text-cocoa">We sent a 6-digit code to {maskedIdentifier}.</p>
               </div>
               <form
                 onSubmit={(event) => {
@@ -340,7 +301,6 @@ export const AuthPortal = () => {
                   Use another email or phone
                 </button>
               </div>
-              <p className="mt-4 rounded-2xl border border-primary/10 bg-[#FFF8FB] px-4 py-3 text-center text-sm leading-6 text-cocoa">{intentContext.helper}</p>
             </div>
           )}
 
@@ -353,7 +313,9 @@ export const AuthPortal = () => {
               <Link href="/terms" className="hover:text-primary">Terms</Link>
               <Link href="/privacy" className="hover:text-primary">Privacy</Link>
               <Link href="/safety" className="hover:text-primary">Safety</Link>
+              <Link href="/contact" className="hover:text-primary">Contact support</Link>
             </div>
+            <p className="mt-3 text-center text-xs leading-5 text-cocoa">Having trouble? Contact support and include the email or phone you are using.</p>
           </div>
         </div>
 
@@ -370,24 +332,6 @@ export const AuthPortal = () => {
           })}
         </div>
 
-        <div className="mx-auto mt-10 max-w-[1080px] rounded-[38px] border border-primary/10 bg-white/64 p-6 text-left shadow-[0_18px_60px_rgba(17,16,20,0.05)] backdrop-blur sm:p-8">
-          <div className="text-center">
-            <p className="text-sm font-semibold text-primary">Where you go after login</p>
-            <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-espresso">One login. The right workspace.</h2>
-          </div>
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {routePreviewCards.map((item) => {
-              const Icon = item.icon;
-              return (
-                <article key={item.title} className="h-full rounded-[26px] border border-[#ECE8EC] bg-white p-5">
-                  <Icon className="h-5 w-5 text-primary" aria-hidden />
-                  <h3 className="mt-4 text-base font-semibold text-espresso">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-cocoa">{item.copy}</p>
-                </article>
-              );
-            })}
-          </div>
-        </div>
       </div>
     </section>
   );

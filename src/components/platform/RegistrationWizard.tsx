@@ -1,7 +1,6 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Route } from 'next';
 import { ArrowRight, Building2, Check, FileCheck2, Sparkles, UserRound, UsersRound } from 'lucide-react';
@@ -24,7 +23,7 @@ import {
 } from '@/lib/intake-options';
 import { CREATOR_ROLE_CATALOG } from '@/lib/creator-roles';
 
-type Path = 'creator' | 'company' | 'specialist';
+type Path = 'creator' | 'company' | 'specialist' | 'invite';
 
 type ApiResult<T> = {
   ok: boolean;
@@ -42,14 +41,17 @@ const readJson = async <T,>(response: Response): Promise<ApiResult<T>> => {
 };
 
 const pathCards = [
-  { value: 'company', title: "I'm a company", copy: 'I want creator-led marketing, content, livestreams, product demos, or a campaign package.', cta: 'Create Company Profile', icon: Building2 },
-  { value: 'creator', title: "I'm a creator / talent", copy: 'I want to apply for brand-safe creator, model, host, editing, writing, design, or campaign roles.', cta: 'Create Creator Profile', icon: UserRound },
-  { value: 'specialist', title: "I'm a specialist", copy: 'I edit, write, design, shoot, coordinate, or support campaign work behind the scenes.', cta: 'Create Specialist Profile', icon: Sparkles }
+  { value: 'company', title: "I'm a company", copy: 'I want creator-led marketing, content, livestreams, product demos, or a campaign package.', icon: Building2 },
+  { value: 'creator', title: "I'm a creator / talent", copy: 'I want to apply for brand-safe creator, model, host, editing, writing, design, or campaign roles.', icon: UserRound },
+  { value: 'specialist', title: "I'm a specialist", copy: 'I edit, write, design, shoot, coordinate, or support campaigns behind the scenes.', icon: Sparkles },
+  { value: 'invite', title: 'I have an invite', copy: 'I was invited to review campaign work or collaborate with Alina Popova Studio.', icon: UsersRound }
 ] as const;
 
-const invitePathCards = [
-  { title: "I'm a client / project member", copy: 'I was invited to review files, approve deliverables, or collaborate on a project.', cta: 'Continue With Invite', href: '/login' as Route, icon: UsersRound },
-  { title: "I'm internal team", copy: 'I manage campaigns, tasks, deliverables, creators, clients, or operations.', cta: 'Continue to Workspace', href: '/admin' as Route, icon: FileCheck2 }
+const stepLabels = [
+  'Step 1 — Choose your path',
+  'Step 2 — Account details',
+  'Step 3 — Profile details',
+  'Step 4 — Review and agree'
 ] as const;
 
 const serviceOptions = COMPANY_SERVICE_GROUPS.flatMap((group) => group.options);
@@ -142,6 +144,24 @@ export const RegistrationWizard = () => {
       ? form.name.length >= 3 && form.city.length >= 2 && form.area.length >= 2 && (form.email || form.phone)
       : true;
 
+  const handleUseAnotherIdentifier = async () => {
+    await fetch('/api/auth/logout', { method: 'POST', headers: { Accept: 'application/json' } }).catch(() => null);
+    router.push('/login');
+  };
+
+  const continueFromStep = () => {
+    if (step === 0 && !form.userType) {
+      setError('Choose one path to continue.');
+      return;
+    }
+    if (step === 0 && form.userType === 'invite') {
+      setError('Please open the invite link from Alina Popova Studio. If it has expired, ask the studio to send a new one.');
+      return;
+    }
+    setError('');
+    setStep((current) => current + 1);
+  };
+
   const submit = async () => {
     setSubmitting(true);
     setError('');
@@ -209,9 +229,9 @@ export const RegistrationWizard = () => {
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">Registration</p>
                 <h1 className="mt-3 font-display text-3xl font-semibold tracking-[-0.035em] text-espresso sm:text-5xl">What brings you to Alina Popova Studio?</h1>
-                <p className="mt-4 max-w-3xl text-sm leading-7 text-cocoa sm:text-base">Choose the path that fits you. Public profiles collect only the details needed for review, matching, project work, consent, and professional collaboration.</p>
+                <p className="mt-4 max-w-3xl text-sm leading-7 text-cocoa sm:text-base">Choose the path that fits you. Your answers help us guide you to the correct profile and next step.</p>
               </div>
-              <div className="rounded-full border border-primary/15 bg-porcelain px-4 py-2 text-sm font-semibold text-primary">Step {step + 1} of 4</div>
+              <div className="rounded-full border border-primary/15 bg-porcelain px-4 py-2 text-sm font-semibold text-primary">{stepLabels[step]}</div>
             </div>
             <div className="mt-8 h-2 overflow-hidden rounded-full bg-champagne">
               <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${((step + 1) / 4) * 100}%` }} />
@@ -219,7 +239,10 @@ export const RegistrationWizard = () => {
 
             {step === 0 && (
               <>
-                <div className="mt-10 grid gap-5 lg:grid-cols-3">
+                <div className="mt-8 rounded-[26px] border border-primary/10 bg-porcelain p-5">
+                  <p className="text-sm font-semibold text-espresso">Next, we&apos;ll collect the right details for your profile.</p>
+                </div>
+                <div className="mt-6 grid gap-5 lg:grid-cols-2">
                   {pathCards.map((card) => {
                     const Icon = card.icon;
                     const active = form.userType === card.value;
@@ -227,34 +250,24 @@ export const RegistrationWizard = () => {
                       <button
                         key={card.value}
                         type="button"
-                        onClick={() => set('userType', card.value)}
-                        className={`group rounded-[34px] border p-7 text-left transition hover:-translate-y-1 hover:shadow-soft ${active ? 'border-primary bg-porcelain shadow-card' : 'border-[#ECE8EC] bg-white'}`}
+                        onClick={() => {
+                          setError('');
+                          set('userType', card.value);
+                        }}
+                        className={`group relative flex h-full min-h-[210px] flex-col rounded-[34px] border p-7 text-left transition hover:-translate-y-1 hover:shadow-soft ${active ? 'border-primary bg-porcelain shadow-card' : 'border-[#ECE8EC] bg-white'}`}
+                        aria-pressed={active}
                       >
+                        {active && <span className="absolute right-6 top-6 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white"><Check className="h-4 w-4" aria-hidden /></span>}
                         <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/15 bg-white text-primary"><Icon className="h-6 w-6" aria-hidden /></span>
                         <h2 className="mt-7 font-display text-2xl font-semibold text-espresso">{card.title}</h2>
                         <p className="mt-3 text-sm leading-7 text-cocoa">{card.copy}</p>
-                        <span className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-primary">{card.cta} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden /></span>
+                        <span className={`mt-auto pt-6 text-sm font-semibold ${active ? 'text-primary' : 'text-cocoa'}`}>{active ? 'Selected' : 'Select this path'}</span>
                       </button>
                     );
                   })}
                 </div>
-                <div className="mt-5 grid gap-5 lg:grid-cols-2">
-                  {invitePathCards.map((card) => {
-                    const Icon = card.icon;
-                    return (
-                      <Link
-                        key={card.title}
-                        href={card.href}
-                        className="group rounded-[30px] border border-[#ECE8EC] bg-white p-6 text-left no-underline transition hover:-translate-y-1 hover:border-primary/25 hover:bg-porcelain/60 hover:no-underline hover:shadow-card"
-                      >
-                        <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary"><Icon className="h-5 w-5" aria-hidden /></span>
-                        <h2 className="mt-5 font-display text-xl font-semibold text-espresso">{card.title}</h2>
-                        <p className="mt-3 text-sm leading-7 text-cocoa">{card.copy}</p>
-                        <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">{card.cta} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden /></span>
-                      </Link>
-                    );
-                  })}
-                </div>
+                {!form.userType && <p className="mt-5 text-sm font-semibold text-cocoa">Choose one path to continue.</p>}
+                {error && <p role="alert" className="mt-5 rounded-2xl border border-merlot/25 bg-merlot/10 p-4 text-sm text-merlot">{error}</p>}
               </>
             )}
 
@@ -354,10 +367,13 @@ export const RegistrationWizard = () => {
             )}
 
             <div className="mt-10 flex flex-col-reverse gap-3 border-t border-[#ECE8EC] pt-7 sm:flex-row sm:justify-between">
-              <Button type="button" variant="secondary" onClick={() => step === 0 ? router.push('/login') : setStep((current) => current - 1)}>
-                {step === 0 ? 'Back to login' : 'Back'}
-              </Button>
-              {step < 3 && <Button type="button" disabled={!canContinue} onClick={() => setStep((current) => current + 1)} iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Continue</Button>}
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                {step > 0 && <Button type="button" variant="secondary" onClick={() => setStep((current) => current - 1)}>Back</Button>}
+                <button type="button" onClick={() => void handleUseAnotherIdentifier()} className="min-h-11 rounded-full px-4 text-sm font-semibold text-primary transition hover:bg-porcelain hover:text-hotpink">
+                  Use another email or phone
+                </button>
+              </div>
+              {step < 3 && <Button type="button" disabled={!canContinue} onClick={continueFromStep} iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>Continue</Button>}
             </div>
           </div>
         </div>

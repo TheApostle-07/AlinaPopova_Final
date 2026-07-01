@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { RegistrationWizard } from '@/components/platform/RegistrationWizard';
 
 export const metadata: Metadata = {
-  title: 'Choose Your Role | Alina Popova Studio OS',
-  description: 'Choose whether you are joining Alina Popova Studio as a company, creator, specialist, client reviewer, or internal team member.'
+  title: 'Choose Your Path | Alina Popova Studio',
+  description: 'Choose the right public profile path for your company brief, creator application, specialist profile, or invite.'
 };
 
 export default function OnboardingRolePage() {

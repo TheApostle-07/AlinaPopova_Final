@@ -34,10 +34,11 @@ export async function POST(request: Request) {
 
     const delivery = await deliverOtp({ identifier, identifierType, otp });
     if (!delivery.ok) {
+      if (delivery.error?.includes('configured')) console.error('OTP delivery provider is not configured:', delivery.error);
       return json({
         ok: false,
         error: delivery.error === 'Email verification is not configured.' || delivery.error === 'Phone verification is not configured.'
-          ? 'Verification delivery is not configured yet. Please contact the studio or try again later.'
+          ? 'Verification is temporarily unavailable. Please contact support.'
           : 'We could not send the code. Please try again shortly.',
         code: delivery.error?.includes('configured') ? 'OTP_DELIVERY_NOT_CONFIGURED' : 'OTP_DELIVERY_FAILED',
         data: { debugRef: getOtpDebugHash(identifier) }
@@ -59,9 +60,9 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('OTP request failed:', error instanceof Error ? error.message : 'Unknown error');
     const message = error instanceof Error && error.message.includes('DATABASE_URL is not configured')
-      ? 'Database is not configured. Set DATABASE_URL before using OTP login.'
+      ? 'Verification is temporarily unavailable. Please contact support.'
       : 'We could not send the code. Please try again shortly.';
-    const status = message.startsWith('Database') ? 503 : 500;
+    const status = error instanceof Error && error.message.includes('DATABASE_URL is not configured') ? 503 : 500;
     return json({ ok: false, error: message, code: status === 503 ? 'DATABASE_NOT_CONFIGURED' : 'SERVER_ERROR', data: null }, status);
   }
 }
