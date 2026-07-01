@@ -1,35 +1,41 @@
 'use client';
 
 import Link from 'next/link';
+import type { Route } from 'next';
 import { usePathname } from 'next/navigation';
 import { ArrowRight, BadgeCheck, ShieldCheck } from 'lucide-react';
 import { BrandLogo } from '@/components/BrandLogo';
 import { Button } from '@/components/ui/Button';
 import { siteConfig } from '@/lib/config';
 
-const groups = [
+type FooterGroup = {
+  title: string;
+  links: ReadonlyArray<readonly [label: string, href: string]>;
+};
+
+const groups: readonly FooterGroup[] = [
   { title: 'Companies', links: [['For Companies', '/companies'], ['Services', '/services'], ['Campaigns', '/campaigns'], ['Live Studio', '/live-studio'], ['Pricing', '/pricing'], ['Book Campaign', '/companies/start']] },
   { title: 'Creators', links: [['Creator Network', '/creators'], ['Apply as Creator', '/apply'], ['Creator Roles', '/creators#roles'], ['How It Works', '/how-it-works'], ['Safety', '/safety'], ['Complaints', '/complaints']] },
   { title: 'Studio', links: [['About', '/about'], ['Contact', '/contact'], ['FAQs', '/faqs'], ['Safety', '/safety'], ['How It Works', '/how-it-works'], ['Log in', '/login']] },
   { title: 'Legal', links: [['Terms', '/terms'], ['Privacy', '/privacy'], ['Refunds', '/refunds'], ['Content Usage', '/content-usage-policy'], ['Payment Policy', '/payment-policy'], ['Creator Agreement', '/creator-agreement-summary'], ['Company Agreement', '/brand-agreement-summary'], ['Cookie Policy', '/cookie-policy'], ['Complaints', '/complaints']] }
-] as const;
+] as const satisfies readonly FooterGroup[];
 
 const legalPaths = new Set(['/terms', '/privacy', '/refunds', '/safety', '/content-usage-policy', '/payment-policy', '/complaints', '/creator-agreement-summary', '/brand-agreement-summary', '/cookie-policy']);
 
-const FooterLinkGroup = ({ title, links }: typeof groups[number]) => (
+const FooterLinkGroup = ({ title, links }: FooterGroup) => (
   <div>
     <p className="text-sm font-semibold text-white">{title}</p>
     <div className="mt-5 space-y-3.5">
-      {links.map(([label, href]) => <Link key={`${label}-${href}`} href={href} className="block text-sm text-white/65 no-underline transition-colors hover:text-[#E9A1BF] hover:no-underline focus-visible:text-white">{label}</Link>)}
+      {links.map(([label, href]) => <Link key={`${label}-${href}`} href={href as Route} className="block text-sm text-white/65 no-underline transition-colors hover:text-[#E9A1BF] hover:no-underline focus-visible:text-white">{label}</Link>)}
     </div>
   </div>
 );
 
-const FooterMobileGroup = ({ title, links }: typeof groups[number]) => (
+const FooterMobileGroup = ({ title, links }: FooterGroup) => (
   <details className="border-b border-white/10 py-5 last:border-b-0">
     <summary className="cursor-pointer list-none text-sm font-semibold text-white">{title}</summary>
     <div className="mt-4 grid gap-3 pl-1">
-      {links.map(([label, href]) => <Link key={`${label}-${href}`} href={href} className="text-sm text-white/65 no-underline transition-colors hover:text-[#E9A1BF] hover:no-underline">{label}</Link>)}
+      {links.map(([label, href]) => <Link key={`${label}-${href}`} href={href as Route} className="text-sm text-white/65 no-underline transition-colors hover:text-[#E9A1BF] hover:no-underline">{label}</Link>)}
     </div>
   </details>
 );
@@ -72,18 +78,22 @@ const FooterBrand = () => (
 export const SiteFooter = () => {
   const pathname = usePathname();
   const year = new Date().getFullYear();
-  const showCta = pathname !== '/' && pathname !== '/companies' && !legalPaths.has(pathname);
+  const isAuthPage = pathname.startsWith('/login');
+  const showCta = pathname !== '/' && pathname !== '/companies' && !legalPaths.has(pathname) && !isAuthPage;
+  const footerGroups = isAuthPage
+    ? groups.map((group) => ({ ...group, links: group.links.filter(([label]) => label !== 'Log in') }))
+    : groups;
 
-  if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard') || pathname.startsWith('/workspace') || pathname.startsWith('/login') || pathname.startsWith('/register') || pathname.startsWith('/onboarding')) return null;
+  if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard') || pathname.startsWith('/workspace') || pathname.startsWith('/register') || pathname.startsWith('/onboarding')) return null;
 
   return (
     <>
       {showCta && <FooterCtaPanel {...getFooterCta(pathname)} />}
       <footer className="footer-surface rounded-t-[56px] text-white">
-        <div className="mx-auto max-w-[1240px] px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+        <div className={`mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-10 ${isAuthPage ? 'py-14 sm:py-16 lg:py-18' : 'py-16 sm:py-20 lg:py-24'}`}>
           <div className="hidden gap-10 lg:grid lg:grid-cols-[1.7fr_repeat(4,minmax(0,0.8fr))] lg:gap-12">
             <FooterBrand />
-            {groups.map((group) => <FooterLinkGroup key={group.title} {...group} />)}
+            {footerGroups.map((group) => <FooterLinkGroup key={group.title} {...group} />)}
           </div>
           <div className="lg:hidden">
             <FooterBrand />
@@ -91,7 +101,7 @@ export const SiteFooter = () => {
               <Button href="/companies/start" fullWidth>Build My Campaign</Button>
               <Button href="/apply" fullWidth variant="secondary" className="border-white/20 bg-white/5 text-white hover:border-white/35 hover:bg-white/10 hover:text-white">Apply as Creator</Button>
             </div>
-            <div className="mt-9">{groups.map((group) => <FooterMobileGroup key={group.title} {...group} />)}</div>
+            <div className="mt-9">{footerGroups.map((group) => <FooterMobileGroup key={group.title} {...group} />)}</div>
           </div>
           <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-white/50 md:flex-row md:items-center md:justify-between">
             <p>© {year} {siteConfig.siteName}. All rights reserved.</p>

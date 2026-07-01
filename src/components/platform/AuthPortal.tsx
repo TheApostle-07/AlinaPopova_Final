@@ -4,9 +4,7 @@ import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import type { Route } from 'next';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, CheckCircle2, LockKeyhole, MailCheck, RefreshCw, ShieldCheck } from 'lucide-react';
-import { BrandLogo } from '@/components/BrandLogo';
-import { AuthHeader } from '@/components/platform/AuthHeader';
+import { ArrowRight, Building2, CheckCircle2, ClipboardCheck, LockKeyhole, MailCheck, RefreshCw, ShieldCheck, Sparkles, UsersRound } from 'lucide-react';
 import { OtpInput } from '@/components/platform/OtpInput';
 import { Button } from '@/components/ui/Button';
 
@@ -101,9 +99,16 @@ const getIntentContext = (intent: string, nextPath: string, invite: string) => {
 };
 
 const trustCards = [
-  { title: 'OTP protected', copy: 'Secure code-based access.' },
-  { title: 'Role-specific', copy: 'Creators, companies, clients, and team members see the right workspace.' },
-  { title: 'Consent recorded', copy: 'Key submissions store agreement and timestamp.' }
+  { title: 'OTP protected', copy: 'Secure code-based access for every role.', icon: ShieldCheck },
+  { title: 'Role-specific', copy: 'Companies, creators, clients, and team members see the right workspace.', icon: UsersRound },
+  { title: 'Consent recorded', copy: 'Important submissions store agreement, version, and timestamp.', icon: ClipboardCheck }
+];
+
+const routePreviewCards = [
+  { title: 'Companies', copy: 'Submit briefs, upload materials, review deliverables, and approve work.', icon: Building2 },
+  { title: 'Creators', copy: 'Apply for roles, receive opportunities, manage tasks, and track payouts.', icon: Sparkles },
+  { title: 'Team', copy: 'Manage assigned projects, files, messages, revisions, and approvals.', icon: UsersRound },
+  { title: 'Admin', copy: 'Control users, projects, tasks, payments, usage rights, and complaints.', icon: LockKeyhole }
 ];
 
 export const AuthPortal = () => {
@@ -229,150 +234,161 @@ export const AuthPortal = () => {
   };
 
   return (
-    <main
-      className="relative min-h-screen overflow-hidden bg-[#FFFBFD] px-5 pb-10 pt-24 sm:px-8 lg:px-10"
+    <section
+      className="relative overflow-hidden bg-[#FFFBFD] px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24"
       style={{
         background:
-          'radial-gradient(circle at 50% 0%, rgba(199, 53, 114, 0.12), transparent 34%), radial-gradient(circle at 20% 30%, rgba(233, 161, 191, 0.12), transparent 28%), radial-gradient(circle at 80% 25%, rgba(200, 169, 106, 0.08), transparent 26%), linear-gradient(180deg, #ffffff 0%, #fff8fb 54%, #ffffff 100%)'
+          'radial-gradient(circle at 50% 0%, rgba(199, 53, 114, 0.10), transparent 34%), radial-gradient(circle at 20% 25%, rgba(233, 161, 191, 0.10), transparent 28%), radial-gradient(circle at 80% 20%, rgba(200, 169, 106, 0.07), transparent 26%), linear-gradient(180deg, #ffffff 0%, #fff8fb 54%, #ffffff 100%)'
       }}
     >
-      <AuthHeader />
-      <section className="relative mx-auto flex min-h-[calc(100vh-160px)] max-w-[1080px] items-center justify-center">
-        <div className="pointer-events-none absolute left-1/2 top-[8%] h-[360px] w-[min(720px,88vw)] -translate-x-1/2 rounded-full bg-primary/[0.06] blur-3xl sm:h-[420px]" />
-        <div className="relative grid w-full min-w-0 overflow-hidden rounded-[38px] border border-[#F1D7E3] bg-white/82 shadow-[0_30px_100px_rgba(17,16,20,0.10)] backdrop-blur-xl lg:min-h-[500px] lg:grid-cols-[0.95fr_1.05fr]">
-          <aside className="order-2 min-w-0 px-5 py-7 sm:px-8 lg:order-1 lg:px-12 lg:py-12">
-            <BrandLogo className="hidden justify-center lg:inline-flex lg:justify-start" />
-            <div className="hidden rounded-full border border-primary/15 bg-white/85 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary shadow-[0_8px_24px_rgba(17,16,20,0.04)] lg:mt-10 lg:inline-flex">
-              Campaign OS
-            </div>
-            <h1 className="mt-6 hidden max-w-lg font-display text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-espresso sm:text-5xl lg:block">
-              Log in or start your profile.
-            </h1>
-            <p className="mt-5 hidden max-w-xl text-base leading-8 text-cocoa lg:block">
-              One secure workspace for creator applications, company briefs, campaign projects, files, approvals, and messages.
-            </p>
-            <div className="lg:hidden">
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">Secure Campaign OS</p>
-              <p className="mt-2 text-sm leading-6 text-cocoa">One login for creator, company, client, and team workspaces.</p>
-            </div>
-            <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:mt-8 lg:grid-cols-1 xl:grid-cols-3">
-              {trustCards.map((item) => (
-                <article key={item.title} className="flex h-full min-h-[132px] flex-col rounded-[24px] border border-primary/10 bg-white/88 p-5 shadow-[0_12px_35px_rgba(17,16,20,0.05)]">
-                  <ShieldCheck className="h-5 w-5 text-primary" aria-hidden />
-                  <h2 className="mt-4 text-sm font-semibold text-espresso">{item.title}</h2>
-                  <p className="mt-2 text-xs leading-5 text-cocoa">{item.copy}</p>
-                </article>
-              ))}
-            </div>
-          </aside>
+      <div className="pointer-events-none absolute left-1/2 top-10 h-[420px] w-[min(720px,88vw)] -translate-x-1/2 rounded-full bg-primary/[0.06] blur-3xl" />
 
-          <section className="order-1 min-w-0 border-b border-primary/10 bg-white/92 px-5 py-8 sm:px-8 lg:order-2 lg:border-b-0 lg:border-l lg:px-12 lg:py-12">
-            <div className="mx-auto max-w-md min-w-0">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary shadow-[0_12px_28px_rgba(199,53,114,0.08)]">
-                {step === 'identifier' ? <LockKeyhole className="h-6 w-6" aria-hidden /> : verified ? <CheckCircle2 className="h-6 w-6" aria-hidden /> : <MailCheck className="h-6 w-6" aria-hidden />}
+      <div className="relative mx-auto max-w-[1120px] text-center">
+        <p className="inline-flex rounded-full border border-primary/15 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary shadow-[0_10px_30px_rgba(17,16,20,0.04)]">
+          Secure Campaign OS Login
+        </p>
+        <h1 className="mx-auto mt-6 max-w-[760px] font-display text-[38px] font-semibold leading-[1.02] tracking-[-0.05em] text-espresso sm:text-5xl lg:text-6xl">
+          Log in or start your profile.
+        </h1>
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-cocoa">
+          One secure login for company briefs, creator applications, project workspaces, approvals, files, and messages.
+        </p>
+
+        <div className="mx-auto mt-10 max-w-[520px] rounded-[38px] border border-primary/15 bg-white p-6 text-left shadow-[0_28px_90px_rgba(17,16,20,0.08)] sm:p-9 lg:p-11">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary shadow-[0_12px_28px_rgba(199,53,114,0.08)]">
+            {activeHomePath ? <CheckCircle2 className="h-6 w-6" aria-hidden /> : step === 'identifier' ? <LockKeyhole className="h-6 w-6" aria-hidden /> : verified ? <CheckCircle2 className="h-6 w-6" aria-hidden /> : <MailCheck className="h-6 w-6" aria-hidden />}
+          </div>
+
+          {activeHomePath ? (
+            <div className="mt-7 text-center">
+              <h2 className="font-display text-3xl font-semibold leading-tight text-espresso">You&apos;re already logged in.</h2>
+              <p className="mt-3 text-sm leading-7 text-cocoa">Continue to your workspace or use another account to start a different profile.</p>
+              <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                <Button href={activeHomePath} size="lg" fullWidth>Continue to dashboard</Button>
+                <Button type="button" size="lg" fullWidth variant="secondary" onClick={() => void handleUseAnotherAccount()}>
+                  Use another account
+                </Button>
               </div>
-
-              {activeHomePath && (
-                <div className="mt-6 rounded-[24px] border border-primary/15 bg-[#FFF8FB] p-4">
-                  <p className="text-sm font-semibold text-espresso">You are already logged in.</p>
-                  <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-                    <Button href={activeHomePath} variant="secondary" size="sm" className="flex-1">Continue to dashboard</Button>
-                    <button type="button" onClick={() => void handleUseAnotherAccount()} className="min-h-10 flex-1 rounded-full border border-[#ECE8EC] px-4 text-sm font-semibold text-cocoa transition hover:border-primary/25 hover:bg-white hover:text-espresso">
-                      Use another account
-                    </button>
-                  </div>
+            </div>
+          ) : step === 'identifier' ? (
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                void sendOtp();
+              }}
+              className="mt-7 space-y-5"
+            >
+              <div className="text-center">
+                <h2 className="font-display text-3xl font-semibold leading-tight text-espresso">Continue securely</h2>
+                <p className="mt-3 text-sm leading-7 text-cocoa">Enter your email or phone. We&apos;ll send a 6-digit code.</p>
+              </div>
+              <label className="block text-sm font-semibold text-espresso">
+                Email or phone
+                <input
+                  value={identifier}
+                  onChange={(event) => setIdentifier(event.target.value)}
+                  placeholder="alina@example.com or +91 98765 43210"
+                  autoComplete="email"
+                  className="mt-2 min-h-[56px] w-full rounded-[20px] border border-[#ECE8EC] bg-white px-4 text-base outline-none transition placeholder:text-cocoa/55 focus:border-primary focus:ring-4 focus:ring-primary/10"
+                />
+              </label>
+              <Button type="submit" size="lg" fullWidth disabled={sending} iconRight={sending ? <RefreshCw className="h-4 w-4 animate-spin" aria-hidden /> : <ArrowRight className="h-4 w-4" aria-hidden />}>
+                {sending ? 'Sending code...' : 'Send verification code'}
+              </Button>
+              <p className="text-center text-sm leading-6 text-cocoa">New here? Use the same email or phone and we&apos;ll guide you to the right profile.</p>
+            </form>
+          ) : (
+            <div className="mt-7">
+              <div className="text-center">
+                <h2 className="font-display text-3xl font-semibold leading-tight text-espresso">{intentContext.title}</h2>
+                <p className="mt-3 text-sm leading-7 text-cocoa">{intentContext.copy || `We sent a 6-digit code to ${maskedIdentifier}.`}</p>
+                {intentContext.copy && <p className="mt-2 text-sm leading-6 text-cocoa">Code sent to {maskedIdentifier}.</p>}
+              </div>
+              <form
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  void verifyCode(otp, true);
+                }}
+                className="mt-7 space-y-5"
+              >
+                <div>
+                  <p id="otp-help" className="mb-3 text-center text-sm font-semibold text-espresso">6-digit code</p>
+                  <OtpInput
+                    value={otp}
+                    onChange={handleOtpChange}
+                    onComplete={(value) => void verifyCode(value)}
+                    disabled={verifying || verified}
+                    error={Boolean(error)}
+                    describedBy="otp-help otp-status"
+                  />
                 </div>
-              )}
-
-              {step === 'identifier' ? (
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    void sendOtp();
-                  }}
-                  className="mt-7 space-y-5"
+                {previewCode && <div className="rounded-2xl border border-primary/15 bg-porcelain p-4 text-sm text-cocoa"><span className="font-semibold text-espresso">Development preview code:</span> {previewCode}</div>}
+                <Button type="submit" size="lg" fullWidth disabled={otp.length !== OTP_LENGTH || verifying || verified} iconRight={verifying ? <RefreshCw className="h-4 w-4 animate-spin" aria-hidden /> : <ArrowRight className="h-4 w-4" aria-hidden />}>
+                  {verified ? 'Verified. Taking you forward...' : verifying ? 'Verifying...' : error ? 'Try again' : 'Verify and continue'}
+                </Button>
+              </form>
+              <div className="mt-5 flex flex-col items-center justify-center gap-3 text-sm font-semibold sm:flex-row sm:gap-5">
+                <button
+                  type="button"
+                  disabled={sending || resendSeconds > 0}
+                  onClick={() => void sendOtp()}
+                  className="text-primary transition hover:text-hotpink disabled:cursor-not-allowed disabled:text-cocoa"
                 >
-                  <div>
-                    <h2 className="font-display text-3xl font-semibold leading-tight text-espresso">Log in or start your profile</h2>
-                    <p className="mt-3 text-sm leading-7 text-cocoa">Enter your email or phone. We&apos;ll send a secure code to continue.</p>
-                  </div>
-                  <label className="block text-sm font-semibold text-espresso">
-                    Email or phone
-                    <input
-                      value={identifier}
-                      onChange={(event) => setIdentifier(event.target.value)}
-                      placeholder="Example: alina@example.com or +91 98765 43210"
-                      autoComplete="email"
-                      className="mt-2 min-h-[56px] w-full rounded-[20px] border border-[#ECE8EC] bg-white px-4 text-base outline-none transition placeholder:text-cocoa/55 focus:border-primary focus:ring-4 focus:ring-primary/10"
-                    />
-                  </label>
-                  <Button type="submit" size="lg" fullWidth disabled={sending} iconRight={sending ? <RefreshCw className="h-4 w-4 animate-spin" aria-hidden /> : <ArrowRight className="h-4 w-4" aria-hidden />}>
-                    {sending ? 'Sending code...' : 'Send verification code'}
-                  </Button>
-                  <p className="text-sm leading-6 text-cocoa">New here? Continue with the same email or phone and we&apos;ll help you create the right profile.</p>
-                </form>
-              ) : (
-                <div className="mt-7">
-                  <h2 className="font-display text-3xl font-semibold leading-tight text-espresso">{intentContext.title}</h2>
-                  <p className="mt-3 text-sm leading-7 text-cocoa">{intentContext.copy || `We sent a 6-digit code to ${maskedIdentifier}.`}</p>
-                  {intentContext.copy && <p className="mt-2 text-sm leading-6 text-cocoa">Code sent to {maskedIdentifier}.</p>}
-                  <p className="mt-3 rounded-2xl border border-primary/10 bg-[#FFF8FB] px-4 py-3 text-sm leading-6 text-cocoa">{intentContext.helper}</p>
-                  <form
-                    onSubmit={(event) => {
-                      event.preventDefault();
-                      void verifyCode(otp, true);
-                    }}
-                    className="mt-8 space-y-5"
-                  >
-                    <div>
-                      <p id="otp-help" className="mb-3 text-sm font-semibold text-espresso">6-digit code</p>
-                      <OtpInput
-                        value={otp}
-                        onChange={handleOtpChange}
-                        onComplete={(value) => void verifyCode(value)}
-                        disabled={verifying || verified}
-                        error={Boolean(error)}
-                        describedBy="otp-help otp-status"
-                      />
-                    </div>
-                    {previewCode && <div className="rounded-2xl border border-primary/15 bg-porcelain p-4 text-sm text-cocoa"><span className="font-semibold text-espresso">Development preview code:</span> {previewCode}</div>}
-                    <Button type="submit" size="lg" fullWidth disabled={otp.length !== OTP_LENGTH || verifying || verified} iconRight={verifying ? <RefreshCw className="h-4 w-4 animate-spin" aria-hidden /> : <ArrowRight className="h-4 w-4" aria-hidden />}>
-                      {verified ? 'Verified. Taking you forward...' : verifying ? 'Verifying...' : error ? 'Try again' : 'Verify and continue'}
-                    </Button>
-                  </form>
-                  <div className="mt-5 flex flex-col items-center justify-center gap-3 text-sm font-semibold sm:flex-row sm:gap-5">
-                    <button
-                      type="button"
-                      disabled={sending || resendSeconds > 0}
-                      onClick={() => void sendOtp()}
-                      className="text-primary transition hover:text-hotpink disabled:cursor-not-allowed disabled:text-cocoa"
-                    >
-                      {resendSeconds > 0 ? `Resend code in ${resendSeconds}s` : 'Resend code'}
-                    </button>
-                    <button type="button" onClick={resetIdentifierStep} className="text-primary transition hover:text-hotpink">
-                      Use another email or phone
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              <div className="mt-6 min-h-[56px]" aria-live="polite">
-                {notice && <p id="otp-status" className="rounded-2xl border border-sage/20 bg-sage/10 p-4 text-sm text-[#527057]">{notice}</p>}
-                {error && <p id="otp-status" role="alert" className="rounded-2xl border border-merlot/25 bg-merlot/10 p-4 text-sm text-merlot">{error}</p>}
+                  {resendSeconds > 0 ? `Resend code in ${resendSeconds}s` : 'Resend code'}
+                </button>
+                <button type="button" onClick={resetIdentifierStep} className="text-primary transition hover:text-hotpink">
+                  Use another email or phone
+                </button>
               </div>
-              <div className="mt-6 rounded-[24px] border border-[#ECE8EC] bg-white/75 p-4">
-                <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-semibold text-cocoa">
-                  <Link href="/terms" className="hover:text-primary">Terms</Link>
-                  <Link href="/privacy" className="hover:text-primary">Privacy</Link>
-                  <Link href="/safety" className="hover:text-primary">Safety</Link>
-                  <Link href="/contact" className="hover:text-primary">Contact support</Link>
-                </div>
-                <p className="mt-3 text-center text-xs leading-5 text-cocoa">Having trouble? Contact support and include the email or phone you are using.</p>
-              </div>
+              <p className="mt-4 rounded-2xl border border-primary/10 bg-[#FFF8FB] px-4 py-3 text-center text-sm leading-6 text-cocoa">{intentContext.helper}</p>
             </div>
-          </section>
+          )}
+
+          <div className="mt-6 min-h-[56px]" aria-live="polite">
+            {notice && <p id="otp-status" className="rounded-2xl border border-sage/20 bg-sage/10 p-4 text-center text-sm text-[#527057]">{notice}</p>}
+            {error && <p id="otp-status" role="alert" className="rounded-2xl border border-merlot/25 bg-merlot/10 p-4 text-center text-sm text-merlot">{error}</p>}
+          </div>
+          <div className="mt-6 border-t border-[#ECE8EC] pt-5">
+            <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm font-semibold text-cocoa">
+              <Link href="/terms" className="hover:text-primary">Terms</Link>
+              <Link href="/privacy" className="hover:text-primary">Privacy</Link>
+              <Link href="/safety" className="hover:text-primary">Safety</Link>
+            </div>
+          </div>
         </div>
-      </section>
-    </main>
+
+        <div className="mx-auto mt-8 grid max-w-[960px] gap-4 md:grid-cols-3">
+          {trustCards.map((item) => {
+            const Icon = item.icon;
+            return (
+              <article key={item.title} className="flex h-full flex-col rounded-[28px] border border-primary/10 bg-white/82 p-6 text-left shadow-[0_12px_35px_rgba(17,16,20,0.05)]">
+                <Icon className="h-5 w-5 text-primary" aria-hidden />
+                <h2 className="mt-4 text-base font-semibold text-espresso">{item.title}</h2>
+                <p className="mt-2 text-sm leading-6 text-cocoa">{item.copy}</p>
+              </article>
+            );
+          })}
+        </div>
+
+        <div className="mx-auto mt-10 max-w-[1080px] rounded-[38px] border border-primary/10 bg-white/64 p-6 text-left shadow-[0_18px_60px_rgba(17,16,20,0.05)] backdrop-blur sm:p-8">
+          <div className="text-center">
+            <p className="text-sm font-semibold text-primary">Where you go after login</p>
+            <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-espresso">One login. The right workspace.</h2>
+          </div>
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {routePreviewCards.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article key={item.title} className="h-full rounded-[26px] border border-[#ECE8EC] bg-white p-5">
+                  <Icon className="h-5 w-5 text-primary" aria-hidden />
+                  <h3 className="mt-4 text-base font-semibold text-espresso">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-cocoa">{item.copy}</p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import type { Route } from 'next';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { ArrowRight, Menu, X } from 'lucide-react';
+import { ArrowRight, LayoutDashboard, LogOut, Menu, X } from 'lucide-react';
 import { BrandLogo } from '@/components/BrandLogo';
 import { Button } from '@/components/ui/Button';
 
@@ -21,10 +21,32 @@ const navLinks: NavLink[] = [
   { label: 'Safety', href: { pathname: '/safety' } }
 ];
 
+const dashboardLabel = (userType: string | null) => {
+  if (userType === 'admin') return 'Admin';
+  if (userType === 'campaign_manager') return 'Workspace';
+  if (userType === 'company') return 'Company Dashboard';
+  if (userType === 'specialist') return 'Workspace';
+  if (userType === 'client') return 'Review Dashboard';
+  if (userType === 'creator') return 'Creator Dashboard';
+  return 'Dashboard';
+};
+
+const dashboardPath = (userType: string | null): Route => {
+  if (userType === 'admin') return '/admin';
+  if (userType === 'campaign_manager') return '/workspace';
+  if (userType === 'company') return '/dashboard/company';
+  if (userType === 'specialist') return '/dashboard/workspace';
+  if (userType === 'client') return '/dashboard/client';
+  return '/dashboard/creator';
+};
+
 export const SiteHeader = () => {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userType, setUserType] = useState<string | null>(null);
+  const loggedIn = Boolean(userType);
+  const isLoginPage = pathname.startsWith('/login');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 8);
@@ -40,7 +62,27 @@ export const SiteHeader = () => {
     };
   }, [menuOpen]);
 
-  if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard') || pathname.startsWith('/workspace') || pathname.startsWith('/login') || pathname.startsWith('/register') || pathname.startsWith('/onboarding')) return null;
+  useEffect(() => {
+    let active = true;
+    void (async () => {
+      const response = await fetch('/api/auth/status', { headers: { Accept: 'application/json' }, cache: 'no-store' }).catch(() => null);
+      if (!response?.ok || !active) return;
+      const payload = await response.json().catch(() => null) as { ok?: boolean; data?: { authenticated?: boolean; userType?: string | null } } | null;
+      setUserType(payload?.ok && payload.data?.authenticated ? payload.data.userType ?? null : null);
+    })();
+    return () => {
+      active = false;
+    };
+  }, [pathname]);
+
+  const signOut = async () => {
+    await fetch('/api/auth/logout', { method: 'POST', headers: { Accept: 'application/json' } }).catch(() => null);
+    setUserType(null);
+    setMenuOpen(false);
+    if (pathname.startsWith('/dashboard') || pathname.startsWith('/workspace') || pathname.startsWith('/admin')) window.location.href = '/login';
+  };
+
+  if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard') || pathname.startsWith('/workspace') || pathname.startsWith('/register') || pathname.startsWith('/onboarding')) return null;
 
   return (
     <header className={`sticky top-0 z-[60] border-b border-black/[0.06] bg-white/90 backdrop-blur-xl transition-shadow ${scrolled ? 'shadow-header' : 'shadow-none'}`}>
@@ -63,12 +105,28 @@ export const SiteHeader = () => {
           })}
         </nav>
         <div className="flex items-center gap-3">
-          <Button href="/login" size="sm" variant="secondary" className="hidden min-h-11 px-4 shadow-none hover:shadow-card lg:inline-flex">
-            Log in
-          </Button>
-          <Button href="/companies/start" size="sm" className="hidden min-h-11 px-[18px] shadow-none hover:shadow-card lg:inline-flex">
-            Build My Campaign
-          </Button>
+          {loggedIn ? (
+            <>
+              <Button href={dashboardPath(userType)} size="sm" variant="secondary" className="hidden min-h-11 px-4 shadow-none hover:shadow-card lg:inline-flex" iconLeft={<LayoutDashboard className="h-4 w-4" aria-hidden />}>
+                {dashboardLabel(userType)}
+              </Button>
+              <button type="button" onClick={() => void signOut()} className="hidden min-h-11 rounded-full border border-[#E7E1E5] bg-white px-4 text-sm font-semibold text-cocoa transition hover:border-primary/30 hover:bg-porcelain hover:text-espresso lg:inline-flex lg:items-center lg:gap-2">
+                <LogOut className="h-4 w-4" aria-hidden />
+                Sign out
+              </button>
+            </>
+          ) : (
+            <>
+              {!isLoginPage && (
+                <Button href="/login" size="sm" variant="secondary" className="hidden min-h-11 px-4 shadow-none hover:shadow-card lg:inline-flex">
+                  Log in
+                </Button>
+              )}
+              <Button href="/companies/start" size="sm" className="hidden min-h-11 px-[18px] shadow-none hover:shadow-card lg:inline-flex">
+                Build My Campaign
+              </Button>
+            </>
+          )}
           <button
             type="button"
             aria-label="Toggle navigation menu"
@@ -104,12 +162,25 @@ export const SiteHeader = () => {
                 </button>
               </div>
               <div className="grid gap-3">
-                <Button href="/companies/start" fullWidth iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
-                  Build My Campaign
-                </Button>
-                <Button href="/apply" fullWidth variant="secondary">
-                  Apply as Creator
-                </Button>
+                {loggedIn ? (
+                  <>
+                    <Button href={dashboardPath(userType)} fullWidth iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
+                      {dashboardLabel(userType)}
+                    </Button>
+                    <Button type="button" fullWidth variant="secondary" onClick={() => void signOut()} iconLeft={<LogOut className="h-4 w-4" aria-hidden />}>
+                      Sign out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button href="/companies/start" fullWidth iconRight={<ArrowRight className="h-4 w-4" aria-hidden />}>
+                      Build My Campaign
+                    </Button>
+                    <Button href="/apply" fullWidth variant="secondary">
+                      Apply as Creator
+                    </Button>
+                  </>
+                )}
               </div>
               <nav className="mt-5 flex flex-col gap-1 border-t border-[#ECE8EC] pt-5 text-base font-semibold text-espresso" aria-label="Mobile navigation">
                 {navLinks.map((link) => {
@@ -125,13 +196,15 @@ export const SiteHeader = () => {
                     {link.label}
                   </Link>;
                 })}
-                <Link
-                  href="/login"
-                  onClick={() => setMenuOpen(false)}
-                  className="rounded-xl px-4 py-3 no-underline transition hover:bg-porcelain hover:text-espresso hover:no-underline"
-                >
-                  Log in
-                </Link>
+                {!loggedIn && !isLoginPage && (
+                  <Link
+                    href="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className="rounded-xl px-4 py-3 no-underline transition hover:bg-porcelain hover:text-espresso hover:no-underline"
+                  >
+                    Log in
+                  </Link>
+                )}
               </nav>
             </div>
           </div>
