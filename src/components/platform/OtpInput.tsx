@@ -23,6 +23,12 @@ export function OtpInput({
   const digits = Array.from({ length }, (_, index) => value[index] ?? '');
 
   useEffect(() => {
+    if (disabled) return;
+    const focusIndex = Math.max(0, Math.min(value.length, length - 1));
+    refs.current[focusIndex]?.focus();
+  }, [disabled, length, value]);
+
+  useEffect(() => {
     if (value.length === length) {
       const timeout = window.setTimeout(() => onComplete?.(value), 320);
       return () => window.clearTimeout(timeout);
@@ -84,7 +90,7 @@ export function OtpInput({
   };
 
   return (
-    <div className="flex items-center justify-center gap-1.5 sm:gap-3" aria-label="Verification code">
+    <div className={['flex items-center justify-center gap-1 min-[360px]:gap-1.5 sm:gap-3', error ? 'animate-[authShake_220ms_ease-out_1]' : ''].join(' ')} aria-label="Verification code">
       {digits.map((digit, index) => (
         <input
           key={`otp-${index}`}
@@ -105,7 +111,7 @@ export function OtpInput({
           onPaste={handlePaste}
           onKeyDown={(event) => handleKeyDown(index, event)}
           className={[
-            'h-12 w-[42px] rounded-2xl border bg-white text-center text-xl font-semibold text-[#111014] outline-none transition sm:h-14 sm:w-[52px] sm:text-2xl',
+            'h-12 w-9 rounded-2xl border bg-white text-center text-xl font-semibold text-[#111014] outline-none transition min-[360px]:w-[42px] sm:h-14 sm:w-[52px] sm:text-2xl',
             error
               ? 'border-merlot/45 shadow-[0_0_0_4px_rgba(125,42,65,0.08)]'
               : 'border-[#ECE8EC] focus:border-[#C73572] focus:shadow-[0_0_0_4px_rgba(199,53,114,0.10)]',

@@ -6,6 +6,7 @@ import type { Route } from 'next';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, CheckCircle2, LockKeyhole, MailCheck, RefreshCw, ShieldCheck } from 'lucide-react';
 import { BrandLogo } from '@/components/BrandLogo';
+import { AuthHeader } from '@/components/platform/AuthHeader';
 import { OtpInput } from '@/components/platform/OtpInput';
 import { Button } from '@/components/ui/Button';
 
@@ -61,9 +62,47 @@ const withPreservedIntent = (path: string, intent: string, invite: string, next:
   return query ? `${safePath}?${query}` : safePath;
 };
 
+const homePathForUserType = (userType: string) => {
+  if (userType === 'admin') return '/admin';
+  if (userType === 'campaign_manager') return '/workspace';
+  if (userType === 'company') return '/dashboard/company';
+  if (userType === 'specialist') return '/dashboard/workspace';
+  if (userType === 'client') return '/dashboard/client';
+  return '/dashboard/creator';
+};
+
+const getIntentContext = (intent: string, nextPath: string, invite: string) => {
+  if (invite || intent.includes('invite')) {
+    return {
+      title: 'Verify to continue your invite',
+      copy: 'We sent a 6-digit code so you can open the invited project workspace securely.',
+      helper: 'After verification, we will route you to the right review or collaboration space.'
+    };
+  }
+  if (intent.includes('company') || intent.includes('brief') || nextPath.startsWith('/brief') || nextPath.startsWith('/companies')) {
+    return {
+      title: 'Verify to continue your campaign brief',
+      copy: 'We sent a 6-digit code so you can save your brief and continue securely.',
+      helper: 'After verification, your campaign brief continues with the same details and intent.'
+    };
+  }
+  if (intent.includes('creator') || intent.includes('apply') || nextPath.startsWith('/apply') || nextPath.startsWith('/creators')) {
+    return {
+      title: 'Verify to continue your creator profile',
+      copy: 'We sent a 6-digit code so you can save your role preferences and application.',
+      helper: 'After verification, we will route you to role selection or your creator workspace.'
+    };
+  }
+  return {
+    title: 'Enter verification code',
+    copy: '',
+    helper: 'Enter the code to continue securely into the right workspace.'
+  };
+};
+
 const trustCards = [
   { title: 'OTP protected', copy: 'Secure code-based access.' },
-  { title: 'Role-specific', copy: 'The right workspace after login.' },
+  { title: 'Role-specific', copy: 'Creators, companies, clients, and team members see the right workspace.' },
   { title: 'Consent recorded', copy: 'Key submissions store agreement and timestamp.' }
 ];
 
@@ -83,15 +122,30 @@ export const AuthPortal = () => {
   const [notice, setNotice] = useState('');
   const [resendSeconds, setResendSeconds] = useState(0);
   const [previewCode, setPreviewCode] = useState<string | null>(null);
+  const [activeHomePath, setActiveHomePath] = useState('');
   const lastSubmittedCode = useRef('');
 
   const maskedIdentifier = useMemo(() => maskIdentifier(identifier), [identifier]);
+  const intentContext = useMemo(() => getIntentContext(intent, nextPath, invite), [intent, invite, nextPath]);
 
   useEffect(() => {
     if (resendSeconds <= 0) return undefined;
     const interval = window.setInterval(() => setResendSeconds((current) => Math.max(0, current - 1)), 1000);
     return () => window.clearInterval(interval);
   }, [resendSeconds]);
+
+  useEffect(() => {
+    let active = true;
+    void (async () => {
+      const response = await fetch('/api/auth/status', { headers: { Accept: 'application/json' }, cache: 'no-store' }).catch(() => null);
+      if (!response?.ok || !active) return;
+      const payload = await readJson<{ authenticated: boolean; userType: string | null }>(response);
+      if (payload.ok && payload.data?.authenticated && payload.data.userType) setActiveHomePath(homePathForUserType(payload.data.userType));
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const sendOtp = async () => {
     const cleanIdentifier = identifier.trim();
@@ -166,31 +220,44 @@ export const AuthPortal = () => {
     if (value !== lastSubmittedCode.current) setError('');
   };
 
+  const handleUseAnotherAccount = async () => {
+    await fetch('/api/auth/logout', { method: 'POST', headers: { Accept: 'application/json' } }).catch(() => null);
+    setActiveHomePath('');
+    setIdentifier('');
+    resetIdentifierStep();
+    setNotice('You can now use another email or phone.');
+  };
+
   return (
     <main
-      className="min-h-screen overflow-hidden px-5 py-8 sm:px-8 lg:px-10"
+      className="relative min-h-screen overflow-hidden bg-[#FFFBFD] px-5 pb-10 pt-24 sm:px-8 lg:px-10"
       style={{
         background:
-          'radial-gradient(circle at 50% 0%, rgba(199, 53, 114, 0.10), transparent 34%), radial-gradient(circle at 20% 30%, rgba(233, 161, 191, 0.14), transparent 28%), linear-gradient(180deg, #ffffff 0%, #fff8fb 52%, #ffffff 100%)'
+          'radial-gradient(circle at 50% 0%, rgba(199, 53, 114, 0.12), transparent 34%), radial-gradient(circle at 20% 30%, rgba(233, 161, 191, 0.12), transparent 28%), radial-gradient(circle at 80% 25%, rgba(200, 169, 106, 0.08), transparent 26%), linear-gradient(180deg, #ffffff 0%, #fff8fb 54%, #ffffff 100%)'
       }}
     >
-      <section className="relative mx-auto flex min-h-[calc(100vh-64px)] max-w-[1040px] items-center justify-center">
-        <div className="pointer-events-none absolute left-1/2 top-10 h-[320px] w-[min(680px,88vw)] -translate-x-1/2 rounded-full bg-primary/[0.08] blur-3xl" />
-        <div className="relative grid w-full min-w-0 overflow-hidden rounded-[40px] border border-primary/15 bg-white/70 shadow-[0_30px_120px_rgba(17,16,20,0.10)] backdrop-blur-xl lg:grid-cols-[0.98fr_1.02fr]">
-          <aside className="min-w-0 px-5 py-8 sm:px-8 lg:px-10 lg:py-12">
-            <BrandLogo className="justify-center lg:justify-start" />
-            <div className="mt-10 inline-flex rounded-full border border-primary/15 bg-white/85 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+      <AuthHeader />
+      <section className="relative mx-auto flex min-h-[calc(100vh-160px)] max-w-[1080px] items-center justify-center">
+        <div className="pointer-events-none absolute left-1/2 top-[8%] h-[360px] w-[min(720px,88vw)] -translate-x-1/2 rounded-full bg-primary/[0.06] blur-3xl sm:h-[420px]" />
+        <div className="relative grid w-full min-w-0 overflow-hidden rounded-[38px] border border-[#F1D7E3] bg-white/82 shadow-[0_30px_100px_rgba(17,16,20,0.10)] backdrop-blur-xl lg:min-h-[500px] lg:grid-cols-[0.95fr_1.05fr]">
+          <aside className="order-2 min-w-0 px-5 py-7 sm:px-8 lg:order-1 lg:px-12 lg:py-12">
+            <BrandLogo className="hidden justify-center lg:inline-flex lg:justify-start" />
+            <div className="hidden rounded-full border border-primary/15 bg-white/85 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary shadow-[0_8px_24px_rgba(17,16,20,0.04)] lg:mt-10 lg:inline-flex">
               Campaign OS
             </div>
-            <h1 className="mt-6 max-w-lg font-display text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-espresso sm:text-5xl">
+            <h1 className="mt-6 hidden max-w-lg font-display text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-espresso sm:text-5xl lg:block">
               Log in or start your profile.
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-8 text-cocoa">
+            <p className="mt-5 hidden max-w-xl text-base leading-8 text-cocoa lg:block">
               One secure workspace for creator applications, company briefs, campaign projects, files, approvals, and messages.
             </p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+            <div className="lg:hidden">
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">Secure Campaign OS</p>
+              <p className="mt-2 text-sm leading-6 text-cocoa">One login for creator, company, client, and team workspaces.</p>
+            </div>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3 lg:mt-8 lg:grid-cols-1 xl:grid-cols-3">
               {trustCards.map((item) => (
-                <article key={item.title} className="flex h-full flex-col rounded-[24px] border border-primary/10 bg-white/85 p-5 shadow-card">
+                <article key={item.title} className="flex h-full min-h-[132px] flex-col rounded-[24px] border border-primary/10 bg-white/88 p-5 shadow-[0_12px_35px_rgba(17,16,20,0.05)]">
                   <ShieldCheck className="h-5 w-5 text-primary" aria-hidden />
                   <h2 className="mt-4 text-sm font-semibold text-espresso">{item.title}</h2>
                   <p className="mt-2 text-xs leading-5 text-cocoa">{item.copy}</p>
@@ -199,11 +266,23 @@ export const AuthPortal = () => {
             </div>
           </aside>
 
-          <section className="min-w-0 border-t border-primary/10 bg-white/92 px-5 py-8 sm:px-8 lg:border-l lg:border-t-0 lg:px-10 lg:py-12">
+          <section className="order-1 min-w-0 border-b border-primary/10 bg-white/92 px-5 py-8 sm:px-8 lg:order-2 lg:border-b-0 lg:border-l lg:px-12 lg:py-12">
             <div className="mx-auto max-w-md min-w-0">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/15 bg-porcelain text-primary shadow-[0_12px_28px_rgba(199,53,114,0.08)]">
                 {step === 'identifier' ? <LockKeyhole className="h-6 w-6" aria-hidden /> : verified ? <CheckCircle2 className="h-6 w-6" aria-hidden /> : <MailCheck className="h-6 w-6" aria-hidden />}
               </div>
+
+              {activeHomePath && (
+                <div className="mt-6 rounded-[24px] border border-primary/15 bg-[#FFF8FB] p-4">
+                  <p className="text-sm font-semibold text-espresso">You are already logged in.</p>
+                  <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                    <Button href={activeHomePath} variant="secondary" size="sm" className="flex-1">Continue to dashboard</Button>
+                    <button type="button" onClick={() => void handleUseAnotherAccount()} className="min-h-10 flex-1 rounded-full border border-[#ECE8EC] px-4 text-sm font-semibold text-cocoa transition hover:border-primary/25 hover:bg-white hover:text-espresso">
+                      Use another account
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {step === 'identifier' ? (
                 <form
@@ -214,8 +293,8 @@ export const AuthPortal = () => {
                   className="mt-7 space-y-5"
                 >
                   <div>
-                    <h2 className="font-display text-3xl font-semibold text-espresso">Enter your email or phone</h2>
-                    <p className="mt-3 text-sm leading-7 text-cocoa">We&apos;ll send a 6-digit verification code to continue.</p>
+                    <h2 className="font-display text-3xl font-semibold leading-tight text-espresso">Log in or start your profile</h2>
+                    <p className="mt-3 text-sm leading-7 text-cocoa">Enter your email or phone. We&apos;ll send a secure code to continue.</p>
                   </div>
                   <label className="block text-sm font-semibold text-espresso">
                     Email or phone
@@ -234,8 +313,10 @@ export const AuthPortal = () => {
                 </form>
               ) : (
                 <div className="mt-7">
-                  <h2 className="font-display text-3xl font-semibold text-espresso">Enter verification code</h2>
-                  <p className="mt-3 text-sm leading-7 text-cocoa">We sent a 6-digit code to {maskedIdentifier}.</p>
+                  <h2 className="font-display text-3xl font-semibold leading-tight text-espresso">{intentContext.title}</h2>
+                  <p className="mt-3 text-sm leading-7 text-cocoa">{intentContext.copy || `We sent a 6-digit code to ${maskedIdentifier}.`}</p>
+                  {intentContext.copy && <p className="mt-2 text-sm leading-6 text-cocoa">Code sent to {maskedIdentifier}.</p>}
+                  <p className="mt-3 rounded-2xl border border-primary/10 bg-[#FFF8FB] px-4 py-3 text-sm leading-6 text-cocoa">{intentContext.helper}</p>
                   <form
                     onSubmit={(event) => {
                       event.preventDefault();
@@ -256,7 +337,7 @@ export const AuthPortal = () => {
                     </div>
                     {previewCode && <div className="rounded-2xl border border-primary/15 bg-porcelain p-4 text-sm text-cocoa"><span className="font-semibold text-espresso">Development preview code:</span> {previewCode}</div>}
                     <Button type="submit" size="lg" fullWidth disabled={otp.length !== OTP_LENGTH || verifying || verified} iconRight={verifying ? <RefreshCw className="h-4 w-4 animate-spin" aria-hidden /> : <ArrowRight className="h-4 w-4" aria-hidden />}>
-                      {verified ? 'Verified. Redirecting...' : verifying ? 'Verifying...' : error ? 'Try again' : 'Verify and continue'}
+                      {verified ? 'Verified. Taking you forward...' : verifying ? 'Verifying...' : error ? 'Try again' : 'Verify and continue'}
                     </Button>
                   </form>
                   <div className="mt-5 flex flex-col items-center justify-center gap-3 text-sm font-semibold sm:flex-row sm:gap-5">
@@ -279,10 +360,14 @@ export const AuthPortal = () => {
                 {notice && <p id="otp-status" className="rounded-2xl border border-sage/20 bg-sage/10 p-4 text-sm text-[#527057]">{notice}</p>}
                 {error && <p id="otp-status" role="alert" className="rounded-2xl border border-merlot/25 bg-merlot/10 p-4 text-sm text-merlot">{error}</p>}
               </div>
-              <div className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2 border-t border-[#ECE8EC] pt-5 text-xs font-semibold text-cocoa">
-                <Link href="/terms" className="hover:text-primary">Terms</Link>
-                <Link href="/privacy" className="hover:text-primary">Privacy</Link>
-                <Link href="/safety" className="hover:text-primary">Safety</Link>
+              <div className="mt-6 rounded-[24px] border border-[#ECE8EC] bg-white/75 p-4">
+                <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-semibold text-cocoa">
+                  <Link href="/terms" className="hover:text-primary">Terms</Link>
+                  <Link href="/privacy" className="hover:text-primary">Privacy</Link>
+                  <Link href="/safety" className="hover:text-primary">Safety</Link>
+                  <Link href="/contact" className="hover:text-primary">Contact support</Link>
+                </div>
+                <p className="mt-3 text-center text-xs leading-5 text-cocoa">Having trouble? Contact support and include the email or phone you are using.</p>
               </div>
             </div>
           </section>

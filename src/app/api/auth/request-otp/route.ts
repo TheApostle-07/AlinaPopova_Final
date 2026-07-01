@@ -57,6 +57,7 @@ export async function POST(request: Request) {
       }
     });
   } catch (error) {
+    console.error('OTP request failed:', error instanceof Error ? error.message : 'Unknown error');
     const message = error instanceof Error && error.message.includes('DATABASE_URL is not configured')
       ? 'Database is not configured. Set DATABASE_URL before using OTP login.'
       : 'We could not send the code. Please try again shortly.';
