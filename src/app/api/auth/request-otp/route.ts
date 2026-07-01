@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { classifyIdentifier, createOtpToken, generateOtp, getOtpDebugHash } from '@/lib/platform-database';
 import { isRateLimited } from '@/lib/rate-limit';
+import { deliverOtp } from '@/lib/otp-delivery';
 
 const getClientIp = (request: Request) => request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || 'unknown';
 
@@ -31,16 +32,27 @@ export async function POST(request: Request) {
       userAgent: request.headers.get('user-agent')
     });
 
-    const providerConfigured = Boolean(process.env.RESEND_API_KEY || process.env.OTP_PROVIDER_WEBHOOK_URL || process.env.WHATSAPP_OTP_PROVIDER_URL);
+    const delivery = await deliverOtp({ identifier, identifierType, otp });
+    if (!delivery.ok) {
+      return json({
+        ok: false,
+        error: delivery.error === 'Email verification is not configured.' || delivery.error === 'Phone verification is not configured.'
+          ? 'Verification delivery is not configured yet. Please contact the studio or try again later.'
+          : 'We could not send the code. Please try again shortly.',
+        code: delivery.error?.includes('configured') ? 'OTP_DELIVERY_NOT_CONFIGURED' : 'OTP_DELIVERY_FAILED',
+        data: { debugRef: getOtpDebugHash(identifier) }
+      }, delivery.error?.includes('configured') ? 503 : 502);
+    }
+
     return json({
       ok: true,
       error: null,
       code: null,
       data: {
-        delivery: providerConfigured ? 'sent' : 'development_preview',
+        delivery: delivery.delivery,
         identifierType,
         resendAfterSeconds: 60,
-        previewCode: providerConfigured ? null : otp,
+        previewCode: delivery.delivery === 'development_preview' ? otp : null,
         debugRef: getOtpDebugHash(identifier)
       }
     });
