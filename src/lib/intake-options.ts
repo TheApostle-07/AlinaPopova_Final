@@ -225,6 +225,7 @@ export const CREATOR_CATEGORIES: IntakeOption[] = [
   { value: 'luxury', label: 'Luxury' },
   { value: 'real_estate', label: 'Real estate / interiors' },
   { value: 'local_business', label: 'Local businesses' },
+  { value: 'open_to_suitable_work', label: 'Not sure / open to suitable work' },
   { value: 'other', label: 'Other' }
 ];
 
@@ -234,6 +235,7 @@ export const CREATOR_AVAILABILITY: IntakeOption[] = [
   { value: 'travel', label: 'Can travel if required' },
   { value: 'weekday', label: 'Usually available on weekdays' },
   { value: 'weekend', label: 'Usually available on weekends' },
+  { value: 'evening', label: 'Usually available in evenings' },
   { value: 'urgent_available', label: 'Available for urgent work when suitable' }
 ];
 
